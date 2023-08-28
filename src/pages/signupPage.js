@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { MdEmail } from "react-icons/md";
-import { FaLock } from "react-icons/fa6";
+import { FaLock, FaUser } from "react-icons/fa6";
 import { IconContext } from "react-icons";
 import LoginField from "@/Components/LoginComponent";
 
@@ -11,7 +11,7 @@ const SignupPage = () => {
   const signup = (event) => {
     event.preventDefault();
     // Get details from form
-    var { email, password } = document.forms[0];
+    var { email, password, username } = document.forms[0];
     // sign up logic
     // use email.value to get value of variable
 
@@ -25,6 +25,12 @@ const SignupPage = () => {
     <div className="formDiv">
       <h1>Sign up Here!</h1>
       <form onSubmit={signup}>
+        <LoginField
+          icon={<FaUser />}
+          type="text"
+          name="username"
+          placeholder="Username"
+        />
         <LoginField
           icon={<MdEmail />}
           type="email"
