@@ -49,7 +49,7 @@ const LoginPage = () => {
       </form>
       <br />
       <span>
-        <i>Don't have an account? Sign up here</i>
+        <i>Don&apos;t have an account? Sign up here</i>
       </span>
     </div>
   );
