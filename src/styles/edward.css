@@ -1,0 +1,19 @@
+.loginIconStyle {
+  position: relative;
+  top: 5px;
+  right: 3px;
+}
+
+.inputFieldWithIcon {
+  padding: 4px;
+  align-content: center;
+  text-align: center;
+}
+
+.formDiv {
+  position: absolute;
+  top: 20%;
+  margin: auto;
+  width: 100%;
+  text-align: center;
+}
