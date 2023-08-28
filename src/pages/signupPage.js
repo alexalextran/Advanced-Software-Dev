@@ -1,17 +1,18 @@
 import { useRouter } from "next/router";
 import { MdEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa6";
+import { IconContext } from "react-icons";
 import LoginField from "@/Components/LoginComponent";
 
 // use router.push('/Dashboard') to go redirect user to dashboard after user auth
 
-const LoginPage = () => {
+const SignupPage = () => {
   const router = useRouter();
-  const login = (event) => {
+  const signup = (event) => {
     event.preventDefault();
     // Get details from form
     var { email, password } = document.forms[0];
-    // Login logic
+    // sign up logic
     // use email.value to get value of variable
 
     // Redirect to dashboard if valid
@@ -22,8 +23,8 @@ const LoginPage = () => {
 
   return (
     <div className="formDiv">
-      <h1>Login Here!</h1>
-      <form onSubmit={login}>
+      <h1>Sign up Here!</h1>
+      <form onSubmit={signup}>
         <LoginField
           icon={<MdEmail />}
           type="email"
@@ -37,14 +38,15 @@ const LoginPage = () => {
           placeholder="Password"
         />
         <br />
-        <button type="submit">Log in</button>
+        <button type="submit">Sign up</button>
       </form>
       <br />
       <span>
         <i>
-          Don&apos;t have an account?{" "}
-          <a href="signupPage">
-            <u>Sign up</u>
+          Have an account?{" "}
+          <a href="loginPage">
+            {" "}
+            <u>Login</u>
           </a>{" "}
           here
         </i>
@@ -53,4 +55,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default SignupPage;
