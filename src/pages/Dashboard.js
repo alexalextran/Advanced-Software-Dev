@@ -7,15 +7,15 @@ const Dashboard = () => {
         <main className={styles.main}>
             <Navigation/>
             <div className={styles.industry_grid}>
-                <div>bruh</div>
-                <div>bruh</div>
-                <div>bruh</div>
-                <div>bruh</div>
-                <div>bruh</div>
-                <div>bruh</div>
-                <div>bruh</div>
-                <div>bruh</div>
-                <div>bruh</div>
+                <div className={styles.industry_card}>bruh  <div className={styles.industry_image}>photo</div> </div>
+                <div className={styles.industry_card}>bruh  <div className={styles.industry_image}>photo</div> </div>
+                <div className={styles.industry_card}>bruh  <div className={styles.industry_image}>photo</div> </div>
+                <div className={styles.industry_card}>bruh  <div className={styles.industry_image}>photo</div> </div>
+                <div className={styles.industry_card}>bruh  <div className={styles.industry_image}>photo</div> </div>
+                <div className={styles.industry_card}>bruh  <div className={styles.industry_image}>photo</div> </div>
+                <div className={styles.industry_card}>bruh  <div className={styles.industry_image}>photo</div> </div>
+                <div className={styles.industry_card}>bruh  <div className={styles.industry_image}>photo</div> </div>
+                <div className={styles.industry_card}>bruh  <div className={styles.industry_image}>photo</div> </div>
                 
             </div>
         </main>

@@ -6,17 +6,40 @@
 }
 
 .industry_grid{
-   
+    margin: auto;
+   width: 80em;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
-    div{
+    .industry_card{
+        background-color: $foregroundColor;
+        color: $textcolor;
         display: flex;
+        font-size: 1.7em;
         align-items: center;
         justify-content: center;
-        border: 2px solid black;
-        margin: 2em 8em;
-        height: 10em;
-        border-radius: 1em;
+       position: relative;
+        margin: 2em 4em;
+        height: 6em;
+        border-radius: 0.9em;
+        background: rgba( 255, 255, 255, 0.25 );
+        box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+        backdrop-filter: blur( 7px );
+        -webkit-backdrop-filter: blur( 7px );
+        z-index: 2;
+        &:hover > .industry_image{
+           opacity: 1;
+            top: 0;
+        }
+        .industry_image{
+            transition: 400ms;
+            background-color: red;
+            @include absolutefill;
+            top: 100%;
+            opacity: 0;
+            z-index: 1;
+            border-radius: inherit;
+        }
     }
+    
 }

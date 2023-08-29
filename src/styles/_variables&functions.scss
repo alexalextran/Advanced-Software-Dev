@@ -7,6 +7,10 @@ $white: rgb(243,240,245);
 $blue: rgb(84,101,222);
 $orange: rgba(255,92,53, .7);
 
+$backgroundColor:rgb(255,255,255);
+$foregroundColor:rgb(230,230,230);
+$textcolor: white;
+$secondaryColor: rgb(148,36,51);
 
 @mixin button {
   aspect-ratio: 7/2;
