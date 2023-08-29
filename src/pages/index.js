@@ -16,8 +16,22 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
+// <<<<<<< loginPage
         <div>
           <LoginPage></LoginPage>
+// =======
+//         <div >
+//           main page
+//         <Link href="/login"><button>Login</button></Link>
+//         <Link href="/Dashboard"><button>Dashboard</button></Link>
+//         <Link href="/navigation"><button>Navigation</button></Link>
+//         <Link href="/profile"><button>Profile</button></Link>
+//         <Link href="/jobs"><button>Jobs</button></Link>
+//         <Link href="/chat"><button>Chat</button></Link>
+//         <Link href="/analytics"><button>Analytics</button></Link>
+//         <Link href="/history"><button>History</button></Link>
+
+// >>>>>>> master
         </div>
       </main>
     </>
