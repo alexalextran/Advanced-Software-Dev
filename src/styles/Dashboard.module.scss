@@ -1,0 +1,22 @@
+@import "variables&functions";
+
+
+.main{
+    font-size: 1vw;
+}
+
+.industry_grid{
+   
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    div{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid black;
+        margin: 2em 8em;
+        height: 10em;
+        border-radius: 1em;
+    }
+}
