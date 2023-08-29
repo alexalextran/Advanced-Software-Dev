@@ -1,9 +1,10 @@
-import Head from 'next/head'
-import Link from 'next/link';
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.scss'
+import Head from "next/head";
+import Link from "next/link";
+import { Inter } from "next/font/google";
+import styles from "@/styles/Home.module.scss";
+import LoginPage from "./loginPage";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
@@ -15,19 +16,24 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div >
-          main page
-        <Link href="/login"><button>Login</button></Link>
-        <Link href="/Dashboard"><button>Dashboard</button></Link>
-        <Link href="/navigation"><button>Navigation</button></Link>
-        <Link href="/profile"><button>Profile</button></Link>
-        <Link href="/jobs"><button>Jobs</button></Link>
-        <Link href="/chat"><button>Chat</button></Link>
-        <Link href="/analytics"><button>Analytics</button></Link>
-        <Link href="/history"><button>History</button></Link>
-
+        {/* // <<<<<<< HEAD
+//         <div >
+//           main page
+//         <Link href="/login"><button>Login</button></Link>
+//         <Link href="/Dashboard"><button>Dashboard</button></Link>
+//         <Link href="/navigation"><button>Navigation</button></Link>
+//         <Link href="/profile"><button>Profile</button></Link>
+//         <Link href="/jobs"><button>Jobs</button></Link>
+//         <Link href="/chat"><button>Chat</button></Link>
+//         <Link href="/analytics"><button>Analytics</button></Link>
+//         <Link href="/history"><button>History</button></Link>
+//
+// ======= */}
+        <div>
+          <LoginPage></LoginPage>
+          {/* // >>>>>>> loginPage */}
         </div>
       </main>
     </>
-  )
+  );
 }
