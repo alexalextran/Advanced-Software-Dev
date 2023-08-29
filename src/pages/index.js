@@ -16,10 +16,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-// <<<<<<< loginPage
-        <div>
-          <LoginPage></LoginPage>
-// =======
+        {/* // <<<<<<< HEAD
 //         <div >
 //           main page
 //         <Link href="/login"><button>Login</button></Link>
@@ -30,8 +27,11 @@ export default function Home() {
 //         <Link href="/chat"><button>Chat</button></Link>
 //         <Link href="/analytics"><button>Analytics</button></Link>
 //         <Link href="/history"><button>History</button></Link>
-
-// >>>>>>> master
+//
+// ======= */}
+        <div>
+          <LoginPage></LoginPage>
+          {/* // >>>>>>> loginPage */}
         </div>
       </main>
     </>
