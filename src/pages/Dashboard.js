@@ -2,8 +2,8 @@ import React from 'react';
 import styles from '@/styles/Dashboard.module.scss'
 import Navigation from './navigation';
 import IndustryCard from '@/Components/IndustryCard';
-
-const industries = [{name: "It"},{ name: "Enginnering"},{ name: "Hospitality"}, {name: "Business"}, {name: "Healthcare"}, {name: "Goverment"}, {name: "Education"},  {name: "Trade"}, {name: "Construction"}]
+import Link from 'next/link'
+import industries from  '../../public/data/industryData.js'
 
 const Dashboard = () => {
     return (
@@ -12,7 +12,7 @@ const Dashboard = () => {
             <div className={styles.industry_grid}>
             {
                 industries.map((industry, index) => {
-                return(<IndustryCard industry={industry.name} key={index}/>)
+                return(  <Link href={`/jobs/${industry.name}`} key={index}><IndustryCard industry={industry.name} />   </Link> )
                 })
             }
                 
