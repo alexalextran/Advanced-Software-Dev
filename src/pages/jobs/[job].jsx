@@ -1,13 +1,14 @@
 import React from 'react';
-import industries from  '../../../public/data/industryData.js'
+import JobItem from '../../Components/JobItem.jsx';
 import Navigation from '../navigation.js';
 import styles from '@/styles/job.module.scss'
+import industryjobs from  '../../../public/data/industryJobs.js'
 
 export const getStaticPaths = () => {
     //generates all possible routes and links for every project
-        const paths = industries.map(industry => {
+        const paths = industryjobs.map(industry => {
             return{
-                params: {job: industry.name.toString()}
+                params: {job: industry.IndustryName}
             }
         })
         return{
@@ -27,14 +28,25 @@ return{
 }
 
 const Job = ({job}) => {
+
+    const selectedIndustry = industryjobs.find((industry) => industry.IndustryName === job);
+  
    
     return (
         <main className={styles.main}>
         <Navigation/>
 
         <div>
+            
             <div className={styles.listofjobs}>
             <h1> {job}</h1>
+            
+            {
+               selectedIndustry.jobs.map((job, index) => {
+                return  ( <JobItem key={index} jobitem={job}></JobItem> )
+               })
+
+            }
             </div>
             <nav>
               balls

@@ -3,7 +3,7 @@ import styles from '@/styles/Dashboard.module.scss'
 import Navigation from './navigation';
 import IndustryCard from '@/Components/IndustryCard';
 import Link from 'next/link'
-import industries from  '../../public/data/industryData.js'
+import industries from  '../../public/data/industryJobs.js'
 
 const Dashboard = () => {
     return (
@@ -12,7 +12,7 @@ const Dashboard = () => {
             <div className={styles.industry_grid}>
             {
                 industries.map((industry, index) => {
-                return(  <Link href={`/jobs/${industry.name}`} key={index}><IndustryCard industry={industry.name} />   </Link> )
+                return(  <Link href={`/jobs/${industry.IndustryName}`} key={index}><IndustryCard industry={industry.IndustryName} />   </Link> )
                 })
             }
                 

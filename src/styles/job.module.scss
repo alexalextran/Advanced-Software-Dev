@@ -17,6 +17,7 @@
             background-color: purple !important;
             width: 70%;
             height: 40em;
+            @include flexCustom(start, center, column);
         }
        
         nav{
