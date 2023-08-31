@@ -1,6 +1,7 @@
 import React from 'react';
 import industries from  '../../../public/data/industryData.js'
-
+import Navigation from '../navigation.js';
+import styles from '@/styles/job.module.scss'
 
 export const getStaticPaths = () => {
     //generates all possible routes and links for every project
@@ -26,12 +27,21 @@ return{
 }
 
 const Job = ({job}) => {
-    console.log(job)
+   
     return (
+        <main className={styles.main}>
+        <Navigation/>
+
         <div>
-            nice
-            {job}
+            <div className={styles.listofjobs}>
+            <h1> {job}</h1>
+            </div>
+            <nav>
+              balls
+            </nav>
         </div>
+            
+        </main>
     );
 }
 
