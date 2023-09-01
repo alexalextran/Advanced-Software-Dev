@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import industryQuestions from  '../../public/data/industryQuestions.js'
+import Question from '@/Components/question.jsx';
+import styles from '@/styles/JobItem.module.scss'
+
 
 const JobItem = ({jobitem}) => {
     const [showQuestions, setshowQuestions] = useState(false)
@@ -11,15 +14,15 @@ const JobItem = ({jobitem}) => {
 
     
     return (
-        <button onClick={() => {setshowQuestions(!showQuestions)}}>
+        <div className={styles.job} onClick={() => {setshowQuestions(!showQuestions)}}>
             {jobitem}
             {
               showQuestions ?  QuestionArray.Questions.map((question, index) => {
-                    return <p key={index}> {question} </p>
+                    return <Question key={index} question={question}> </Question>
                 })
                 : <p></p>
             }
-        </button>
+        </div>
     );
 }
 

@@ -2,22 +2,24 @@
 
 .main{
     height: 100vh;
-    :nth-child(2){
-        background-color: red;
+    .jobs_container{
+       
         @include flexCustom(center, center, row);
         width: 100%;
         text-align: center;
-        background: rgba( 255, 255, 255, 0.25 );
-        box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-        backdrop-filter: blur( 2em );
-        -webkit-backdrop-filter: blur( 2em );
+        
             
 
         .listofjobs{
-            background-color: purple !important;
             width: 70%;
             height: 40em;
             @include flexCustom(start, center, column);
+            :nth-child(2){
+                border-radius: 1em 1em 0 0;
+            }
+             :last-child{
+                border-radius: 0 0 1em 1em;
+            }
         }
        
         nav{
