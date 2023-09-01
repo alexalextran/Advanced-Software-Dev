@@ -49,7 +49,9 @@ const Job = ({job}) => {
             }
             </div>
             <nav>
-              balls
+                <h1>Information</h1>
+                <p>Information placeholder</p>
+              <button>Start</button>
             </nav>
         </div>
             

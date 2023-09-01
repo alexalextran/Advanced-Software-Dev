@@ -11,8 +11,9 @@
             
 
         .listofjobs{
-            width: 70%;
+            width: 65%;
             height: 40em;
+            margin-right: 30em;
             @include flexCustom(start, center, column);
             :nth-child(2){
                 border-radius: 1em 1em 0 0;
@@ -23,9 +24,11 @@
         }
        
         nav{
-            background-color: blue;
-            width: 15%;
-            height: 40em;
+            position: fixed;
+            right: 2em;
+            background-color: white;
+            width: 30%;
+            height: 30em;
         }
        
     }
