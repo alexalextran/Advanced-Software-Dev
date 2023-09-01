@@ -4,6 +4,7 @@ const Navigation = () => {
     return (
         <main className={styles.main}>
             Navigation
+            Hello World
         </main>
     );
 }
