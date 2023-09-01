@@ -1,8 +1,20 @@
 @import "variables&functions";
 
-.main{
-    font-size: 1vw;
-    width: 100%;
-    height: 6em;
-    background-color: whitesmoke;
-}
+.topnavbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #333;
+    color: white;
+    height: 50px;
+  }
+  
+  .topnavbar a {
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+  }
+  
+  .topnavbar a:hover {
+    background-color: #555;
+  }
