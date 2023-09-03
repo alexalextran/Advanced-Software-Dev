@@ -48,30 +48,32 @@ const Profile = () => {
     }
   };
   return (
-    <div>
+    <div className="formDiv">
       <h1>Username</h1>
       <form onSubmit={update}>
-        <ProfileFields
-          label="Username: "
-          type="text"
-          name="username"
-          placeholder="Get from db"
-          disabled={isDisabled}
-        />
-        <ProfileFields
-          label="Email: "
-          type="email"
-          name="email"
-          placeholder="Get from db"
-          disabled={isDisabled}
-        />
-        <ProfileFields
-          label="Password: "
-          type="text"
-          name="password"
-          placeholder="Get from db"
-          disabled={isDisabled}
-        />
+        <div className="profileForm">
+          <ProfileFields
+            label="Username: "
+            type="text"
+            name="username"
+            placeholder="Get from db"
+            disabled={isDisabled}
+          />
+          <ProfileFields
+            label="Email: "
+            type="email"
+            name="email"
+            placeholder="Get from db"
+            disabled={isDisabled}
+          />
+          <ProfileFields
+            label="Password: "
+            type="text"
+            name="password"
+            placeholder="Get from db"
+            disabled={isDisabled}
+          />
+        </div>
         <Button isClicked={isClicked} />
       </form>
     </div>

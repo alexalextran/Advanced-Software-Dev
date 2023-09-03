@@ -1,6 +1,6 @@
 const ProfileFields = (props) => {
   return (
-    <div>
+    <div className="profileFormElement">
       <label>{props.label}</label>
       <input
         type={props.type}

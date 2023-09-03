@@ -17,3 +17,15 @@
   width: 100%;
   text-align: center;
 }
+
+.profileFormElement {
+  padding: 7px;
+  text-align: justify;
+  justify-content: center;
+}
+
+.profileForm {
+  padding: 10px;
+  width: fit-content;
+  margin: auto;
+}
