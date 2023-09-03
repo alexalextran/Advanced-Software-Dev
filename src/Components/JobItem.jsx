@@ -6,11 +6,9 @@ import styles from '@/styles/JobItem.module.scss'
 
 const JobItem = ({jobitem}) => {
     const [showQuestions, setshowQuestions] = useState(false)
+    var QuestionArray = industryQuestions.find((question) => question.Name === jobitem);
 
  
-    
-
-    var QuestionArray = industryQuestions.find((question) => question.Name === jobitem);
 
     
     return (
@@ -18,7 +16,7 @@ const JobItem = ({jobitem}) => {
             {jobitem}
             {
               showQuestions ?  QuestionArray.Questions.map((question, index) => {
-                    return <Question key={index} question={question}> </Question>
+                    return   <Question question={question}  key={index} index={index}> </Question> 
                 })
                 : <p></p>
             }
