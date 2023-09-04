@@ -5,9 +5,11 @@ import { useSpring, animated } from '@react-spring/web'
 
 
 
-const Question = ({question, index}) => {
+const Question = ({Question, index, setquestionInfo}) => {
   
- 
+ const updateState = () => {
+
+ }
 
   const trans = useSpring({
     from: { y: -50, opacity: 0},
@@ -16,9 +18,9 @@ const Question = ({question, index}) => {
   })
 
   return (
-    <animated.div style={trans}>
+    <animated.div style={trans} onClick={() => setquestionInfo(Question)}>
     <p className={styles.main}>
-        {question}
+        {Question.question}
     </p>
     </animated.div>
   );

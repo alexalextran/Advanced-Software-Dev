@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import JobItem from '../../Components/JobItem.jsx';
 import Navigation from '../navigation.js';
 import styles from '@/styles/job.module.scss'
@@ -28,9 +28,14 @@ return{
 }
 
 const Job = ({job}) => {
-
+    
+    const [questionInfo, setquestionInfo] = useState()
     const selectedIndustry = industryjobs.find((industry) => industry.IndustryName === job);
-  
+    
+    useEffect(() => {
+      
+    }, [])
+    
    
     return (
         <main className={styles.main}>
@@ -43,14 +48,14 @@ const Job = ({job}) => {
             
             {
                selectedIndustry.jobs.map((job, index) => {
-                return  ( <JobItem key={index} jobitem={job}></JobItem> )
+                return  ( <JobItem setquestionInfo={setquestionInfo} key={index} jobitem={job}></JobItem> )
                })
 
             }
             </div>
             <nav>
                 <h1>Information</h1>
-                <p>Information placeholder</p>
+                <p>{questionInfo?.time}</p>
               <button>Start</button>
             </nav>
         </div>
