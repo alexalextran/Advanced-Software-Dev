@@ -36,7 +36,7 @@ const Job = ({job}) => {
         <main className={styles.main}>
         <Navigation/>
 
-        <div>
+        <div className={styles.jobs_container}>
             
             <div className={styles.listofjobs}>
             <h1> {job}</h1>
@@ -49,7 +49,9 @@ const Job = ({job}) => {
             }
             </div>
             <nav>
-              balls
+                <h1>Information</h1>
+                <p>Information placeholder</p>
+              <button>Start</button>
             </nav>
         </div>
             
