@@ -56,6 +56,9 @@ const Job = ({job}) => {
             <nav>
                 <h1>Information</h1>
                 <p>{questionInfo?.time}</p>
+                <p>{questionInfo?.tag}</p>
+                <p>{questionInfo?.testing}</p>
+
               <button>Start</button>
             </nav>
         </div>

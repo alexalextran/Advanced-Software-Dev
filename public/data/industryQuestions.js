@@ -23,7 +23,8 @@ const QuestionArray =
             },
             {question: "Give me an example of conflict that has happened to you",
              time: "4mins",
-             tag: "application"
+             tag: "application",
+             testing: "skills"
             },
             {question: "How do you keep up to date with tech news?",
             time: "5mins",
@@ -58,7 +59,8 @@ const QuestionArray =
             },
             {question: "Give me an example of conflict that has happened to you",
              time: "4mins",
-             tag: "application"
+             tag: "application",
+             testing: "skills"
             },
             {question: "How do you keep up to date with tech news?",
             time: "5mins",
@@ -93,7 +95,8 @@ const QuestionArray =
             },
             {question: "Give me an example of conflict that has happened to you",
              time: "4mins",
-             tag: "application"
+             tag: "application",
+             testing: "skills"
             },
             {question: "How do you keep up to date with tech news?",
             time: "5mins",
@@ -128,7 +131,8 @@ const QuestionArray =
             },
             {question: "Give me an example of conflict that has happened to you",
              time: "4mins",
-             tag: "application"
+             tag: "application",
+             testing: "skills"
             },
             {question: "How do you keep up to date with tech news?",
             time: "5mins",
@@ -163,7 +167,8 @@ const QuestionArray =
             },
             {question: "Give me an example of conflict that has happened to you",
              time: "4mins",
-             tag: "application"
+             tag: "application",
+             testing: "skills"
             },
             {question: "How do you keep up to date with tech news?",
             time: "5mins",
@@ -198,7 +203,8 @@ const QuestionArray =
             },
             {question: "Give me an example of conflict that has happened to you",
              time: "4mins",
-             tag: "application"
+             tag: "application",
+             testing: "skills"
             },
             {question: "How do you keep up to date with tech news?",
             time: "5mins",
@@ -233,7 +239,8 @@ const QuestionArray =
             },
             {question: "Give me an example of conflict that has happened to you",
              time: "4mins",
-             tag: "application"
+             tag: "application",
+             testing: "skills"
             },
             {question: "How do you keep up to date with tech news?",
             time: "5mins",
@@ -268,7 +275,8 @@ const QuestionArray =
             },
             {question: "Give me an example of conflict that has happened to you",
              time: "4mins",
-             tag: "application"
+             tag: "application",
+             testing: "skills"
             },
             {question: "How do you keep up to date with tech news?",
             time: "5mins",
