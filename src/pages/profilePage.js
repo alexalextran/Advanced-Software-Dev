@@ -5,7 +5,7 @@ const Profile = () => {
   const [isDisabled, setDisabled] = useState(true);
   const [isClicked, setClicked] = useState(false);
 
-  const update = (event) => {
+  const Update = (event) => {
     event.preventDefault();
     // Get details from form
     var { username, email, password } = document.forms[0];
@@ -47,10 +47,21 @@ const Profile = () => {
       );
     }
   };
+
+  const Delete = () => {
+    // Have a pop up to ask if user is sure
+    const response = window.confirm(
+      "Are you sure you want to delete your account?"
+    );
+    if (response) {
+      // Delete account logic
+      console.log("Delete account");
+    }
+  };
   return (
     <div className="formDiv">
       <h1>Username</h1>
-      <form onSubmit={update}>
+      <form onSubmit={Update}>
         <div className="profileForm">
           <ProfileFields
             label="Username: "
@@ -76,6 +87,10 @@ const Profile = () => {
         </div>
         <Button isClicked={isClicked} />
       </form>
+      <br />
+      <button onClick={Delete}>
+        <span style={{ color: "red" }}>Delete account</span>
+      </button>
     </div>
   );
 };
