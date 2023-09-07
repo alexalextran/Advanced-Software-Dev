@@ -1,5 +1,6 @@
 import { ProfileFields } from "@/Components/ProfileComponent";
 import { useState } from "react";
+import Navigation from "./navigation";
 
 const Profile = () => {
   const [isDisabled, setDisabled] = useState(true);
@@ -59,38 +60,41 @@ const Profile = () => {
     }
   };
   return (
-    <div className="formDiv">
-      <h1>Username</h1>
-      <form onSubmit={Update}>
-        <div className="profileForm">
-          <ProfileFields
-            label="Username: "
-            type="text"
-            name="username"
-            placeholder="Get from db"
-            disabled={isDisabled}
-          />
-          <ProfileFields
-            label="Email: "
-            type="email"
-            name="email"
-            placeholder="Get from db"
-            disabled={isDisabled}
-          />
-          <ProfileFields
-            label="Password: "
-            type="text"
-            name="password"
-            placeholder="Get from db"
-            disabled={isDisabled}
-          />
-        </div>
-        <Button isClicked={isClicked} />
-      </form>
-      <br />
-      <button onClick={Delete}>
-        <span style={{ color: "red" }}>Delete account</span>
-      </button>
+    <div>
+      <Navigation />
+      <div className="formDiv">
+        <h1>Username</h1>
+        <form onSubmit={Update}>
+          <div className="profileForm">
+            <ProfileFields
+              label="Username: "
+              type="text"
+              name="username"
+              placeholder="Get from db"
+              disabled={isDisabled}
+            />
+            <ProfileFields
+              label="Email: "
+              type="email"
+              name="email"
+              placeholder="Get from db"
+              disabled={isDisabled}
+            />
+            <ProfileFields
+              label="Password: "
+              type="text"
+              name="password"
+              placeholder="Get from db"
+              disabled={isDisabled}
+            />
+          </div>
+          <Button isClicked={isClicked} />
+        </form>
+        <br />
+        <button onClick={Delete}>
+          <span style={{ color: "red" }}>Delete account</span>
+        </button>
+      </div>
     </div>
   );
 };
