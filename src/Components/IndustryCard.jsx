@@ -9,9 +9,12 @@ var { image } = industry
     <div className={styles.industry_card}>{industry.IndustryName}  
     
     <div className={styles.industry_image}>
-      <Image src={image[industry.IndustryName]}
-      layout="fill"
-      objectFit="cover"  ></Image>
+      <Image 
+      src={image[industry.IndustryName]}
+      className={styles.img}
+      alt='industry image'>
+
+     </Image>
       </div> 
       
       </div>

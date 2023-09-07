@@ -9,16 +9,16 @@ const JobItem = ({jobitem, setquestionInfo}) => {
     var QuestionArray = industryQuestions.find((question) => question.Name === jobitem);
 
     const handleDivClick = (e) => {
-        // Check if the clicked element has the classname styles.job
-        if (e.target.classList.contains(styles.job)) {
+        // Check if the clicked element has the classname styles.jobtitle
+        if ((e.target.classList.contains(styles.job))) {
             setshowQuestions(!showQuestions);
+       
         }
     }
-
-   
+    
     return (
         <div className={styles.job} onClick={handleDivClick}>
-            {jobitem}
+            <h2 className={styles.jobtitle}>{jobitem}</h2>
             {
               showQuestions ?  QuestionArray.Questions.map((Question, index) => {
                     return   <QuestionComponent setquestionInfo={setquestionInfo} Question={Question}  key={index} index={index}> </QuestionComponent> 

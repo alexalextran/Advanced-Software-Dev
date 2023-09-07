@@ -4,6 +4,7 @@ import Navigation from '../navigation.js';
 import styles from '@/styles/job.module.scss'
 import industryjobs from  '../../../public/data/industryJobs.js'
 
+
 export const getStaticPaths = () => {
     //generates all possible routes and links for every project
         const paths = industryjobs.map(industry => {
@@ -28,15 +29,13 @@ return{
 }
 
 const Job = ({job}) => {
-    
+
     const [questionInfo, setquestionInfo] = useState()
     const selectedIndustry = industryjobs.find((industry) => industry.IndustryName === job);
+  
+
     
-    useEffect(() => {
-      
-    }, [])
-    
-   
+
     return (
         <main className={styles.main}>
         <Navigation/>
@@ -53,11 +52,26 @@ const Job = ({job}) => {
 
             }
             </div>
-            <nav>
+          <nav>
                 <h1>Information</h1>
-                <p>{questionInfo?.time}</p>
-                <p>{questionInfo?.tag}</p>
-                <p>{questionInfo?.testing}</p>
+                <div>
+                    <p>Time: </p> 
+                    <span>&nbsp;</span>
+                    <p>{questionInfo?.time}</p>  
+                    
+                </div>
+
+                <div>
+                    <p>Type Of Question:</p> 
+                    <span>&nbsp;</span>
+                    <p>{questionInfo?.tag} </p>
+                </div>
+
+                <div>
+                    <p>Field Tested:</p> 
+                    <span>&nbsp;</span>
+                    <p>{questionInfo?.testing} </p>
+                </div>
 
               <button>Start</button>
             </nav>
