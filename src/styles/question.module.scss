@@ -1,18 +1,12 @@
 @import "variables&functions";
 
 .main{
-<<<<<<< HEAD
-    font-size: 0.7em !important;
-    padding: 0.5em;
-    transition: 200ms all;
-=======
     font-size: 1em !important;
     padding: 1em;
     transition: 200ms all;
     margin: 0;
       
   
->>>>>>> 7bdb18468951e2c97506c4bda214f3cc0b05741f
     &:hover{
         background: rgba( 255, 255, 255, 0.25 );
     }
