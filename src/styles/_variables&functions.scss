@@ -8,7 +8,7 @@ $blue: rgb(84,101,222);
 $orange: rgba(255,92,53, .7);
 
 $backgroundColor:rgb(255,255,255);
-$foregroundColor:rgb(230,230,230);
+$foregroundColor:rgb(51,51,51);
 $textcolor: white;
 $secondaryColor: rgb(148,36,51);
 
@@ -18,9 +18,11 @@ $secondaryColor: rgb(148,36,51);
   font-size: 0.6em;
   outline: none;
   color: white;
-  background-color: $blue;
+  background-color: $foregroundColor;
   border: 0.15em solid black;
+  cursor: pointer;
 }
+
 
    
 

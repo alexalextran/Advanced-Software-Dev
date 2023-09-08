@@ -12,7 +12,7 @@ const Dashboard = () => {
             <div className={styles.industry_grid}>
             {
                 industries.map((industry, index) => {
-                return(  <Link href={`/jobs/${industry.IndustryName}`} key={index}><IndustryCard industry={industry.IndustryName} />   </Link> )
+                return(  <Link href={`/jobs/${industry.IndustryName}`} key={index}><IndustryCard industry={industry} />   </Link> )
                 })
             }
                 

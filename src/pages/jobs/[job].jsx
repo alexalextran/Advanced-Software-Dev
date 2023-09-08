@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import JobItem from '../../Components/JobItem.jsx';
 import Navigation from '../navigation.js';
 import styles from '@/styles/job.module.scss'
 import industryjobs from  '../../../public/data/industryJobs.js'
+
 
 export const getStaticPaths = () => {
     //generates all possible routes and links for every project
@@ -29,27 +30,50 @@ return{
 
 const Job = ({job}) => {
 
+    const [questionInfo, setquestionInfo] = useState()
     const selectedIndustry = industryjobs.find((industry) => industry.IndustryName === job);
   
-   
+
+    
+
     return (
         <main className={styles.main}>
         <Navigation/>
 
-        <div>
+        <div className={styles.jobs_container}>
             
             <div className={styles.listofjobs}>
             <h1> {job}</h1>
             
             {
                selectedIndustry.jobs.map((job, index) => {
-                return  ( <JobItem key={index} jobitem={job}></JobItem> )
+                return  ( <JobItem setquestionInfo={setquestionInfo} key={index} jobitem={job}></JobItem> )
                })
 
             }
             </div>
-            <nav>
-              balls
+          <nav>
+                <h1>Information</h1>
+                <div>
+                    <p>Time: </p> 
+                    <span>&nbsp;</span>
+                    <p>{questionInfo?.time}</p>  
+                    
+                </div>
+
+                <div>
+                    <p>Type Of Question:</p> 
+                    <span>&nbsp;</span>
+                    <p>{questionInfo?.tag} </p>
+                </div>
+
+                <div>
+                    <p>Field Tested:</p> 
+                    <span>&nbsp;</span>
+                    <p>{questionInfo?.testing} </p>
+                </div>
+
+              <button>Start</button>
             </nav>
         </div>
             

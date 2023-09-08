@@ -4,6 +4,12 @@
     font-size: 0.7em !important;
     padding: 0.5em;
     transition: 200ms all;
+=======
+    font-size: 1em !important;
+    padding: 1em;
+    transition: 200ms all;
+    margin: 0;
+      
     &:hover{
         background: rgba( 255, 255, 255, 0.25 );
     }

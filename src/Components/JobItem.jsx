@@ -1,25 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import industryQuestions from  '../../public/data/industryQuestions.js'
+import QuestionComponent  from '@/Components/question.jsx';
+import styles from '@/styles/JobItem.module.scss'
 
-const JobItem = ({jobitem}) => {
+
+const JobItem = ({jobitem, setquestionInfo}) => {
     const [showQuestions, setshowQuestions] = useState(false)
-
- 
-    
-
     var QuestionArray = industryQuestions.find((question) => question.Name === jobitem);
 
+    const handleDivClick = (e) => {
+        // Check if the clicked element has the classname styles.jobtitle
+        if ((e.target.classList.contains(styles.job))) {
+            setshowQuestions(!showQuestions);
+       
+        }
+    }
     
     return (
-        <button onClick={() => {setshowQuestions(!showQuestions)}}>
-            {jobitem}
+        <div className={styles.job} onClick={handleDivClick}>
+            <h2 className={styles.jobtitle}>{jobitem}</h2>
             {
-              showQuestions ?  QuestionArray.Questions.map((question, index) => {
-                    return <p key={index}> {question} </p>
+              showQuestions ?  QuestionArray.Questions.map((Question, index) => {
+                    return   <QuestionComponent setquestionInfo={setquestionInfo} Question={Question}  key={index} index={index}> </QuestionComponent> 
                 })
                 : <p></p>
             }
-        </button>
+        </div>
     );
 }
 
