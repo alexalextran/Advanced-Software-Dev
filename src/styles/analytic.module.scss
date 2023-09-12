@@ -1,0 +1,37 @@
+
+.container {
+  width: 100%;
+  background-color: gray;
+}
+
+.g1 {
+  width: 90%; // Width is fixed for now, it would be changed by data once data is stored in database 
+  background-color: red;  
+  padding-right: 0px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.g2 {
+  width: 60%; // Width is fixed for now, it would be changed by data once data is stored in database 
+  background-color: green;  
+  padding-right: 0px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.g3 {
+  width: 40%; // Width is fixed for now, it would be changed by data once data is stored in database 
+  background-color: blue;  
+  padding-right: 0px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.g4 {
+  width: 85%; // Width is fixed for now, it would be changed by data once data is stored in database 
+  background-color: yellow;  
+  padding-right: 0px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}

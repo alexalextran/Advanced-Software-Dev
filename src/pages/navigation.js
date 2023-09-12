@@ -4,7 +4,7 @@ const Navigation = () => {
   return (
     <div className={styles.topnavbar}>
       <a href="#">Dashboard</a>
-      <a href="#">Analytics</a>
+      <a href="analytics">Analytics</a>
       <a href="#">History</a>
       <a href="profilePage">Profile</a>
     </div>
