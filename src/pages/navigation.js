@@ -1,12 +1,13 @@
 import React from "react";
+import Link from 'next/link'
 import styles from "@/styles/navigation.module.scss";
 const Navigation = () => {
   return (
     <div className={styles.topnavbar}>
-      <a href="#">Dashboard</a>
-      <a href="analytics">Analytics</a>
-      <a href="history">History</a>
-      <a href="profilePage">Profile</a>
+      <Link href={"/Dashboard"}> Dashboard </Link>
+      <Link href={"/analytics"}>Analytics </Link>
+      <Link href={"/history"}>History </Link>
+      <Link href={"/profilePage"}>Profile </Link>
     </div>
   );
 };
