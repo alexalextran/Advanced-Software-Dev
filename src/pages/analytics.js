@@ -16,7 +16,7 @@ const Analytics = () => {
                             type="String"
                             name="rate"
                             placeholder="90%" //Need to put rated score date from database 
-                            disabled="true" //Always need to be disabled to edit the value by users, only can be changed as the value change in the database
+                            disabled={true} //Always need to be disabled to edit the value by users, only can be changed as the value change in the database
                     />
                 </h2>
                 <div className={styles.container}>  
@@ -28,7 +28,7 @@ const Analytics = () => {
                             type="String"
                             name="rate"
                             placeholder="60%" //Need to put rated score date from database 
-                            disabled="true" //Always need to be disabled to edit the value by users, only can be changed as the value change in the database
+                            disabled={true} //Always need to be disabled to edit the value by users, only can be changed as the value change in the database
                     />
                 </h2>
                 <div className={styles.container}>  
@@ -40,7 +40,7 @@ const Analytics = () => {
                             type="String"
                             name="rate"
                             placeholder="40%" //Need to put rated score date from database 
-                            disabled="true" //Always need to be disabled to edit the value by users, only can be changed as the value change in the database
+                            disabled={true} //Always need to be disabled to edit the value by users, only can be changed as the value change in the database
                     />
                 </h2>
                 <div className={styles.container}>  
@@ -52,7 +52,7 @@ const Analytics = () => {
                             type="String"
                             name="rate"
                             placeholder="85%" //Need to put rated score date from database 
-                            disabled="true" //Always need to be disabled to edit the value by users, only can be changed as the value change in the database
+                            disabled={true} //Always need to be disabled to edit the value by users, only can be changed as the value change in the database
                     />
                 </h2>
                 <div className={styles.container}>  
