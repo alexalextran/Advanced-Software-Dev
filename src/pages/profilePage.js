@@ -1,10 +1,12 @@
 import { ProfileFields } from "@/Components/ProfileComponent";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import Navigation from "./navigation";
 
 const Profile = () => {
   const [isDisabled, setDisabled] = useState(true);
   const [isClicked, setClicked] = useState(false);
+  const router = useRouter();
 
   const Update = (event) => {
     event.preventDefault();
@@ -59,6 +61,16 @@ const Profile = () => {
       console.log("Delete account");
     }
   };
+
+  const LogOut = () => {
+    // Have a pop up to ask if user is sure
+    const response = window.confirm("Are you sure you want to log out?");
+    if (response) {
+      // Log out logic
+      router.replace("/");
+      console.log("Log out");
+    }
+  };
   return (
     <div>
       <Navigation />
@@ -90,6 +102,8 @@ const Profile = () => {
           </div>
           <Button isClicked={isClicked} />
         </form>
+        <br />
+        <button onClick={LogOut}> Log Out </button>
         <br />
         <button onClick={Delete}>
           <span style={{ color: "red" }}>Delete account</span>
