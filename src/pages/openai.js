@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Inter } from 'next/font/google'
 import axios from 'axios';
 import AISTT from "./AISTT";
+import Navigation from "./navigation";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -93,6 +94,7 @@ export default function Home() {
 
   return ( 
   <>
+  <Navigation/>
     <div>
       
         <h1 >ChatGPT</h1>

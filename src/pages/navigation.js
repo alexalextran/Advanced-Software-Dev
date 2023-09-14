@@ -8,6 +8,7 @@ const Navigation = () => {
       <Link href={"/analytics"}>Analytics </Link>
       <Link href={"/history"}>History </Link>
       <Link href={"/profilePage"}>Profile </Link>
+      <Link href={"/openai"}>OPENAI </Link>
     </div>
   );
 };
