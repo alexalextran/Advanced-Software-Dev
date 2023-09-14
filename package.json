@@ -16,5 +16,8 @@
     "react-dom": "18.2.0",
     "react-icons": "^4.10.1",
     "sass": "^1.66.1"
+  },
+  "devDependencies": {
+    "@gradio/client": "^0.3.1"
   }
 }
