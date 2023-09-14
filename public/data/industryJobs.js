@@ -69,7 +69,8 @@ const industries =
         jobs: [],
         image:{Engineering}
         
-    }
+    },
+    
      
      
 ]
