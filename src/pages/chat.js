@@ -9,7 +9,7 @@ const Chat = () => {
       <iframe
         src="https://hickman2049-gradio-chatai.hf.space"
         frameborder="0"
-        class={styles.iframe}
+        className={styles.iframe}
         allow="microphone"
       ></iframe>
     </div>
