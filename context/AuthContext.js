@@ -5,8 +5,9 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth'
-import { auth } from '../firebase'
-import {getFirestore } from "firebase/firestore"; 
+import { auth, app } from '../firebase'
+import { collection, addDoc, getFirestore, setDoc, deleteDoc, doc, getDocs, updateDoc, query, where, collectionGroup  } from "firebase/firestore";  
+
 
 const AuthContext = createContext({})
 export const useAuth = () => useContext(AuthContext)
@@ -36,7 +37,7 @@ export const AuthContextProvider = ({
     return () => unsubscribe()
   }, [])
 
-  const db = getFirestore();
+  const db = getFirestore(app);
 
 
   const signup = (email, password) => {
@@ -52,8 +53,18 @@ export const AuthContextProvider = ({
     await signOut(auth)
   }
 
+  const addIndustry =  async (IndustryName, jobs) => {
+
+    const docRef = await addDoc(collection(db, "industryJobs"), {
+      IndustryName: IndustryName,
+      jobs: jobs
+    });
+    docRef
+
+  }
+
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout,}}>
+    <AuthContext.Provider value={{ user, login, signup, logout, addIndustry, db}}>
       {loading ? null : children}
     </AuthContext.Provider>
   )

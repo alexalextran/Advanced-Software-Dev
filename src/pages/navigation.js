@@ -9,6 +9,7 @@ const Navigation = () => {
       <Link href={"/history"}>History </Link>
       <Link href={"/profilePage"}>Profile </Link>
       <Link href={"/chat"}>Chat </Link>
+      <Link href={"/admin"}>Admin</Link>
     </div>
   );
 };

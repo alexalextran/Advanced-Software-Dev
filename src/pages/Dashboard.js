@@ -1,11 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from '@/styles/Dashboard.module.scss'
 import Navigation from './navigation';
 import IndustryCard from '@/Components/IndustryCard';
 import Link from 'next/link'
 import industries from  '../../public/data/industryJobs.js'
+import { collection, getDocs } from "firebase/firestore";
+import { useAuth } from '../../context/AuthContext'
+
 
 const Dashboard = () => {
+
+    const { db } = useAuth()
+
+    async function getIndustryData() {
+      const querySnapshot =  await getDocs(collection(db, "industryJobs"));
+        querySnapshot.forEach((doc) => {
+          console.log(doc.id, " => ", doc.data());
+        });
+    }
+
+    getIndustryData()
+
+
     return (
         <main className={styles.main}>
             <Navigation/>
