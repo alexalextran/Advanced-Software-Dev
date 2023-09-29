@@ -3,28 +3,45 @@ import { MdEmail } from "react-icons/md";
 import { FaLock, FaUser } from "react-icons/fa6";
 import { IconContext } from "react-icons";
 import LoginField from "@/Components/LoginComponent";
-
+import { useAuth } from '../../context/AuthContext'
+import React, { useEffect } from "react";
 // use router.push('/Dashboard') to go redirect user to dashboard after user auth
 
 const SignupPage = () => {
   const router = useRouter();
-  const signup = (event) => {
+  const { user, signup } = useAuth()
+
+
+  const signupfunc = async (event) => {
     event.preventDefault();
     // Get details from form
     var { email, password, username } = document.forms[0];
     // sign up logic
     // use email.value to get value of variable
 
+    try {
+      await signup(email.value, password.value)
+      router.replace("/Dashboard");
+    } catch (err) {
+      alert(err.message)
+      console.log(err)
+    }
+    
+
     // Redirect to dashboard if valid
     // Todo: pass email to dashboard page
-    router.replace("/Dashboard");
+ 
     // Redirect if not valid
   };
+
+  useEffect(() => {
+    if(user) router.push('/Dashboard')
+  }, [user])
 
   return (
     <div className="formDiv">
       <h1>Sign up Here!</h1>
-      <form onSubmit={signup}>
+      <form onSubmit={signupfunc}>
         <LoginField
           icon={<FaUser />}
           type="text"

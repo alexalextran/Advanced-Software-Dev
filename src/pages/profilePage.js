@@ -2,11 +2,13 @@ import { ProfileFields } from "@/Components/ProfileComponent";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Navigation from "./navigation";
-
+import { useAuth } from '../../context/AuthContext'
 const Profile = () => {
   const [isDisabled, setDisabled] = useState(true);
   const [isClicked, setClicked] = useState(false);
   const router = useRouter();
+  const { user, logout } = useAuth()
+
 
   const Update = (event) => {
     event.preventDefault();
@@ -66,9 +68,8 @@ const Profile = () => {
     // Have a pop up to ask if user is sure
     const response = window.confirm("Are you sure you want to log out?");
     if (response) {
-      // Log out logic
-      router.replace("/");
-      console.log("Log out");
+    logout()
+    router.push("/");
     }
   };
   return (
