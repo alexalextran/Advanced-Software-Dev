@@ -7,6 +7,10 @@
 }
 
 .industry_grid{
+    .link{
+        margin: 2em 3em;
+        
+    }
     margin: auto;
    width: 80em;
     display: grid;
@@ -21,8 +25,7 @@
         align-items: center;
         justify-content: center;
        position: relative;
-        margin: 1em 3em;
-        height: 6.1em;
+        height: 6.2em;
         border-radius: 0.9em;
         background: rgba( 255, 255, 255, 0.25 );
         box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
