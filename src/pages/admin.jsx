@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import 'firebase/firestore';
-import { collection, onSnapshot, getFirestore } from "firebase/firestore"; 
+import { collection, getFirestore, getDocs } from "firebase/firestore"; 
 const Admin = () => {
   const [industryJobs, setIndustryJobs] = useState([]);
   const [selectedJob, setSelectedJob] = useState('');
@@ -11,20 +11,22 @@ const Admin = () => {
   const db = getFirestore();
 
   useEffect(() => {
-      var unsubscribe = () => {}
+    const fetchData = async () => {
       try {
-        unsubscribe = onSnapshot(collection(db, 'industryJobs'), (snapshot) => {
-        setIndustryJobs(snapshot.docs.map(doc => ({
-          //generate array and populate with id and doc data
+        const industryJobsRef = collection(db, 'industryJobs');
+        const snapshot = await getDocs(industryJobsRef);
+        const jobsData = snapshot.docs.map((doc) => ({
           ID: doc.id,
           ...doc.data(),
-        })))
-      })
-    }
-    catch{
-    }
-      return () => unsubscribe()
-  }, [])
+        }));
+        setIndustryJobs(jobsData);
+      } catch (error) {
+        console.error('Error fetching industry jobs:', error);
+      }
+    };
+  
+    fetchData();
+  }, []);
 
 console.log(industryJobs)
   const handleJobChange = (e) => {
@@ -37,7 +39,7 @@ console.log(industryJobs)
       <select id="jobSelect" value={selectedJob} onChange={handleJobChange}>
         <option value="">Select a job</option>
         {industryJobs.map((job) => (
-          <option key={job.id} value={job.id}>
+          <option key={job.ID}>
             {job.ID}
           </option>
         ))}
