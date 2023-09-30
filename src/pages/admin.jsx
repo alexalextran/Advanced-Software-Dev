@@ -1,58 +1,64 @@
-import React, { useState } from "react";
-import { useAuth } from '../../context/AuthContext'
+import React, { useEffect, useState } from "react";
+import 'firebase/firestore';
+import { collection, onSnapshot, getFirestore } from "firebase/firestore"; 
 const Admin = () => {
-    const [industryName, setIndustryName] = useState("");
-    const [jobs, setJobs] = useState([]);
-    const [image, setImage] = useState(null);
+  const [industryJobs, setIndustryJobs] = useState([]);
+  const [selectedJob, setSelectedJob] = useState('');
+  const [question, setQuestion] = useState('');
 
-    const { addIndustry } = useAuth()
+    
 
-    const handleImageChange = (e) => {
-        const selectedImage = e.target.files[0];
-        setImage(selectedImage);
-      };
+  const db = getFirestore();
 
-      const handleSubmit = (e) => {
-        e.preventDefault();
-        addIndustry(industryName, jobs, image)
-        // You can handle the form data here, e.g., send it to an API
-        console.log("Submitted Data:", { industryName, jobs, image });
-      };
-    return (
-        <form onSubmit={handleSubmit}>
+  useEffect(() => {
+      var unsubscribe = () => {}
+      try {
+        unsubscribe = onSnapshot(collection(db, 'industryJobs'), (snapshot) => {
+        setIndustryJobs(snapshot.docs.map(doc => ({
+          //generate array and populate with id and doc data
+          ID: doc.id,
+          ...doc.data(),
+        })))
+      })
+    }
+    catch{
+    }
+      return () => unsubscribe()
+  }, [])
+
+console.log(industryJobs)
+  const handleJobChange = (e) => {
+    setSelectedJob(e.target.value);
+  };
+
+  return (
+    <form>
+      <label htmlFor="jobSelect">Select Industry Job:</label>
+      <select id="jobSelect" value={selectedJob} onChange={handleJobChange}>
+        <option value="">Select a job</option>
+        {industryJobs.map((job) => (
+          <option key={job.id} value={job.id}>
+            {job.ID}
+          </option>
+        ))}
+      </select>
+
+      {selectedJob && (
         <div>
-          <label htmlFor="industryName">Industry Name:</label>
+          <label htmlFor="question">Question:</label>
           <input
             type="text"
-            id="industryName"
-            value={industryName}
-            onChange={(e) => setIndustryName(e.target.value)}
-            required
+            id="question"
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
           />
         </div>
-        <div>
-          <label htmlFor="jobs">Jobs:</label>
-          <input
-            type="text"
-            id="jobs"
-            value={jobs.join(", ")} // Join array values with a comma and space
-            onChange={(e) => setJobs(e.target.value.split(", "))} // Split input into an array
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="image">Image:</label>
-          <input
-            type="file"
-            id="image"
-            accept="image/*"
-            onChange={handleImageChange}
-            required
-          />
-        </div>
-        <button type="submit">Submit</button>
-      </form>
-    );
-}
+      )}
+
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+
 
 export default Admin;
