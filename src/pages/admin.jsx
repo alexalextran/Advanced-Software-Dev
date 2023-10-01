@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import 'firebase/firestore';
-import { collection, getFirestore, getDocs } from "firebase/firestore"; 
+import { collection, getFirestore, getDocs, addDoc, updateDoc, doc } from "firebase/firestore"; 
+
 const Admin = () => {
   const [industryJobs, setIndustryJobs] = useState([]);
+  const [selectedIndustryJob, setSelectedIndustryJob] = useState('');
   const [selectedJob, setSelectedJob] = useState('');
   const [question, setQuestion] = useState('');
-
-    
+  const [jobsForSelectedIndustryJob, setJobsForSelectedIndustryJob] = useState([]);
+  const [newJob, setNewJob] = useState('');
 
   const db = getFirestore();
 
@@ -24,43 +26,101 @@ const Admin = () => {
         console.error('Error fetching industry jobs:', error);
       }
     };
-  
-    fetchData();
-  }, []);
 
-console.log(industryJobs)
-  const handleJobChange = (e) => {
-    setSelectedJob(e.target.value);
+    fetchData();
+  }, [db]);
+
+  const handleIndustryJobChange = (e) => {
+    const selectedJobId = e.target.value;
+    setSelectedIndustryJob(selectedJobId);
+
+    // Find the selected industry job and get its associated jobs
+    const selectedIndustryJobData = industryJobs.find((job) => job.ID === selectedJobId);
+    if (selectedIndustryJobData) {
+      setJobsForSelectedIndustryJob(selectedIndustryJobData.jobs || []);
+    }
+  };
+
+  const handleAddJob = async () => {
+    // Ensure a job is selected
+    if (!selectedIndustryJob) {
+      alert("Please select an industry job first.");
+      return;
+    }
+
+    try {
+      const industryJobRef = doc(db, 'industryJobs', selectedIndustryJob);
+      const updatedJobs = [...jobsForSelectedIndustryJob, newJob];
+
+      // Update the Firestore document with the new job added to the 'jobs' array
+      await updateDoc(industryJobRef, {
+        jobs: updatedJobs,
+      });
+
+      // Update the local state with the new jobs array
+      setJobsForSelectedIndustryJob(updatedJobs);
+      setNewJob('');
+    } catch (error) {
+      console.error('Error adding job:', error);
+    }
   };
 
   return (
-    <form>
-      <label htmlFor="jobSelect">Select Industry Job:</label>
-      <select id="jobSelect" value={selectedJob} onChange={handleJobChange}>
-        <option value="">Select a job</option>
-        {industryJobs.map((job) => (
-          <option key={job.ID}>
-            {job.ID}
-          </option>
-        ))}
-      </select>
+    <div>
+      <form>
+        <label htmlFor="industryJobSelect">Select Industry Job:</label>
+        <select id="industryJobSelect" value={selectedIndustryJob} onChange={handleIndustryJobChange}>
+          <option value="">Select an industry job</option>
+          {industryJobs.map((job) => (
+            <option key={job.ID} value={job.ID}>
+              {job.ID}
+            </option>
+          ))}
+        </select>
 
-      {selectedJob && (
-        <div>
-          <label htmlFor="question">Question:</label>
-          <input
-            type="text"
-            id="question"
-            value={question}
-            onChange={(e) => setQuestion(e.target.value)}
-          />
-        </div>
+        {selectedIndustryJob && (
+          <div>
+            <label htmlFor="question">Question:</label>
+            <input
+              type="text"
+              id="question"
+              value={question}
+              onChange={(e) => setQuestion(e.target.value)}
+            />
+          </div>
+        )}
+
+        <button type="submit">Submit</button>
+      </form>
+
+      {selectedIndustryJob && (
+        <form>
+          <label htmlFor="jobSelect">Select a Job from the Industry:</label>
+          <select id="jobSelect" value={selectedJob} onChange={(e) => setSelectedJob(e.target.value)}>
+            <option value="">Select a job</option>
+            {jobsForSelectedIndustryJob.map((job) => (
+              <option key={job} value={job}>
+                {job}
+              </option>
+            ))}
+          </select>
+        </form>
       )}
 
-      <button type="submit">Submit</button>
-    </form>
+      {selectedIndustryJob && (
+        <div>
+          <label htmlFor="newJob">Add a New Job:</label>
+          <input
+            type="text"
+            id="newJob"
+            value={newJob}
+            onChange={(e) => setNewJob(e.target.value)}
+          />
+          <button type="button" onClick={handleAddJob}>Add Job</button>
+        </div>
+      )}
+    </div>
   );
 };
-
 
 export default Admin;
