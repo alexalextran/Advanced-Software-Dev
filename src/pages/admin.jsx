@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import 'firebase/firestore';
-import { collection, getFirestore, getDocs, addDoc, updateDoc, doc } from "firebase/firestore"; 
+import { collection, getFirestore, getDocs, addDoc, query, where, doc, setDoc } from "firebase/firestore"; 
 
 const Admin = () => {
   const [industryJobs, setIndustryJobs] = useState([]);
@@ -30,14 +30,24 @@ const Admin = () => {
     fetchData();
   }, [db]);
 
-  const handleIndustryJobChange = (e) => {
+  const handleIndustryJobChange = async (e) => {
     const selectedJobId = e.target.value;
     setSelectedIndustryJob(selectedJobId);
 
     // Find the selected industry job and get its associated jobs
     const selectedIndustryJobData = industryJobs.find((job) => job.ID === selectedJobId);
     if (selectedIndustryJobData) {
-      setJobsForSelectedIndustryJob(selectedIndustryJobData.jobs || []);
+      try {
+        const jobsCollectionRef = collection(db, 'industryJobs', selectedJobId, 'jobs');
+        const jobsSnapshot = await getDocs(jobsCollectionRef);
+        const jobsData = jobsSnapshot.docs.map((doc) => ({
+          ID: doc.id,
+          ...doc.data(),
+        }));
+        setJobsForSelectedIndustryJob(jobsData);
+      } catch (error) {
+        console.error('Error fetching jobs for the selected industry job:', error);
+      }
     }
   };
 
@@ -47,23 +57,23 @@ const Admin = () => {
       alert("Please select an industry job first.");
       return;
     }
-
+  
     try {
-      const industryJobRef = doc(db, 'industryJobs', selectedIndustryJob);
-      const updatedJobs = [...jobsForSelectedIndustryJob, newJob];
-
-      // Update the Firestore document with the new job added to the 'jobs' array
-      await updateDoc(industryJobRef, {
-        jobs: updatedJobs,
-      });
-
-      // Update the local state with the new jobs array
-      setJobsForSelectedIndustryJob(updatedJobs);
+      const jobDocumentRef = doc(db, 'industryJobs', selectedIndustryJob, 'jobs', newJob);
+      const jobobj = {
+        Name: newJob,
+      };
+      // Add the new job document to the 'jobs' subcollection
+      await setDoc(jobDocumentRef, { jobobj });
+  
+      // Update the local state with the new job added
+      setJobsForSelectedIndustryJob([...jobsForSelectedIndustryJob, newJob]);
       setNewJob('');
     } catch (error) {
       console.error('Error adding job:', error);
     }
   };
+  
 
   return (
     <div>
@@ -99,8 +109,8 @@ const Admin = () => {
           <select id="jobSelect" value={selectedJob} onChange={(e) => setSelectedJob(e.target.value)}>
             <option value="">Select a job</option>
             {jobsForSelectedIndustryJob.map((job) => (
-              <option key={job} value={job}>
-                {job}
+              <option key={job.ID} value={job.ID}>
+                {job.ID}
               </option>
             ))}
           </select>

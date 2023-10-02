@@ -1,21 +1,39 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import JobItem from '../../Components/JobItem.jsx';
 import Navigation from '../navigation.js';
 import styles from '@/styles/job.module.scss'
 import industryjobs from  '../../../public/data/industryJobs.js'
+import 'firebase/firestore';
+import { collection, getFirestore, getDocs, addDoc, query, where, doc, setDoc } from "firebase/firestore"; 
 
+export const getStaticPaths = async () => {
+    const db = getFirestore();
+        var jobsData
+        
+          const industryJobsRef = collection(db, 'industryJobs');
+          const snapshot = await getDocs(industryJobsRef);
+           jobsData = snapshot.docs.map((doc) => ({
+            ID: doc.id,
+            ...doc.data(),
+          }));
 
-export const getStaticPaths = () => {
-    //generates all possible routes and links for every project
-        const paths = industryjobs.map(industry => {
+          const paths = jobsData.map(industry => {
             return{
-                params: {job: industry.IndustryName}
+                params: {job: industry.ID.toString()}
             }
         })
         return{
             paths,
             fallback: false
         }
+
+
+       
+      
+
+    //generates all possible routes and links for every project
+       
+       
     }
 
     
@@ -29,10 +47,31 @@ return{
 }
 
 const Job = ({job}) => {
+    const [industryJobS, setIndustryJobs] = useState([]);
+    const db = getFirestore();
 
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const industryJobsRef = collection(db, 'industryJobs');
+            const snapshot = await getDocs(industryJobsRef);
+            const jobsData = snapshot.docs.map((doc) => ({
+              ID: doc.id,
+              ...doc.data(),
+            }));
+            setIndustryJobs(jobsData);
+           
+          } catch (error) {
+            console.error('Error fetching industry jobs:', error);
+          }
+        };
+    
+        fetchData();
+      }, [db]);
+
+    
     const [questionInfo, setquestionInfo] = useState()
-    const selectedIndustry = industryjobs.find((industry) => industry.IndustryName === job);
-  
+    const selectedIndustry = industryJobS.find((industry) => industry.ID === job);
 
     
 
@@ -46,11 +85,12 @@ const Job = ({job}) => {
             <h1> {job}</h1>
             
             {
-               selectedIndustry.jobs.map((job, index) => {
-                return  ( <JobItem setquestionInfo={setquestionInfo} key={index} jobitem={job}></JobItem> )
-               })
-
-            }
+  selectedIndustry && selectedIndustry.jobs && selectedIndustry.jobs.length > 0 && (
+    selectedIndustry.jobs.map((job, index) => (
+      <JobItem setquestionInfo={setquestionInfo} key={index} jobitem={job}></JobItem>
+    ))
+  )
+}
             </div>
           <nav>
                 <h1>Information</h1>

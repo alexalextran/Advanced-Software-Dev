@@ -15,7 +15,7 @@ const Dashboard = () => {
     async function getIndustryData() {
       const querySnapshot =  await getDocs(collection(db, "industryJobs"));
         querySnapshot.forEach((doc) => {
-          console.log(doc.id, " => ", doc.data());
+        
         });
     }
 
