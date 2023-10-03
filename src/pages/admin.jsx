@@ -4,13 +4,11 @@ import {
   collection,
   getFirestore,
   getDocs,
-  addDoc,
-  doc,
-  setDoc,
-  updateDoc,
 } from "firebase/firestore"; 
 import AdminIndustry from "@/Components/adminIndustry";
 import AdminJobDropDown from "@/Components/adminJobDropDown";
+import AdminAddQuestion from "@/Components/adminAddQuestion";
+import AdminAddJob from "@/Components/adminAddJob";
 
 const Admin = () => {
   const [industryJobs, setIndustryJobs] = useState([]);
@@ -43,54 +41,9 @@ const Admin = () => {
 
   
 
-  const handleAddJob = async () => {
-    if (!selectedIndustryJob) {
-      alert("Please select an industry job first.");
-      return;
-    }
   
-    try {
-      const jobDocumentRef = doc(db, 'industryJobs', selectedIndustryJob, 'jobs', newJob);
-      const jobObj = {
-        Name: newJob,
-        Questions: [],
-      };
 
-      await setDoc(jobDocumentRef, { jobObj });
-
-      setJobsForSelectedIndustryJob([...jobsForSelectedIndustryJob, newJob]);
-      setNewJob('');
-    } catch (error) {
-      console.error('Error adding job:', error);
-    }
-  };
-
-  const handleAddQuestion = async () => {
-    if (!selectedJob) {
-      alert("Please select a job first.");
-      return;
-    }
-
-    if (!question) {
-      alert("Please enter a question.");
-      return;
-    }
-
-    try {
-      const jobDocumentRef = doc(db, 'industryJobs', selectedIndustryJob, 'jobs', selectedJob);
-
-      // Update the questions array for the selected job in Firestore
-      await updateDoc(jobDocumentRef, {
-        Questions: [...questions, question],
-      });
-
-      // Update the local state with the new question added
-      setQuestions([...questions, question]);
-      setQuestion('');
-    } catch (error) {
-      console.error('Error adding question:', error);
-    }
-  };
+  
 
   return (
     <div>
@@ -105,20 +58,11 @@ const Admin = () => {
         }
 
       {selectedIndustryJob && selectedJob && (
-        <div>
-          <label htmlFor="newQuestion">Add a New Question:</label>
-          <input
-            type="text"
-            id="newQuestion"
-            value={question}
-            onChange={(e) => setQuestion(e.target.value)}
-          />
-          <button type="button" onClick={handleAddQuestion}>Add Question</button>
-        </div>
+        <AdminAddQuestion question={question} jobsForSelectedIndustryJob={jobsForSelectedIndustryJob} selectedJob={selectedJob} db={db} selectedIndustryJob={selectedIndustryJob} questions={questions} setQuestion={setQuestion} setQuestions={setQuestions} setJobsForSelectedIndustryJob={setJobsForSelectedIndustryJob}/>
       )}
 
       {/* Render the added questions */}
-      {selectedJob && questions.length > 0 && (
+      {/* {selectedJob && questions.length > 0 && (
         <div>
           <h2>Added Questions:</h2>
           <ul>
@@ -127,20 +71,11 @@ const Admin = () => {
             ))}
           </ul>
         </div>
-      )}
+      )} */}
 
       {/* Form to add a new job */}
       {selectedIndustryJob && (
-        <div>
-          <label htmlFor="newJob">Add a New Job:</label>
-          <input
-            type="text"
-            id="newJob"
-            value={newJob}
-            onChange={(e) => setNewJob(e.target.value)}
-          />
-          <button type="button" onClick={handleAddJob}>Add Job</button>
-        </div>
+       <AdminAddJob newJob={newJob} setNewJob={setNewJob} setJobsForSelectedIndustryJob={setJobsForSelectedIndustryJob} jobsForSelectedIndustryJob={jobsForSelectedIndustryJob} db={db} selectedIndustryJob={selectedIndustryJob}/>
       )}
     </div>
   );

@@ -2,12 +2,7 @@ import React from 'react';
 import 'firebase/firestore';
 import {
   collection,
-  getFirestore,
   getDocs,
-  addDoc,
-  doc,
-  setDoc,
-  updateDoc,
 } from "firebase/firestore"; 
 const AdminIndustry = ({industryJobs, selectedIndustryJob, setSelectedIndustryJob, db, setJobsForSelectedIndustryJob}) => {
 
