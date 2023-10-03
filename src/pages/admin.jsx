@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 import 'firebase/firestore';
-import { collection, getFirestore, getDocs, addDoc, query, where, doc, setDoc } from "firebase/firestore"; 
+import {
+  collection,
+  getFirestore,
+  getDocs,
+  addDoc,
+  doc,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore"; 
 
 const Admin = () => {
   const [industryJobs, setIndustryJobs] = useState([]);
@@ -9,6 +17,7 @@ const Admin = () => {
   const [question, setQuestion] = useState('');
   const [jobsForSelectedIndustryJob, setJobsForSelectedIndustryJob] = useState([]);
   const [newJob, setNewJob] = useState('');
+  const [questions, setQuestions] = useState([]); // State for questions
 
   const db = getFirestore();
 
@@ -34,7 +43,6 @@ const Admin = () => {
     const selectedJobId = e.target.value;
     setSelectedIndustryJob(selectedJobId);
 
-    // Find the selected industry job and get its associated jobs
     const selectedIndustryJobData = industryJobs.find((job) => job.ID === selectedJobId);
     if (selectedIndustryJobData) {
       try {
@@ -52,7 +60,6 @@ const Admin = () => {
   };
 
   const handleAddJob = async () => {
-    // Ensure a job is selected
     if (!selectedIndustryJob) {
       alert("Please select an industry job first.");
       return;
@@ -60,20 +67,46 @@ const Admin = () => {
   
     try {
       const jobDocumentRef = doc(db, 'industryJobs', selectedIndustryJob, 'jobs', newJob);
-      const jobobj = {
+      const jobObj = {
         Name: newJob,
+        Questions: [],
       };
-      // Add the new job document to the 'jobs' subcollection
-      await setDoc(jobDocumentRef, { jobobj });
-  
-      // Update the local state with the new job added
+
+      await setDoc(jobDocumentRef, { jobObj });
+
       setJobsForSelectedIndustryJob([...jobsForSelectedIndustryJob, newJob]);
       setNewJob('');
     } catch (error) {
       console.error('Error adding job:', error);
     }
   };
-  
+
+  const handleAddQuestion = async () => {
+    if (!selectedJob) {
+      alert("Please select a job first.");
+      return;
+    }
+
+    if (!question) {
+      alert("Please enter a question.");
+      return;
+    }
+
+    try {
+      const jobDocumentRef = doc(db, 'industryJobs', selectedIndustryJob, 'jobs', selectedJob);
+
+      // Update the questions array for the selected job in Firestore
+      await updateDoc(jobDocumentRef, {
+        Questions: [...questions, question],
+      });
+
+      // Update the local state with the new question added
+      setQuestions([...questions, question]);
+      setQuestion('');
+    } catch (error) {
+      console.error('Error adding question:', error);
+    }
+  };
 
   return (
     <div>
@@ -87,20 +120,6 @@ const Admin = () => {
             </option>
           ))}
         </select>
-
-        {selectedIndustryJob && (
-          <div>
-            <label htmlFor="question">Question:</label>
-            <input
-              type="text"
-              id="question"
-              value={question}
-              onChange={(e) => setQuestion(e.target.value)}
-            />
-          </div>
-        )}
-
-        <button type="submit">Submit</button>
       </form>
 
       {selectedIndustryJob && (
@@ -108,8 +127,8 @@ const Admin = () => {
           <label htmlFor="jobSelect">Select a Job from the Industry:</label>
           <select id="jobSelect" value={selectedJob} onChange={(e) => setSelectedJob(e.target.value)}>
             <option value="">Select a job</option>
-            {jobsForSelectedIndustryJob.map((job) => (
-              <option key={job.ID} value={job.ID}>
+            {jobsForSelectedIndustryJob.map((job, index) => (
+              <option key={index} value={job.ID}>
                 {job.ID}
               </option>
             ))}
@@ -117,6 +136,32 @@ const Admin = () => {
         </form>
       )}
 
+      {selectedIndustryJob && selectedJob && (
+        <div>
+          <label htmlFor="newQuestion">Add a New Question:</label>
+          <input
+            type="text"
+            id="newQuestion"
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+          />
+          <button type="button" onClick={handleAddQuestion}>Add Question</button>
+        </div>
+      )}
+
+      {/* Render the added questions */}
+      {selectedJob && questions.length > 0 && (
+        <div>
+          <h2>Added Questions:</h2>
+          <ul>
+            {questions.map((q, index) => (
+              <li key={index}>{q}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* Form to add a new job */}
       {selectedIndustryJob && (
         <div>
           <label htmlFor="newJob">Add a New Job:</label>
