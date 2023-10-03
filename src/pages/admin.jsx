@@ -9,6 +9,8 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore"; 
+import AdminIndustry from "@/Components/adminIndustry";
+import AdminJobDropDown from "@/Components/adminJobDropDown";
 
 const Admin = () => {
   const [industryJobs, setIndustryJobs] = useState([]);
@@ -39,25 +41,7 @@ const Admin = () => {
     fetchData();
   }, [db]);
 
-  const handleIndustryJobChange = async (e) => {
-    const selectedJobId = e.target.value;
-    setSelectedIndustryJob(selectedJobId);
-
-    const selectedIndustryJobData = industryJobs.find((job) => job.ID === selectedJobId);
-    if (selectedIndustryJobData) {
-      try {
-        const jobsCollectionRef = collection(db, 'industryJobs', selectedJobId, 'jobs');
-        const jobsSnapshot = await getDocs(jobsCollectionRef);
-        const jobsData = jobsSnapshot.docs.map((doc) => ({
-          ID: doc.id,
-          ...doc.data(),
-        }));
-        setJobsForSelectedIndustryJob(jobsData);
-      } catch (error) {
-        console.error('Error fetching jobs for the selected industry job:', error);
-      }
-    }
-  };
+  
 
   const handleAddJob = async () => {
     if (!selectedIndustryJob) {
@@ -110,31 +94,15 @@ const Admin = () => {
 
   return (
     <div>
-      <form>
-        <label htmlFor="industryJobSelect">Select Industry Job:</label>
-        <select id="industryJobSelect" value={selectedIndustryJob} onChange={handleIndustryJobChange}>
-          <option value="">Select an industry job</option>
-          {industryJobs.map((job) => (
-            <option key={job.ID} value={job.ID}>
-              {job.ID}
-            </option>
-          ))}
-        </select>
-      </form>
+  
+      {
+        <AdminIndustry industryJobs={industryJobs} db={db} setJobsForSelectedIndustryJob={setJobsForSelectedIndustryJob} selectedIndustryJob={selectedIndustryJob} setSelectedIndustryJob={setSelectedIndustryJob}/>
+      }
 
-      {selectedIndustryJob && (
-        <form>
-          <label htmlFor="jobSelect">Select a Job from the Industry:</label>
-          <select id="jobSelect" value={selectedJob} onChange={(e) => setSelectedJob(e.target.value)}>
-            <option value="">Select a job</option>
-            {jobsForSelectedIndustryJob.map((job, index) => (
-              <option key={index} value={job.ID}>
-                {job.ID}
-              </option>
-            ))}
-          </select>
-        </form>
-      )}
+      {selectedIndustryJob 
+      && 
+      (<AdminJobDropDown selectedJob={selectedJob} setSelectedJob={setSelectedJob} jobsForSelectedIndustryJob={jobsForSelectedIndustryJob}/>)
+        }
 
       {selectedIndustryJob && selectedJob && (
         <div>
