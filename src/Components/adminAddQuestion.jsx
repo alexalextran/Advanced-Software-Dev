@@ -4,21 +4,20 @@ import {
   updateDoc,
   getDoc
   } from "firebase/firestore";
-const AdminAddQuestion = ({setJobsForSelectedIndustryJob,  jobsForSelectedIndustryJob, question, setQuestion, selectedJob, db, selectedIndustryJob, questions}) => {
+const AdminAddQuestion = ({setJobsArray,  jobsArray, question, selectedJob, db, selectedIndustry}) => {
 
-    const handleAddQuestion = async () => {
+    const handleAddQuestion = async (e) => {
+      e.preventDefault();
+      const questionInput = e.target[0].value;
+   
         if (!selectedJob) {
           alert("Please select a job first.");
           return;
         }
       
-        if (!question) {
-          alert("Please enter a question.");
-          return;
-        }
       
         try {
-          const jobDocumentRef = doc(db, 'industryJobs', selectedIndustryJob, 'jobs', selectedJob);
+          const jobDocumentRef = doc(db, 'industryJobs', selectedIndustry, 'jobs', selectedJob);
    
           // Fetch the existing questions from the database
           const jobDocSnapshot = await getDoc(jobDocumentRef);
@@ -26,7 +25,7 @@ const AdminAddQuestion = ({setJobsForSelectedIndustryJob,  jobsForSelectedIndust
           const existingQuestions = jobData.Questions || [];
       
           // Update the questions array with the new question and existing questions
-          const updatedQuestions = [...existingQuestions, question];
+          const updatedQuestions = [...existingQuestions, questionInput];
            
           // Update the questions array for the selected job in Firestore using updateDoc
           await updateDoc(jobDocumentRef, {
@@ -34,7 +33,7 @@ const AdminAddQuestion = ({setJobsForSelectedIndustryJob,  jobsForSelectedIndust
           });
       
           // Update the local state with the new questions added
-          const updatedJobsForSelectedIndustryJob = jobsForSelectedIndustryJob.map((job) => {
+          const updatedjobsArray = jobsArray.map((job) => {
             if (job.Name === selectedJob) {
               return {
                 ...job,
@@ -43,8 +42,7 @@ const AdminAddQuestion = ({setJobsForSelectedIndustryJob,  jobsForSelectedIndust
             }
             return job;
           });
-          setJobsForSelectedIndustryJob(updatedJobsForSelectedIndustryJob);
-          setQuestion('');
+          setJobsArray(updatedjobsArray);
         } catch (error) {
           console.error('Error adding question:', error);
         }
@@ -54,14 +52,14 @@ const AdminAddQuestion = ({setJobsForSelectedIndustryJob,  jobsForSelectedIndust
 
     return (
         <div>
+          <form  onSubmit={handleAddQuestion}>
           <label htmlFor="newQuestion">Add a New Question:</label>
           <input
             type="text"
             id="newQuestion"
-            value={question}
-            onChange={(e) => setQuestion(e.target.value)}
           />
-          <button type="button" onClick={handleAddQuestion}>Add Question</button>
+          <button type="submit">Add Question</button>
+          </form>
         </div>
     );
 }

@@ -11,11 +11,12 @@ import AdminAddQuestion from "@/Components/adminAddQuestion";
 import AdminAddJob from "@/Components/adminAddJob";
 
 const Admin = () => {
-  const [industryJobs, setIndustryJobs] = useState([]);
-  const [selectedIndustryJob, setSelectedIndustryJob] = useState('');
-  const [selectedJob, setSelectedJob] = useState('');
+  const [industryArray, setIndustryArray] = useState([]); //all industries e.g --> IT, Hospitality, Finance etc
+  const [selectedIndustry, setSelectedIndustry] = useState(''); //chosen industry --> IT
+  const [jobsArray, setJobsArray] = useState([]); // jobs for the selected industry --> IT --> softare developer, tester etc
+  const [selectedJob, setSelectedJob] = useState(''); //chosen job --> software developer
+
   const [question, setQuestion] = useState('');
-  const [jobsForSelectedIndustryJob, setJobsForSelectedIndustryJob] = useState([]);
   const [newJob, setNewJob] = useState('');
   const [questions, setQuestions] = useState([]); // State for questions
 
@@ -30,7 +31,7 @@ const Admin = () => {
           ID: doc.id,
           ...doc.data(),
         }));
-        setIndustryJobs(jobsData);
+        setIndustryArray(jobsData);
       } catch (error) {
         console.error('Error fetching industry jobs:', error);
       }
@@ -49,16 +50,16 @@ const Admin = () => {
     <div>
   
       {
-        <AdminIndustry industryJobs={industryJobs} db={db} setJobsForSelectedIndustryJob={setJobsForSelectedIndustryJob} selectedIndustryJob={selectedIndustryJob} setSelectedIndustryJob={setSelectedIndustryJob}/>
+        <AdminIndustry industryArray={industryArray} db={db} setJobsArray={setJobsArray} selectedIndustry={selectedIndustry} setSelectedIndustry={setSelectedIndustry}/>
       }
 
-      {selectedIndustryJob 
+      {selectedIndustry 
       && 
-      (<AdminJobDropDown selectedJob={selectedJob} setSelectedJob={setSelectedJob} jobsForSelectedIndustryJob={jobsForSelectedIndustryJob}/>)
+      (<AdminJobDropDown selectedJob={selectedJob} setSelectedJob={setSelectedJob} jobsArray={jobsArray}/>)
         }
 
-      {selectedIndustryJob && selectedJob && (
-        <AdminAddQuestion question={question} jobsForSelectedIndustryJob={jobsForSelectedIndustryJob} selectedJob={selectedJob} db={db} selectedIndustryJob={selectedIndustryJob} questions={questions} setQuestion={setQuestion} setQuestions={setQuestions} setJobsForSelectedIndustryJob={setJobsForSelectedIndustryJob}/>
+      {selectedIndustry && selectedJob && (
+        <AdminAddQuestion question={question} jobsArray={jobsArray} selectedJob={selectedJob} db={db} selectedIndustry={selectedIndustry} questions={questions} setQuestion={setQuestion} setQuestions={setQuestions} setJobsArray={setJobsArray}/>
       )}
 
       {/* Render the added questions */}
@@ -74,8 +75,8 @@ const Admin = () => {
       )} */}
 
       {/* Form to add a new job */}
-      {selectedIndustryJob && (
-       <AdminAddJob newJob={newJob} setNewJob={setNewJob} setJobsForSelectedIndustryJob={setJobsForSelectedIndustryJob} jobsForSelectedIndustryJob={jobsForSelectedIndustryJob} db={db} selectedIndustryJob={selectedIndustryJob}/>
+      {selectedIndustry && (
+       <AdminAddJob newJob={newJob} setNewJob={setNewJob} setJobsArray={setJobsArray} jobsArray={jobsArray} db={db} selectedIndustry={selectedIndustry}/>
       )}
     </div>
   );
