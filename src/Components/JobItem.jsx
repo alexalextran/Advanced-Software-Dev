@@ -18,7 +18,7 @@ const JobItem = ({jobitem, setquestionInfo}) => {
     
     return (
         <div className={styles.job} onClick={handleDivClick}>
-            <h2 className={styles.jobtitle}>{jobitem}</h2>
+            <h2 className={styles.jobtitle}>{jobitem.ID}</h2>
             {
               showQuestions  ?  QuestionArray.Questions.map((Question, index) => {
                     return   <QuestionComponent setquestionInfo={setquestionInfo} Question={Question}  key={index} index={index}> </QuestionComponent> 

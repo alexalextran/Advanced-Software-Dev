@@ -46,79 +46,83 @@ return{
 };
 }
 
-const Job = ({job}) => {
-    const [industryJobS, setIndustryJobs] = useState([]);
-    const db = getFirestore();
 
-    useEffect(() => {
-        const fetchData = async () => {
+const Job = ({ job }) => {
+  const [industryJobs, setIndustryJobs] = useState([]);
+  const [questionInfo, setQuestionInfo] = useState();
+
+  useEffect(() => {
+      const fetchData = async () => {
           try {
-            const industryJobsRef = collection(db, 'industryJobs');
-            const snapshot = await getDocs(industryJobsRef);
-            const jobsData = snapshot.docs.map((doc) => ({
-              ID: doc.id,
-              ...doc.data(),
-            }));
-            setIndustryJobs(jobsData);
-           
+              const db = getFirestore();
+              const industryJobsRef = collection(db, 'industryJobs');
+              const industrySnapshot = await getDocs(industryJobsRef);
+              const industryData = industrySnapshot.docs.map((doc) => ({
+                  ID: doc.id,
+                  ...doc.data(),
+              }));
+
+              // Find the selected industry based on the job parameter
+              const selectedIndustry = industryData.find((industry) => industry.ID === job);
+
+              if (selectedIndustry) {
+                  const subcategoryJobsRef = collection(industryJobsRef, selectedIndustry.ID, 'jobs');
+                  const subcategorySnapshot = await getDocs(subcategoryJobsRef);
+                  const subcategoryData = subcategorySnapshot.docs.map((doc) => ({
+                      ID: doc.id,
+                      ...doc.data(),
+                  }));
+                  setIndustryJobs(subcategoryData);
+              }
           } catch (error) {
-            console.error('Error fetching industry jobs:', error);
+              console.error('Error fetching industry jobs:', error);
           }
-        };
-    
-        fetchData();
-      }, [db]);
+      };
 
-    
-    const [questionInfo, setquestionInfo] = useState()
-    const selectedIndustry = industryJobS.find((industry) => industry.ID === job);
+      fetchData();
+  }, [job]);
 
-    
+  console.log(industryJobs)
 
-    return (
-        <main className={styles.main}>
-        <Navigation/>
+  return (
+      <main className={styles.main}>
+          <Navigation />
 
-        <div className={styles.jobs_container}>
-            
-            <div className={styles.listofjobs}>
-            <h1> {job}</h1>
-            
-            {
-  selectedIndustry && selectedIndustry.jobs && selectedIndustry.jobs.length > 0 && (
-    selectedIndustry.jobs.map((job, index) => (
-      <JobItem setquestionInfo={setquestionInfo} key={index} jobitem={job}></JobItem>
-    ))
-  )
-}
-            </div>
-          <nav>
-                <h1>Information</h1>
-                <div>
-                    <p>Time: </p> 
-                    <span>&nbsp;</span>
-                    <p>{questionInfo?.time}</p>  
-                    
-                </div>
+          <div className={styles.jobs_container}>
+              <div className={styles.listofjobs}>
+                  <h1>{job}</h1>
 
-                <div>
-                    <p>Type Of Question:</p> 
-                    <span>&nbsp;</span>
-                    <p>{questionInfo?.tag} </p>
-                </div>
+                  {industryJobs.length > 0 && (
+                      industryJobs.map((jobItem, index) => (
+                          <JobItem setquestionInfo={setQuestionInfo} key={index} jobitem={jobItem}></JobItem>
+                      ))
+                  )}
+              </div>
+              <nav>
+                  <h1>Information</h1>
+                  <div>
+                      <p>Time: </p>
+                      <span>&nbsp;</span>
+                      <p>{questionInfo?.time}</p>
+                  </div>
 
-                <div>
-                    <p>Field Tested:</p> 
-                    <span>&nbsp;</span>
-                    <p>{questionInfo?.testing} </p>
-                </div>
+                  <div>
+                      <p>Type Of Question:</p>
+                      <span>&nbsp;</span>
+                      <p>{questionInfo?.tag}</p>
+                  </div>
 
-              <button>Start</button>
-            </nav>
-        </div>
-            
-        </main>
-    );
+                  <div>
+                      <p>Field Tested:</p>
+                      <span>&nbsp;</span>
+                      <p>{questionInfo?.testing}</p>
+                  </div>
+
+                  <button>Start</button>
+              </nav>
+          </div>
+      </main>
+  );
 }
 
 export default Job;

@@ -9,7 +9,11 @@ export default function App({ Component, pageProps }) {
   const { user } = useAuth()
   const router = useRouter();
   useEffect(() => {
-    if(!user) router.push('/')
+
+    if (!user && router.pathname !== '/signupPage') {
+      router.push('/');
+    }
+
   }, [user])
 
 
