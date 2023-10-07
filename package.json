@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest --watchAll --silent",
-    "debug": "jest --watchAll"
+    "debug": "jest --watchAll",
+    "autoTest": "jest"
   },
   "dependencies": {
     "eslint": "8.47.0",
