@@ -23,7 +23,7 @@ const SignupPage = () => {
       await signup(email.value, password.value);
 
       const db = getFirestore();
-      await setDoc(doc(db, "users", email.value), {
+      await setDoc(doc(db, "users", email.value.toLowerCase()), {
         username: username.value,
         password: password.value,
       });
