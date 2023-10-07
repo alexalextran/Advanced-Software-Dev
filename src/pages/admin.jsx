@@ -9,6 +9,7 @@ import AdminIndustry from "@/Components/adminIndustry";
 import AdminJobDropDown from "@/Components/adminJobDropDown";
 import AdminAddQuestion from "@/Components/adminAddQuestion";
 import AdminAddJob from "@/Components/adminAddJob";
+import AdminLogOn from "@/Components/adminLogOn";
 
 const Admin = () => {
   const [industryArray, setIndustryArray] = useState([]); //all industries e.g --> IT, Hospitality, Finance etc
@@ -21,6 +22,9 @@ const Admin = () => {
   const [questions, setQuestions] = useState([]); // State for questions
 
   const db = getFirestore();
+
+  const [adminLoggedIn, setadminLoggedIn] = useState(false)
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,38 +52,50 @@ const Admin = () => {
 
   return (
     <div>
-  
-      {
-        <AdminIndustry industryArray={industryArray} db={db} setJobsArray={setJobsArray} selectedIndustry={selectedIndustry} setSelectedIndustry={setSelectedIndustry}/>
-      }
-
-      {selectedIndustry 
-      && 
-      (<AdminJobDropDown selectedJob={selectedJob} setSelectedJob={setSelectedJob} jobsArray={jobsArray}/>)
-        }
-
-      {selectedIndustry && selectedJob && (
-        <AdminAddQuestion question={question} jobsArray={jobsArray} selectedJob={selectedJob} db={db} selectedIndustry={selectedIndustry} questions={questions} setQuestion={setQuestion} setQuestions={setQuestions} setJobsArray={setJobsArray}/>
-      )}
-
-      {/* Render the added questions */}
-      {/* {selectedJob && questions.length > 0 && (
-        <div>
-          <h2>Added Questions:</h2>
-          <ul>
-            {questions.map((q, index) => (
-              <li key={index}>{q}</li>
-            ))}
-          </ul>
-        </div>
-      )} */}
-
-      {/* Form to add a new job */}
-      {selectedIndustry && (
-       <AdminAddJob newJob={newJob} setNewJob={setNewJob} setJobsArray={setJobsArray} jobsArray={jobsArray} db={db} selectedIndustry={selectedIndustry}/>
+      {!adminLoggedIn ? (
+        <AdminLogOn db={db} setadminLoggedIn={setadminLoggedIn}/>
+      ) : (
+        <>
+          <AdminIndustry
+            industryArray={industryArray}
+            db={db}
+            setJobsArray={setJobsArray}
+            selectedIndustry={selectedIndustry}
+            setSelectedIndustry={setSelectedIndustry}
+          />
+          {selectedIndustry && (
+            <AdminJobDropDown
+              selectedJob={selectedJob}
+              setSelectedJob={setSelectedJob}
+              jobsArray={jobsArray}
+            />
+          )}
+          {selectedIndustry && selectedJob && (
+            <AdminAddQuestion
+              question={question}
+              jobsArray={jobsArray}
+              selectedJob={selectedJob}
+              db={db}
+              selectedIndustry={selectedIndustry}
+              questions={questions}
+              setQuestion={setQuestion}
+              setQuestions={setQuestions}
+              setJobsArray={setJobsArray}
+            />
+          )}
+          {selectedIndustry && (
+            <AdminAddJob
+              newJob={newJob}
+              setNewJob={setNewJob}
+              setJobsArray={setJobsArray}
+              jobsArray={jobsArray}
+              db={db}
+              selectedIndustry={selectedIndustry}
+            />
+          )}
+        </>
       )}
     </div>
-  );
-};
+  );}
 
 export default Admin;
