@@ -20,13 +20,14 @@ import {
   deleteUser,
 } from "firebase/auth";
 import { async } from "@firebase/util";
+import { admin } from "../../firebase";
 
 const Profile = () => {
   const [isDisabled, setDisabled] = useState(true);
   const [isClicked, setClicked] = useState(false);
   const [username, setUsername] = useState(null);
   const router = useRouter();
-  const { user, logout, updateUserEmail } = useAuth();
+  const { user, logout, updateUserEmail, login } = useAuth();
 
   let emailVariable = "";
   const auth = getAuth();
@@ -78,19 +79,25 @@ const Profile = () => {
       // Update firestore auth password
       const creds = EmailAuthProvider.credential(
         emailVariable,
-        (await getDoc(doc(getFirestore(), "users", emailVariable))).get(
-          "password"
-        )
+        (await getDoc(doc(getFirestore(), "users", emailVariable))).data()
+          .password
       );
       reauthenticateWithCredential(getAuth().currentUser, creds);
-      updatePassword(getAuth().currentUser, password.value).then(() => {
+      // const oldPassword = (
+      //   await getDoc(doc(getFirestore(), "users", emailVariable))
+      // ).data().password;
+      // login(emailVariable, oldPassword);
+      await updatePassword(getAuth().currentUser, password.value).then(() => {
         console.log("Password updated");
         console.log(emailVariable);
+        console.log(password.value);
       });
       await updateDoc(doc(getFirestore(), "users", emailVariable), {
         password: password.value,
       });
+      login(emailVariable, password.value);
     }
+
     // Set the buttons back to original state
     setDisabled(true);
     setClicked(false);
