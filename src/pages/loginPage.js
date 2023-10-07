@@ -18,7 +18,6 @@ const LoginPage = () => {
     // use email.value to get value of variable
 
     // Redirect to dashboard if valid
-    // Todo: pass email to dashboard page
     try {
       await login(email.value, password.value);
       router.replace("/Dashboard");

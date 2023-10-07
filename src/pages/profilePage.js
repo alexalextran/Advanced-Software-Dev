@@ -3,8 +3,20 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Navigation from "./navigation";
 import { useAuth } from "../../context/AuthContext";
-import { doc, getDoc, getDocs, getFirestore } from "firebase/firestore";
-import { getAuth, updateEmail } from "firebase/auth";
+import {
+  doc,
+  getDoc,
+  getDocs,
+  getFirestore,
+  updateDoc,
+} from "firebase/firestore";
+import {
+  getAuth,
+  updateEmail,
+  updatePassword,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
+} from "firebase/auth";
 
 const Profile = () => {
   const [isDisabled, setDisabled] = useState(true);
@@ -26,23 +38,56 @@ const Profile = () => {
       const db = getFirestore();
       const userdb = doc(db, "users", email);
       const userObj = await getDoc(userdb);
-      setUsername(user.email);
+      setUsername(userObj.data().username);
     };
 
     getUsername(emailVariable);
   }, []);
 
-  const Update = (event) => {
+  const Update = async (event) => {
     event.preventDefault();
     // Get details from form
     var { username, email, password } = document.forms[0];
     // update DB logic
-  console.log((email))
-    updateUserEmail(email.value)
+    updateUserEmail(email.value);
 
-
-
-
+    if (username.value !== "") {
+      // Update user collection fields
+      await updateDoc(
+        doc(getFirestore(), "users", emailVariable),
+        { username: username.value },
+        { merge: true }
+      );
+    }
+    if (email.value !== "") {
+      // Update firestore auth email
+      // updateEmail(getAuth().currentUser, email.value).then(() => {
+      //   console.log("Email updated");
+      // });
+      // Update user collection fields
+      // const db = getFirestore();
+      // const userdb = doc(db, "users", emailVariable);
+      // const userObj = await getDoc(userdb);
+      // await setDoc(doc(getFirestore(), "users", email.value), userObj.data());
+      // deleteDoc(userdb);
+    }
+    if (password.value !== "") {
+      // Update firestore auth password
+      const creds = EmailAuthProvider.credential(
+        emailVariable,
+        (await getDoc(doc(getFirestore(), "users", emailVariable))).get(
+          "password"
+        )
+      );
+      reauthenticateWithCredential(getAuth().currentUser, creds);
+      updatePassword(getAuth().currentUser, password.value).then(() => {
+        console.log("Password updated");
+        console.log(emailVariable);
+      });
+      await updateDoc(doc(getFirestore(), "users", emailVariable), {
+        password: password.value,
+      });
+    }
     // Set the buttons back to original state
     setDisabled(true);
     setClicked(false);
