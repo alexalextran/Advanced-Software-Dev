@@ -7,7 +7,7 @@ import {
 } from 'firebase/auth'
 import { auth, app } from '../firebase'
 import { collection, addDoc, getFirestore, setDoc, deleteDoc, doc, getDocs, updateDoc, query, where, collectionGroup  } from "firebase/firestore";  
-
+import { getAuth, updateEmail } from "firebase/auth";
 
 const AuthContext = createContext({})
 export const useAuth = () => useContext(AuthContext)
@@ -38,7 +38,7 @@ export const AuthContextProvider = ({
   }, [])
 
   const db = getFirestore(app);
-
+  const auth = getAuth();
 
   const signup = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password)
@@ -53,6 +53,17 @@ export const AuthContextProvider = ({
     await signOut(auth)
   }
 
+  const updateUserEmail = (email) => {
+    updateEmail(auth.currentUser, email)
+    .then(() => {
+      // Email updated!
+    })
+    .catch((error) => {
+      console.error("Error updating email:", error);
+    });
+
+  };
+
   const addIndustry =  async (IndustryName, jobs) => {
 
     const docRef = await addDoc(collection(db, "industryJobs"), {
@@ -64,7 +75,7 @@ export const AuthContextProvider = ({
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout, addIndustry, db}}>
+    <AuthContext.Provider value={{ user, login, signup, logout, addIndustry, db, updateUserEmail}}>
       {loading ? null : children}
     </AuthContext.Provider>
   )

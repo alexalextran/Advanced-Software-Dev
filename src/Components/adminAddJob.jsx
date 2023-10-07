@@ -4,17 +4,17 @@ import {
     setDoc,
 } from "firebase/firestore"; 
 
-const AdminAddJob = ({newJob, setNewJob, setJobsForSelectedIndustryJob, jobsForSelectedIndustryJob, db, selectedIndustryJob}) => {
+const AdminAddJob = ({newJob, setNewJob, setJobsForSelectedIndustryJob, jobsForSelectedIndustryJob, db, selectedIndustry}) => {
 
 
     const handleAddJob = async () => {
-        if (!selectedIndustryJob) {
+        if (!selectedIndustry) {
           alert("Please select an industry job first.");
           return;
         }
       
         try {
-          const jobDocumentRef = doc(db, 'industryJobs', selectedIndustryJob, 'jobs', newJob);
+          const jobDocumentRef = doc(db, 'industryJobs', selectedIndustry, 'jobs', newJob);
           const jobObj = {
             Name: newJob,
             Questions: [],

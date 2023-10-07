@@ -4,16 +4,17 @@ import { useEffect, useState } from "react";
 import Navigation from "./navigation";
 import { useAuth } from "../../context/AuthContext";
 import { doc, getDoc, getDocs, getFirestore } from "firebase/firestore";
+import { getAuth, updateEmail } from "firebase/auth";
 
 const Profile = () => {
   const [isDisabled, setDisabled] = useState(true);
   const [isClicked, setClicked] = useState(false);
   const [username, setUsername] = useState(null);
   const router = useRouter();
-  const { user, logout } = useAuth();
+  const { user, logout, updateUserEmail } = useAuth();
 
   let emailVariable = "";
-
+  const auth = getAuth();
   // To prevent error when user is not logged in
   try {
     emailVariable = user.email;
@@ -25,7 +26,7 @@ const Profile = () => {
       const db = getFirestore();
       const userdb = doc(db, "users", email);
       const userObj = await getDoc(userdb);
-      setUsername(userObj.data().username);
+      setUsername(user.email);
     };
 
     getUsername(emailVariable);
@@ -36,9 +37,11 @@ const Profile = () => {
     // Get details from form
     var { username, email, password } = document.forms[0];
     // update DB logic
-    console.log(email.value);
-    console.log(username.value);
-    console.log(password.value);
+  console.log((email))
+    updateUserEmail(email.value)
+
+
+
 
     // Set the buttons back to original state
     setDisabled(true);
