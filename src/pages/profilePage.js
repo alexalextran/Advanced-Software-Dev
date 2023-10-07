@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Navigation from "./navigation";
 import { useAuth } from "../../context/AuthContext";
 import {
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -16,7 +17,9 @@ import {
   updatePassword,
   reauthenticateWithCredential,
   EmailAuthProvider,
+  deleteUser,
 } from "firebase/auth";
+import { async } from "@firebase/util";
 
 const Profile = () => {
   const [isDisabled, setDisabled] = useState(true);
@@ -122,14 +125,18 @@ const Profile = () => {
     }
   };
 
-  const Delete = () => {
+  const Delete = async () => {
     // Have a pop up to ask if user is sure
     const response = window.confirm(
       "Are you sure you want to delete your account?"
     );
     if (response) {
       // Delete account logic
+      await deleteDoc(doc(getFirestore(), "users", emailVariable));
+      deleteUser(getAuth().currentUser);
       console.log("Delete account");
+      logout();
+      router.push("/");
     }
   };
 
