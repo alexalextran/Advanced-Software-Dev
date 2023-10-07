@@ -1,0 +1,26 @@
+@import "variables&functions";
+
+.main{
+    font-size: 1.5vw;
+    @include absolutecenter;
+    border-radius: 1em;
+    padding: 2em;
+    background: rgba( 255, 255, 255, 0.25 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 0.1em );
+    -webkit-backdrop-filter: blur(  0.1em );
+    width: 30em;
+    *{
+        @include flexCenter(column);
+    }
+    input{
+        @include input;
+        margin-top: 0.9em;
+    }
+    div{
+        padding: 0.7em;
+    }
+    button{
+        @include button;
+    }
+}

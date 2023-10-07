@@ -21,6 +21,7 @@ $secondaryColor: rgb(148,36,51);
   background-color: $foregroundColor;
   border: 0.15em solid black;
   cursor: pointer;
+  padding: 0.5em;
 }
 
 
@@ -106,7 +107,7 @@ $secondaryColor: rgb(148,36,51);
 @mixin input {      
         background: none;
         border: none;
-        color: $blue;
+        color: $white;
         border-bottom:  0.2em solid black;
         font-size: 1em;
         transition: border 0.5s;

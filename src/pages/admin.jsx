@@ -56,6 +56,7 @@ const Admin = () => {
         <AdminLogOn db={db} setadminLoggedIn={setadminLoggedIn}/>
       ) : (
         <>
+        <div>
           <AdminIndustry
             industryArray={industryArray}
             db={db}
@@ -63,6 +64,20 @@ const Admin = () => {
             selectedIndustry={selectedIndustry}
             setSelectedIndustry={setSelectedIndustry}
           />
+
+            {selectedIndustry && (
+            <AdminAddJob
+              newJob={newJob}
+              setNewJob={setNewJob}
+              setJobsArray={setJobsArray}
+              jobsArray={jobsArray}
+              db={db}
+              selectedIndustry={selectedIndustry}
+            />
+          )}
+        </div>
+
+          <div>
           {selectedIndustry && (
             <AdminJobDropDown
               selectedJob={selectedJob}
@@ -83,16 +98,7 @@ const Admin = () => {
               setJobsArray={setJobsArray}
             />
           )}
-          {selectedIndustry && (
-            <AdminAddJob
-              newJob={newJob}
-              setNewJob={setNewJob}
-              setJobsArray={setJobsArray}
-              jobsArray={jobsArray}
-              db={db}
-              selectedIndustry={selectedIndustry}
-            />
-          )}
+          </div>
         </>
       )}
     </div>

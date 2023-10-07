@@ -5,6 +5,7 @@ import {
   getFirestore,
   getDocs,
 } from "firebase/firestore"; 
+import styles from '@/styles/adminLogOn.module.scss'
 
 function AdminLogOn({db, setadminLoggedIn}) {
     const [email, setemail] = useState('');
@@ -43,7 +44,7 @@ function AdminLogOn({db, setadminLoggedIn}) {
   
     if (adminMatch) {
       // Admin found, you can set adminLoggedIn to true here or perform any other action
-      console.log('Admin logged in');
+     
       setadminLoggedIn(true)
     } else {
       setError('Invalid credentials. Please try again.');
@@ -51,12 +52,13 @@ function AdminLogOn({db, setadminLoggedIn}) {
   };
 
   return (
-    <div>
+    <div className={styles.main}>
       <h2>Admin Login</h2>
       {error && <p className="error">{error}</p>}
       <form onSubmit={handleSubmit}>
+
         <div>
-          <label htmlFor="email">email:</label>
+          <label htmlFor="email">Email:</label>
           <input
             type="text"
             id="email"
@@ -65,6 +67,7 @@ function AdminLogOn({db, setadminLoggedIn}) {
             required
           />
         </div>
+
         <div>
           <label htmlFor="password">Password:</label>
           <input
@@ -75,9 +78,11 @@ function AdminLogOn({db, setadminLoggedIn}) {
             required
           />
         </div>
+
         <div>
           <button type="submit">Login</button>
         </div>
+
       </form>
     </div>
   );
