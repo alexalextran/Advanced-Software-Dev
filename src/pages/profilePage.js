@@ -2,13 +2,12 @@ import { ProfileFields } from "@/Components/ProfileComponent";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Navigation from "./navigation";
-import { useAuth } from '../../context/AuthContext'
+import { useAuth } from "../../context/AuthContext";
 const Profile = () => {
   const [isDisabled, setDisabled] = useState(true);
   const [isClicked, setClicked] = useState(false);
   const router = useRouter();
-  const { user, logout } = useAuth()
-
+  const { user, logout } = useAuth();
 
   const Update = (event) => {
     event.preventDefault();
@@ -68,10 +67,20 @@ const Profile = () => {
     // Have a pop up to ask if user is sure
     const response = window.confirm("Are you sure you want to log out?");
     if (response) {
-    logout()
-    router.push("/");
+      logout();
+      router.push("/");
     }
   };
+
+  let emailVariable = "";
+
+  // To prevent error when user is not logged in
+  try {
+    emailVariable = user.email;
+  } catch (error) {
+    emailVariable = "";
+  }
+
   return (
     <div>
       <Navigation />
@@ -83,21 +92,21 @@ const Profile = () => {
               label="Username: "
               type="text"
               name="username"
-              placeholder="Get from db"
+              placeholder="Get username from DB"
               disabled={isDisabled}
             />
             <ProfileFields
               label="Email: "
               type="email"
               name="email"
-              placeholder="Get from db"
+              placeholder={emailVariable}
               disabled={isDisabled}
             />
             <ProfileFields
               label="Password: "
               type="text"
               name="password"
-              placeholder="Get from db"
+              placeholder="Type new password"
               disabled={isDisabled}
             />
           </div>

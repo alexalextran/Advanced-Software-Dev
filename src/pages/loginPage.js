@@ -56,7 +56,7 @@ const LoginPage = () => {
       <span>
         <i>
           Don&apos;t have an account?{" "}
-          <a href="signupPage">
+          <a href="signupPage" id="signupPageLink">
             <u>Sign up</u>
           </a>{" "}
           here
