@@ -1,13 +1,35 @@
 import { ProfileFields } from "@/Components/ProfileComponent";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navigation from "./navigation";
 import { useAuth } from "../../context/AuthContext";
+import { doc, getDoc, getDocs, getFirestore } from "firebase/firestore";
+
 const Profile = () => {
   const [isDisabled, setDisabled] = useState(true);
   const [isClicked, setClicked] = useState(false);
+  const [username, setUsername] = useState(null);
   const router = useRouter();
   const { user, logout } = useAuth();
+
+  let emailVariable = "";
+
+  // To prevent error when user is not logged in
+  try {
+    emailVariable = user.email;
+  } catch (error) {
+    emailVariable = "";
+  }
+  useEffect(() => {
+    const getUsername = async (email) => {
+      const db = getFirestore();
+      const userdb = doc(db, "users", email);
+      const userObj = await getDoc(userdb);
+      setUsername(userObj.data().username);
+    };
+
+    getUsername(emailVariable);
+  }, []);
 
   const Update = (event) => {
     event.preventDefault();
@@ -72,15 +94,6 @@ const Profile = () => {
     }
   };
 
-  let emailVariable = "";
-
-  // To prevent error when user is not logged in
-  try {
-    emailVariable = user.email;
-  } catch (error) {
-    emailVariable = "";
-  }
-
   return (
     <div>
       <Navigation />
@@ -92,7 +105,7 @@ const Profile = () => {
               label="Username: "
               type="text"
               name="username"
-              placeholder="Get username from DB"
+              placeholder={username}
               disabled={isDisabled}
             />
             <ProfileFields
