@@ -20,7 +20,7 @@ const Question = ({Question, index, setquestionInfo}) => {
   return (
     <animated.div style={trans} onClick={() => setquestionInfo(Question)}>
     <p className={styles.main}>
-        {Question.question}
+        {Question}
     </p>
     </animated.div>
   );
