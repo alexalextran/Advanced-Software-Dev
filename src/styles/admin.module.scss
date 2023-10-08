@@ -1,0 +1,59 @@
+@import "variables&functions";
+
+
+
+.main{
+    @include absolutecenter;
+    height: 35em;
+    background: rgba( 255, 255, 255, 0.25 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 0.1em );
+    -webkit-backdrop-filter: blur(  0.1em );
+    border-radius: 2em;
+    width: 90em;
+    font-size: 1vw;
+    @include flexCenter(row);
+
+    .mainLeft, .mainRight{
+       width: 50%;
+       @include flexCenter(column);
+    }
+    .mainLeft{
+    border-right: 0.2em solid white
+    }
+    .mainRight{
+     
+    }
+}
+
+
+.jobDropDown, .addJob, .addQuestion, .industryJob{
+    @include flexCenter(column);
+    width: 40em;
+    margin: 3em;
+    padding: 2em;
+    border-top: 2px solid black;
+    label{
+       font-weight: 700;
+       font-size: 1.4em;
+       margin-bottom: 1em;
+    }
+
+    select{
+        width: 50%;
+        margin-bottom: 1em;
+        padding: 0.5em;
+        text-align: center;
+        @include input;
+        option{
+            color: black;
+        }
+    }
+    input{
+        text-align: center;
+        width: 50%;
+        margin-bottom: 1em;
+        padding: 0.5em;
+       @include input;
+    }
+}

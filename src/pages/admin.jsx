@@ -10,6 +10,7 @@ import AdminJobDropDown from "@/Components/adminJobDropDown";
 import AdminAddQuestion from "@/Components/adminAddQuestion";
 import AdminAddJob from "@/Components/adminAddJob";
 import AdminLogOn from "@/Components/adminLogOn";
+import styles from '@/styles/admin.module.scss';
 
 const Admin = () => {
   const [industryArray, setIndustryArray] = useState([]); //all industries e.g --> IT, Hospitality, Finance etc
@@ -51,12 +52,12 @@ const Admin = () => {
   
 
   return (
-    <div>
+    <div className={styles.main}>
       {!adminLoggedIn ? (
         <AdminLogOn db={db} setadminLoggedIn={setadminLoggedIn}/>
       ) : (
         <>
-        <div>
+        <div className={styles.mainLeft}>
           <AdminIndustry
             industryArray={industryArray}
             db={db}
@@ -77,7 +78,7 @@ const Admin = () => {
           )}
         </div>
 
-          <div>
+          <div className={styles.mainRight}>
           {selectedIndustry && (
             <AdminJobDropDown
               selectedJob={selectedJob}

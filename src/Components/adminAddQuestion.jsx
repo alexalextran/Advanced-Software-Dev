@@ -4,6 +4,8 @@ import {
   updateDoc,
   getDoc
   } from "firebase/firestore";
+import styles from '@/styles/admin.module.scss';
+
 const AdminAddQuestion = ({setJobsArray,  jobsArray, question, selectedJob, db, selectedIndustry}) => {
 
     const handleAddQuestion = async (e) => {
@@ -51,8 +53,8 @@ const AdminAddQuestion = ({setJobsArray,  jobsArray, question, selectedJob, db, 
 
 
     return (
-        <div>
-          <form  onSubmit={handleAddQuestion}>
+        <div >
+          <form  onSubmit={handleAddQuestion} className={styles.addQuestion}>
           <label htmlFor="newQuestion">Add a New Question:</label>
           <input
             type="text"

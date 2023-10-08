@@ -4,6 +4,7 @@ import {
   collection,
   getDocs,
 } from "firebase/firestore"; 
+import styles from '@/styles/admin.module.scss';
 const AdminIndustry = ({industryArray, selectedIndustry, setSelectedIndustry, db, setJobsArray}) => {
 
     const handleIndustryJobChange = async (e) => {
@@ -29,7 +30,7 @@ const AdminIndustry = ({industryArray, selectedIndustry, setSelectedIndustry, db
 
 
     return (
-        <form>
+        <form className={styles.industryJob}>
         <label htmlFor="industryJobSelect">Select Industry Job:</label>
         <select id="industryJobSelect" value={selectedIndustry} onChange={handleIndustryJobChange}>
           <option value="">Select an industry job</option>

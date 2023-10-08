@@ -3,7 +3,7 @@ import {
     doc,
     setDoc,
 } from "firebase/firestore"; 
-
+import styles from '@/styles/admin.module.scss';
 const AdminAddJob = ({newJob, setNewJob, setJobsForSelectedIndustryJob, jobsForSelectedIndustryJob, db, selectedIndustry}) => {
 
 
@@ -31,7 +31,7 @@ const AdminAddJob = ({newJob, setNewJob, setJobsForSelectedIndustryJob, jobsForS
 
 
     return (
-        <div>
+        <div className={styles.addJob}>
         <label htmlFor="newJob">Add a New Job:</label>
         <input
           type="text"
