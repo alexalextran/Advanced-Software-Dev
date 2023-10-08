@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import 'firebase/firestore';
 import {
   collection,
-  getFirestore,
   getDocs,
 } from "firebase/firestore"; 
 import styles from '@/styles/adminLogOn.module.scss'

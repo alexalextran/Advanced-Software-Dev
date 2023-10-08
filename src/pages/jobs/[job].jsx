@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import JobItem from '../../Components/JobItem.jsx';
 import Navigation from '../navigation.js';
 import styles from '@/styles/job.module.scss'
-import industryjobs from  '../../../public/data/industryJobs.js'
 import 'firebase/firestore';
-import { collection, getFirestore, getDocs, addDoc, query, where, doc, setDoc } from "firebase/firestore"; 
+import { collection, getFirestore, getDocs} from "firebase/firestore"; 
 
 export const getStaticPaths = async () => {
     const db = getFirestore();

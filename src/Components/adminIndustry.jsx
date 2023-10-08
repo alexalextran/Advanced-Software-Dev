@@ -1,12 +1,10 @@
 import React from 'react';
 import 'firebase/firestore';
-import {
-  collection,
-  getDocs,
-} from "firebase/firestore"; 
 import styles from '@/styles/admin.module.scss';
-const AdminIndustry = ({industryArray, selectedIndustry, setSelectedIndustry, db, setJobsArray}) => {
+import { useAuth } from "../../context/AuthContext";
+const AdminIndustry = ({selectedIndustry, setSelectedIndustry}) => {
 
+    const { retrieveJobsData, industryArray } = useAuth();
     const handleIndustryJobChange = async (e) => {
         const selectedIndustryID = e.target.value;
         setSelectedIndustry(selectedIndustryID);
@@ -15,13 +13,7 @@ const AdminIndustry = ({industryArray, selectedIndustry, setSelectedIndustry, db
 
         if (selectedIndustryJobData) {
           try {
-            const jobsCollectionRef = collection(db, 'industryJobs', selectedIndustryID, 'jobs');
-            const jobsSnapshot = await getDocs(jobsCollectionRef);
-            const jobsData = jobsSnapshot.docs.map((doc) => ({
-              ID: doc.id,
-              ...doc.data(),
-            }));
-            setJobsArray(jobsData);
+            retrieveJobsData(selectedIndustryJobData.ID)
           } catch (error) {
             console.error('Error fetching jobs for the selected industry job:', error);
           }
@@ -31,9 +23,9 @@ const AdminIndustry = ({industryArray, selectedIndustry, setSelectedIndustry, db
 
     return (
         <form className={styles.industryJob}>
-        <label htmlFor="industryJobSelect">Select Industry Job:</label>
+        <label htmlFor="industryJobSelect">Select Industry:</label>
         <select id="industryJobSelect" value={selectedIndustry} onChange={handleIndustryJobChange}>
-          <option value="">Select an industry job</option>
+          <option value="">Select an Industry</option>
           {industryArray.map((job) => (
             <option key={job.ID} value={job.ID}>
               {job.ID}
