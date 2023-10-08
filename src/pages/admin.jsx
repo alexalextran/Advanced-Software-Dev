@@ -11,6 +11,7 @@ import AdminAddQuestion from "@/Components/adminAddQuestion";
 import AdminAddJob from "@/Components/adminAddJob";
 import AdminLogOn from "@/Components/adminLogOn";
 import styles from '@/styles/admin.module.scss';
+import Navigation from "./navigation";
 
 const Admin = () => {
   const [industryArray, setIndustryArray] = useState([]); //all industries e.g --> IT, Hospitality, Finance etc
@@ -52,11 +53,14 @@ const Admin = () => {
   
 
   return (
-    <div className={styles.main}>
+    <>
+    <Navigation/>
+  
       {!adminLoggedIn ? (
         <AdminLogOn db={db} setadminLoggedIn={setadminLoggedIn}/>
       ) : (
-        <>
+        
+          <div className={styles.main}>
         <div className={styles.mainLeft}>
           <AdminIndustry
             industryArray={industryArray}
@@ -100,9 +104,13 @@ const Admin = () => {
             />
           )}
           </div>
-        </>
+        </div>
       )}
-    </div>
-  );}
+    </>
+  );
+}
+ 
+   
+
 
 export default Admin;

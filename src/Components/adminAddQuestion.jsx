@@ -45,6 +45,7 @@ const AdminAddQuestion = ({setJobsArray,  jobsArray, question, selectedJob, db, 
             return job;
           });
           setJobsArray(updatedjobsArray);
+          window.alert('Question added successfully!');
         } catch (error) {
           console.error('Error adding question:', error);
         }

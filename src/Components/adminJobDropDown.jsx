@@ -6,8 +6,8 @@ const AdminJobDropDown = ({setSelectedJob, jobsArray, selectedJob}) => {
           <label htmlFor="jobSelect">Select a Job from the Industry:</label>
           <select id="jobSelect" value={selectedJob} onChange={(e) => setSelectedJob(e.target.value)}>
             <option value="">Select a job</option>
-            {jobsArray.map((job) => (
-              <option key={job.ID} value={job.ID}>
+            {jobsArray.map((job, index) => (
+              <option key={index} value={job.ID}>
                 {job.ID}
               </option>
             ))}

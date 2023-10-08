@@ -4,7 +4,7 @@ import {
     setDoc,
 } from "firebase/firestore"; 
 import styles from '@/styles/admin.module.scss';
-const AdminAddJob = ({newJob, setNewJob, setJobsForSelectedIndustryJob, jobsForSelectedIndustryJob, db, selectedIndustry}) => {
+const AdminAddJob = ({newJob, setNewJob, setJobsArray, jobsArray, db, selectedIndustry}) => {
 
 
     const handleAddJob = async () => {
@@ -14,16 +14,16 @@ const AdminAddJob = ({newJob, setNewJob, setJobsForSelectedIndustryJob, jobsForS
         }
       
         try {
-          const jobDocumentRef = doc(db, 'industryJobs', selectedIndustry, 'jobs', newJob);
-          const jobObj = {
+         
+      
+          await setDoc(doc(db, 'industryJobs', selectedIndustry, 'jobs', newJob), {
             Name: newJob,
             Questions: [],
-          };
+          });
     
-          await setDoc(jobDocumentRef, { jobObj });
-    
-          setJobsForSelectedIndustryJob([...jobsForSelectedIndustryJob, newJob]);
+          setJobsArray([...jobsArray, newJob]);
           setNewJob('');
+          window.alert('Job added successfully!');
         } catch (error) {
           console.error('Error adding job:', error);
         }
