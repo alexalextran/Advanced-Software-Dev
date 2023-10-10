@@ -93,14 +93,18 @@ const Profile = () => {
         console.log("Email updated");
       });
       // Update user collection fields
-      const db = getFirestore();
-      const userdb = doc(db, "users", emailVariable);
-      const userObj = await getDoc(userdb);
-      await setDoc(
-        doc(getFirestore(), "users", email.value.toLowerCase()),
-        userObj.data()
-      );
-      deleteDoc(userdb);
+      // TODO: Add check to make sure email is not the same as currently
+      // Make sure the current email is different from the email the user input
+      if (emailVariable !== email.value.toLowerCase()) {
+        const db = getFirestore();
+        const userdb = doc(db, "users", emailVariable);
+        const userObj = await getDoc(userdb);
+        await setDoc(
+          doc(getFirestore(), "users", email.value.toLowerCase()),
+          userObj.data()
+        );
+        deleteDoc(userdb);
+      }
       emailVariable = email.value.toLowerCase();
       getAuth().signOut();
       await login(emailVariable, oldPassword);
