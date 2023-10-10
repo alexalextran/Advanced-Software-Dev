@@ -134,7 +134,9 @@ const Profile = () => {
     }
 
     // Make sure placeholder updates
-    setUsername(username.value);
+    if (username.value !== "") {
+      setUsername(username.value);
+    }
     // Clear fields after update
     username.value = "";
     email.value = "";
