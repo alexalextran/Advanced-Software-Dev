@@ -79,10 +79,10 @@ const Profile = () => {
       console.log(
         "This is the email before getting old password: " + emailVariable
       );
-      const oldPassword = (
+      let oldPassword = (
         await getDoc(doc(getFirestore(), "users", emailVariable))
       ).data().password;
-      const creds = EmailAuthProvider.credential(
+      let creds = EmailAuthProvider.credential(
         emailVariable,
         (await getDoc(doc(getFirestore(), "users", emailVariable))).data()
           .password
@@ -93,7 +93,6 @@ const Profile = () => {
         console.log("Email updated");
       });
       // Update user collection fields
-      // TODO: Add check to make sure email is not the same as currently
       // Make sure the current email is different from the email the user input
       if (emailVariable !== email.value.toLowerCase()) {
         const db = getFirestore();
@@ -133,6 +132,13 @@ const Profile = () => {
       });
       await login(emailVariable, password.value);
     }
+
+    // Make sure placeholder updates
+    setUsername(username.value);
+    // Clear fields after update
+    username.value = "";
+    email.value = "";
+    password.value = "";
 
     // Set the buttons back to original state
     setDisabled(true);
