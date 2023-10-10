@@ -19,6 +19,7 @@ import {
   reauthenticateWithCredential,
   EmailAuthProvider,
   deleteUser,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 import { async } from "@firebase/util";
 import { admin } from "../../firebase";
@@ -100,11 +101,11 @@ const Profile = () => {
         userObj.data()
       );
       deleteDoc(userdb);
-      emailVariable = email.value;
+      emailVariable = email.value.toLowerCase();
+      getAuth().signOut();
+      await login(emailVariable, oldPassword);
       console.log("This is the new email: " + emailVariable);
       console.log("This is user.email: " + user.email);
-      router.reload();
-      // await login(email.value, oldPassword);
     }
     if (password.value !== "") {
       // Update firestore auth password
