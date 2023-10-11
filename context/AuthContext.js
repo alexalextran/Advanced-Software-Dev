@@ -124,11 +124,11 @@ export const AuthContextProvider = ({
     setIndustryArray(jobsData);
   }
   
-  const addResponseToFirestore = async (userResponse, GPTResponse) => {
+  const addResponseToFirestore = async (userResponse, GPTResponse, timestamp) => {
     try {
   
 
-      await setDoc(doc(db,  `users/${user.uid}/history/${interviewQuestion}`), {
+      await setDoc(doc(db,  `users/${user.email}/history/${timestamp}`), {
         InterviewQuestion: interviewQuestion,
         userResponse: userResponse,
         GPTResponse: GPTResponse

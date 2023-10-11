@@ -23,6 +23,21 @@ export default function Home() {
     setInputValue('');
   }
 
+  
+  const getCurrentDateTimeString = () => {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const day = now.getDate().toString().padStart(2, '0');
+    const month = (now.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based, so we add 1.
+    const year = now.getFullYear();
+
+    return `(${hours}:${minutes} | ${day},${month},${year})`;
+  };
+
+
+
+
   const sendMessage = (message) => {
     const url = '/api/chat';
     const data = {
@@ -34,8 +49,8 @@ export default function Home() {
     setIsLoading(true);
 
     axios.post(url, data).then((response) => {
-    addResponseToFirestore(message.toString(), response.data.choices[0].message.content);
-    console.log(message)
+    addResponseToFirestore(message.toString(), response.data.choices[0].message.content, getCurrentDateTimeString());
+
       setChatLog((prevChatLog) => [...prevChatLog, { type: 'bot', message: response.data.choices[0].message.content }])
       setIsLoading(false);
     }).catch((error) => {
@@ -91,6 +106,10 @@ export default function Home() {
     setChatLog((prevChatLog) => [...prevChatLog, { type: 'user', message: updatedInputValue }]);
     sendMessage(updatedInputValue);
   };
+
+
+
+ 
   
 
   return ( 
