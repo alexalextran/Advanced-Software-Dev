@@ -9,6 +9,7 @@ import {
   getDoc,
   getDocs,
   getFirestore,
+  setDoc,
   updateDoc,
 } from "firebase/firestore";
 import {
@@ -18,6 +19,7 @@ import {
   reauthenticateWithCredential,
   EmailAuthProvider,
   deleteUser,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 import { async } from "@firebase/util";
 import { admin } from "../../firebase";
@@ -32,17 +34,26 @@ const Profile = () => {
   let emailVariable = "";
   const auth = getAuth();
   // To prevent error when user is not logged in
-  try {
-    emailVariable = user.email;
-  } catch (error) {
-    emailVariable = "";
+  if (emailVariable === "") {
+    try {
+      emailVariable = user.email;
+    } catch (error) {
+      emailVariable = "";
+    }
   }
   useEffect(() => {
     const getUsername = async (email) => {
       const db = getFirestore();
       const userdb = doc(db, "users", email);
-      const userObj = await getDoc(userdb);
-      setUsername(userObj.data().username);
+      // const userObj = await getDoc(userdb);
+      // setUsername(userObj.data().username);
+      await getDoc(userdb).then((doc) => {
+        if (doc.exists()) {
+          setUsername(doc.data().username);
+        } else {
+          console.log("No such document!");
+        }
+      });
     };
 
     getUsername(emailVariable);
@@ -65,15 +76,39 @@ const Profile = () => {
     }
     if (email.value !== "") {
       // Update firestore auth email
-      // updateEmail(getAuth().currentUser, email.value).then(() => {
-      //   console.log("Email updated");
-      // });
+      console.log(
+        "This is the email before getting old password: " + emailVariable
+      );
+      let oldPassword = (
+        await getDoc(doc(getFirestore(), "users", emailVariable))
+      ).data().password;
+      let creds = EmailAuthProvider.credential(
+        emailVariable,
+        (await getDoc(doc(getFirestore(), "users", emailVariable))).data()
+          .password
+      );
+      await reauthenticateWithCredential(getAuth().currentUser, creds);
+
+      await updateEmail(getAuth().currentUser, email.value).then(() => {
+        console.log("Email updated");
+      });
       // Update user collection fields
-      // const db = getFirestore();
-      // const userdb = doc(db, "users", emailVariable);
-      // const userObj = await getDoc(userdb);
-      // await setDoc(doc(getFirestore(), "users", email.value), userObj.data());
-      // deleteDoc(userdb);
+      // Make sure the current email is different from the email the user input
+      if (emailVariable !== email.value.toLowerCase()) {
+        const db = getFirestore();
+        const userdb = doc(db, "users", emailVariable);
+        const userObj = await getDoc(userdb);
+        await setDoc(
+          doc(getFirestore(), "users", email.value.toLowerCase()),
+          userObj.data()
+        );
+        deleteDoc(userdb);
+      }
+      emailVariable = email.value.toLowerCase();
+      getAuth().signOut();
+      await login(emailVariable, oldPassword);
+      console.log("This is the new email: " + emailVariable);
+      console.log("This is user.email: " + user.email);
     }
     if (password.value !== "") {
       // Update firestore auth password
@@ -82,7 +117,7 @@ const Profile = () => {
         (await getDoc(doc(getFirestore(), "users", emailVariable))).data()
           .password
       );
-      reauthenticateWithCredential(getAuth().currentUser, creds);
+      await reauthenticateWithCredential(getAuth().currentUser, creds);
       // const oldPassword = (
       //   await getDoc(doc(getFirestore(), "users", emailVariable))
       // ).data().password;
@@ -95,8 +130,17 @@ const Profile = () => {
       await updateDoc(doc(getFirestore(), "users", emailVariable), {
         password: password.value,
       });
-      login(emailVariable, password.value);
+      await login(emailVariable, password.value);
     }
+
+    // Make sure placeholder updates
+    if (username.value !== "") {
+      setUsername(username.value);
+    }
+    // Clear fields after update
+    username.value = "";
+    email.value = "";
+    password.value = "";
 
     // Set the buttons back to original state
     setDisabled(true);
@@ -140,7 +184,7 @@ const Profile = () => {
     if (response) {
       // Delete account logic
       await deleteDoc(doc(getFirestore(), "users", emailVariable));
-      deleteUser(getAuth().currentUser);
+      await deleteUser(getAuth().currentUser);
       console.log("Delete account");
       logout();
       router.push("/");
