@@ -1,0 +1,95 @@
+@import "variables&functions";
+
+.main{
+    font-size: 0.9vw;
+
+    .loading{
+        animation: loading 2s infinite;
+    }
+
+    @keyframes loading {
+        0%{
+
+        }
+
+        100%{
+            transform: rotate(360deg);
+        }
+    }
+
+.chatbox{
+   background-color: rgb(51,51,51);
+   height: 70vh;
+   margin: 0 10em;
+   padding: 2em;
+   margin-top: 1em;
+   overflow-y: scroll;
+
+   .message{
+    background-color: rgb(40,155,253);
+    border-radius: 1em;
+    padding: 0.8em;
+    margin-bottom: 1.7em;
+    text-align: center;
+    color: white;
+   }
+   h3{
+    text-align: center;
+    width: 100%;
+    color: white;
+}
+p{
+    text-align: center;
+    width: 100%;
+    color: white;
+}
+}
+
+.chatboxInput{
+    height: 20vh;
+    @include flexCustom(flex-start, center, column);
+    margin: 0 10em;
+    
+        background: rgba( 255, 255, 255, 0.25 );
+        box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+        backdrop-filter: blur( 7px );
+        -webkit-backdrop-filter: blur( 7px );
+        p{
+            margin: 0.5em;
+        }
+
+   
+
+    .form{
+        
+        width: 100%;
+        input{
+            width: 80%;
+           
+            border: none;
+            background-color: $white;
+            padding: 1em;
+            font-size: 1em;
+            height: 100%;
+        }
+        button{
+            width: 20%;
+            padding: 1em;
+            height: 100%;
+            margin: 0;
+            border: 2px solid black;
+         
+        }
+    }
+    
+
+
+    .fileinput{
+        width: 40%;
+        padding-bottom: 1em;
+        button{
+            width: 50%;
+        }
+    }
+}
+}

@@ -6,7 +6,7 @@ import {
   signOut,
 } from 'firebase/auth'
 import { app } from '../firebase'
-import { collection, addDoc, getFirestore, setDoc, deleteDoc, doc, getDocs,getDoc, updateDoc, query, where, collectionGroup  } from "firebase/firestore";  
+import { collection, addDoc, getFirestore, setDoc, doc, getDocs,getDoc, updateDoc  } from "firebase/firestore";  
 import { getAuth, updateEmail } from "firebase/auth";
 
 const AuthContext = createContext({})
@@ -21,6 +21,7 @@ export const AuthContextProvider = ({
   const [industryArray, setIndustryArray] = useState([]);
   const [interviewQuestion, setinterviewQuestion] = useState([]);
   const [analytics, setAnalytics] = useState([]);
+  const [industrySelected, setindustrySelected] = useState('');
 //console.log(user)
 
   useEffect(() => {
@@ -156,7 +157,7 @@ export const AuthContextProvider = ({
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout, addIndustry, db, updateUserEmail, addQuestionDB, addJobDB, retrieveJobsData, jobsCollection, retrieveIndustriesData, industryArray, interviewQuestion, setinterviewQuestion, addResponseToFirestore, addAanalyticsDB, retrieveAnalytics, analytics}}>
+    <AuthContext.Provider value={{ user, login, signup, logout, addIndustry, db, updateUserEmail, addQuestionDB, addJobDB, retrieveJobsData, jobsCollection, retrieveIndustriesData, industryArray, interviewQuestion, setinterviewQuestion, addResponseToFirestore, addAanalyticsDB, retrieveAnalytics, analytics, setindustrySelected, industrySelected}}>
       {loading ? null : children}
     </AuthContext.Provider>
   )

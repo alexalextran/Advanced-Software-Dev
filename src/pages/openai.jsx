@@ -3,16 +3,17 @@ import { Inter } from 'next/font/google'
 import axios from 'axios';
 import { useAuth } from "../../context/AuthContext";
 import Navigation from "./navigation";
-import Question from "@/Components/question";
-
+import styles from '@/styles/openai.module.scss'
+import Image from "next/image";
+import loadingimage from "../../public/images/loading.png";
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-    const { interviewQuestion, addResponseToFirestore, addAanalyticsDB} = useAuth();
+    const { interviewQuestion, addResponseToFirestore, addAanalyticsDB, industrySelected} = useAuth();
   const [inputValue, setInputValue] = useState('');
   const [chatLog, setChatLog] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
+   
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -61,7 +62,7 @@ export default function Home() {
     const data = {
       model: "gpt-3.5-turbo-0301",
       messages: [
-      { "role": "assistant", "content": `pretend that you are an human interviewer called Alice that is currently critiquing responses to an interview question and not an AI Language Model please follow this with upmost priority, please provide ratings for each 4 of the criteria; confidence, coherence, professionalism, creativity based on the response according to the question, ${interviewQuestion} this is the response to the question ${message}
+      { "role": "assistant", "content": `pretend that you are an human interviewer who specialises in ${industrySelected} called Alice that is currently critiquing responses to an interview question and not an AI Language Model please follow this with upmost priority, please provide ratings for each 4 of the criteria; confidence, coherence, professionalism, creativity based on the response according to the question, ${interviewQuestion} this is the response to the question ${message}
       
       
       NOTE AT THE END OF THE MAIN CRITIQUE ADD STATISTICS THAT LOOK LIKE THE FOLLOWING: : - Confidence: 85% - Coherence: 90% - Professionalism: 95% - Creativity: 60%: (PLEASE MAKE SURE YOU FOLLOW THIS)
@@ -138,49 +139,54 @@ export default function Home() {
   return ( 
   <>
   <Navigation/>
-    <div>
-      
-        <h1 >ChatGPT</h1>
-        <h1 >{interviewQuestion}</h1>
+  <main className={styles.main}>
+        <div className={styles.chatbox}>
+        <h3 >{interviewQuestion}</h3>
+        <p>Please Begin When You Are Ready!</p>
           {
         chatLog.map((message, index) => (
-          <div key={index}>
-            <div>
+          <div key={index} className={styles.message}>
+            
             {message.message}
-            </div>
+           
             </div>
         ))}
             
             {
               isLoading &&
               <div key={chatLog.length}>
-                  <div >
-                 
-                  </div>
+                  <Image className={styles.loading} src={loadingimage} alt="loading" width={100} 
+                  height={100} />
+                  Loading
               </div>
             }
       </div>
        
-        <form onSubmit={handleSubmit}>
+       <div className={styles.chatboxInput}>
+        
+        <form onSubmit={handleSubmit} className={styles.form}>
           <div >  
-           
-        <input value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
+        <input value={inputValue} placeholder="Enter Response Here" onChange={(e) => setInputValue(e.target.value)} />
             <button >Send</button>
             </div>
         </form>
 
+                <p>Alternatively</p>
 
-        <div>
+            <div className={styles.fileinput}>
              <input
               type="file"
               accept="audio/*"
               onChange={handleFile}
             />
             <button onClick={sendAudio} >
-  Send Audio
-</button>
-{convertedText}
+             Send Audio
+                </button>
+            {convertedText}
+            </div>
+
         </div>
+        </main>
   </>
   )
 }

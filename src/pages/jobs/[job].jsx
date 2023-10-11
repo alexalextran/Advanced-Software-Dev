@@ -5,7 +5,9 @@ import styles from '@/styles/job.module.scss'
 import 'firebase/firestore';
 import { collection, getFirestore, getDocs} from "firebase/firestore"; 
 import Link from 'next/link'
+import { useAuth } from "../../../context/AuthContext";
 export const getStaticPaths = async () => {
+
     const db = getFirestore();
         var jobsData
         
@@ -49,7 +51,7 @@ return{
 const Job = ({ job }) => {
   const [industryJobs, setIndustryJobs] = useState([]);
   const [questionInfo, setQuestionInfo] = useState();
-
+  const { setindustrySelected } = useAuth();
   useEffect(() => {
       const fetchData = async () => {
           try {
@@ -79,9 +81,10 @@ const Job = ({ job }) => {
       };
 
       fetchData();
+      setindustrySelected(job)
   }, [job]);
 
-  console.log(industryJobs)
+  
 
   return (
       <main className={styles.main}>
