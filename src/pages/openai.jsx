@@ -182,7 +182,6 @@ export default function Home() {
             <button onClick={sendAudio} >
              Send Audio
                 </button>
-            {convertedText}
             </div>
 
         </div>
