@@ -20,6 +20,7 @@ export const AuthContextProvider = ({
   const [jobsCollection, setJobsCollection] = useState([])
   const [industryArray, setIndustryArray] = useState([]);
   const [interviewQuestion, setinterviewQuestion] = useState([]);
+  const [analytics, setAnalytics] = useState([]);
 //console.log(user)
 
   useEffect(() => {
@@ -113,6 +114,12 @@ export const AuthContextProvider = ({
     setJobsCollection(jobsData);
   }
 
+  const retrieveAnalytics = async () => {
+    const analyticsRef = doc(db, `users/${user.email}`);
+    const analyticsSnapshot = await getDoc(analyticsRef);
+    setAnalytics(analyticsSnapshot.data());
+  }
+
   const retrieveIndustriesData = async () => {
     const industryJobsRef = collection(db, 'industryJobs');
     const snapshot = await getDocs(industryJobsRef);
@@ -126,25 +133,30 @@ export const AuthContextProvider = ({
   
   const addResponseToFirestore = async (userResponse, GPTResponse, timestamp) => {
     try {
-  
-
       await setDoc(doc(db,  `users/${user.email}/history/${timestamp}`), {
         InterviewQuestion: interviewQuestion,
         userResponse: userResponse,
         GPTResponse: GPTResponse
       });
-
-      
-  
       console.log("Document successfully written to Firestore!");
     } catch (error) {
       console.error("Error writing document to Firestore:", error);
     }
   };
   
+  const addAanalyticsDB = async (analytics) => {
+    try {
+      await setDoc(doc(db,  `users/${user.email}`), {
+        analytics: analytics
+      });
+      console.log("Document successfully written to Firestore!");
+    } catch (error) {
+      console.error("Error writing document to Firestore:", error);
+    }
+  };
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout, addIndustry, db, updateUserEmail, addQuestionDB, addJobDB, retrieveJobsData, jobsCollection, retrieveIndustriesData, industryArray, interviewQuestion, setinterviewQuestion, addResponseToFirestore}}>
+    <AuthContext.Provider value={{ user, login, signup, logout, addIndustry, db, updateUserEmail, addQuestionDB, addJobDB, retrieveJobsData, jobsCollection, retrieveIndustriesData, industryArray, interviewQuestion, setinterviewQuestion, addResponseToFirestore, addAanalyticsDB, retrieveAnalytics, analytics}}>
       {loading ? null : children}
     </AuthContext.Provider>
   )

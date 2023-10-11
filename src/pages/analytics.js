@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from "@/styles/analytic.module.scss"
 import AnalyticsFields from "@/Components/AnalyticComponent";
 import Navigation from "./navigation";
 import { Value } from 'sass';
-
+import { useAuth } from "../../context/AuthContext";
 const Analytics = () => {
+
+    const { retrieveAnalytics, analytics} = useAuth();
+
+    useEffect(() => {
+        retrieveAnalytics();
+        console.log(analytics)
+
+    }, []);
     return (
         <div>
             <Navigation />

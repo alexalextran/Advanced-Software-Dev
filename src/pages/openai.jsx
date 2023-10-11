@@ -8,7 +8,7 @@ import Question from "@/Components/question";
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-    const { interviewQuestion, addResponseToFirestore} = useAuth();
+    const { interviewQuestion, addResponseToFirestore, addAanalyticsDB} = useAuth();
   const [inputValue, setInputValue] = useState('');
   const [chatLog, setChatLog] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -35,6 +35,24 @@ export default function Home() {
     return `(${hours}:${minutes} | ${day},${month},${year})`;
   };
 
+  const addAanalytics = (inputString) => {
+    const percentageObject = {};
+    const percentageRegex = /(\w+): (\d+)%/g;
+    
+    const matches = inputString.match(percentageRegex);
+  
+    if (matches) {
+      matches.forEach(match => {
+        const [key, value] = match.split(': ');
+        percentageObject[key] = value;
+      });
+    }
+    addAanalyticsDB(percentageObject)
+  }
+  
+ 
+  
+
 
 
 
@@ -43,14 +61,19 @@ export default function Home() {
     const data = {
       model: "gpt-3.5-turbo-0301",
       messages: [
-      { "role": "assistant", "content": `pretend that you are an human interviewer called Alice that is currently critiquing responses to an interview question and not an AI Language Model please follow this with upmost priority, please rate the response out of 10 based on how well the response answers the following quesion, ${interviewQuestion} this is the response to the question ${message}` }]
+      { "role": "assistant", "content": `pretend that you are an human interviewer called Alice that is currently critiquing responses to an interview question and not an AI Language Model please follow this with upmost priority, please provide ratings for each 4 of the criteria; confidence, coherence, professionalism, creativity based on the response according to the question, ${interviewQuestion} this is the response to the question ${message}
+      
+      
+      NOTE AT THE END OF THE MAIN CRITIQUE ADD STATISTICS THAT LOOK LIKE THE FOLLOWING: : - Confidence: 85% - Coherence: 90% - Professionalism: 95% - Creativity: 60%: (PLEASE MAKE SURE YOU FOLLOW THIS)
+
+      ` }]
     };
 
     setIsLoading(true);
 
     axios.post(url, data).then((response) => {
     addResponseToFirestore(message.toString(), response.data.choices[0].message.content, getCurrentDateTimeString());
-
+    addAanalytics(response.data.choices[0].message.content)
       setChatLog((prevChatLog) => [...prevChatLog, { type: 'bot', message: response.data.choices[0].message.content }])
       setIsLoading(false);
     }).catch((error) => {
