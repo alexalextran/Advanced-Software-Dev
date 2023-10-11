@@ -5,7 +5,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth'
-import { auth, app } from '../firebase'
+import { app } from '../firebase'
 import { collection, addDoc, getFirestore, setDoc, deleteDoc, doc, getDocs,getDoc, updateDoc, query, where, collectionGroup  } from "firebase/firestore";  
 import { getAuth, updateEmail } from "firebase/auth";
 
@@ -124,10 +124,27 @@ export const AuthContextProvider = ({
     setIndustryArray(jobsData);
   }
   
+  const addResponseToFirestore = async (userResponse, GPTResponse) => {
+    try {
+  
+
+      await setDoc(doc(db,  `users/${user.uid}/history/${interviewQuestion}`), {
+        InterviewQuestion: interviewQuestion,
+        userResponse: userResponse,
+        GPTResponse: GPTResponse
+      });
+
+      
+  
+      console.log("Document successfully written to Firestore!");
+    } catch (error) {
+      console.error("Error writing document to Firestore:", error);
+    }
+  };
   
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout, addIndustry, db, updateUserEmail, addQuestionDB, addJobDB, retrieveJobsData, jobsCollection, retrieveIndustriesData, industryArray, interviewQuestion, setinterviewQuestion}}>
+    <AuthContext.Provider value={{ user, login, signup, logout, addIndustry, db, updateUserEmail, addQuestionDB, addJobDB, retrieveJobsData, jobsCollection, retrieveIndustriesData, industryArray, interviewQuestion, setinterviewQuestion, addResponseToFirestore}}>
       {loading ? null : children}
     </AuthContext.Provider>
   )

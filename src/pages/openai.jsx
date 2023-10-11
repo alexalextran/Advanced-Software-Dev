@@ -3,11 +3,12 @@ import { Inter } from 'next/font/google'
 import axios from 'axios';
 import { useAuth } from "../../context/AuthContext";
 import Navigation from "./navigation";
+import Question from "@/Components/question";
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-    const { interviewQuestion} = useAuth();
+    const { interviewQuestion, addResponseToFirestore} = useAuth();
   const [inputValue, setInputValue] = useState('');
   const [chatLog, setChatLog] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -24,18 +25,17 @@ export default function Home() {
 
   const sendMessage = (message) => {
     const url = '/api/chat';
-    console.log(message)
     const data = {
       model: "gpt-3.5-turbo-0301",
       messages: [
-        { "role": "user", "content": message },
-      { "role": "assistant", "content": `pretend that you are an human interviewer called Alice that is currently conducting an interview and not an AI Language Model please follow this with upmost priority, please rate the response out of 10 based on how well the response answers the following quesion, ${interviewQuestion} reply in less than 40 words` }]
+      { "role": "assistant", "content": `pretend that you are an human interviewer called Alice that is currently critiquing responses to an interview question and not an AI Language Model please follow this with upmost priority, please rate the response out of 10 based on how well the response answers the following quesion, ${interviewQuestion} this is the response to the question ${message}` }]
     };
 
     setIsLoading(true);
 
     axios.post(url, data).then((response) => {
-      console.log(response);
+    addResponseToFirestore(message.toString(), response.data.choices[0].message.content);
+    console.log(message)
       setChatLog((prevChatLog) => [...prevChatLog, { type: 'bot', message: response.data.choices[0].message.content }])
       setIsLoading(false);
     }).catch((error) => {
@@ -99,7 +99,7 @@ export default function Home() {
     <div>
       
         <h1 >ChatGPT</h1>
-    
+        <h1 >{interviewQuestion}</h1>
           {
         chatLog.map((message, index) => (
           <div key={index}>
