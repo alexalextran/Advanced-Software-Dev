@@ -10,6 +10,7 @@ const Navigation = () => {
       <Link href={"/profilePage"}>Profile </Link>
       <Link href={"/chat"}>Chat </Link>
       <Link href={"/admin"}>Admin</Link>
+      <Link href={"/openai"}>OpenAI</Link>
     </div>
   );
 };

@@ -1,12 +1,12 @@
 import React from 'react'
 import styles from '@/styles/question.module.scss'
 import { useSpring, animated } from '@react-spring/web'
-
+import { useAuth } from "../../context/AuthContext";
 
 
 
 const Question = ({Question, index, setquestionInfo}) => {
-  
+  const { setinterviewQuestion} = useAuth();
  const updateState = () => {
 
  }
@@ -18,7 +18,11 @@ const Question = ({Question, index, setquestionInfo}) => {
   })
 
   return (
-    <animated.div style={trans} onClick={() => setquestionInfo(Question)}>
+    <animated.div style={trans} onClick={() => {
+    setquestionInfo(Question)
+    setinterviewQuestion(Question)
+    }
+    }>
     <p className={styles.main}>
         {Question}
     </p>

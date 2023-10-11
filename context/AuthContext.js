@@ -19,6 +19,7 @@ export const AuthContextProvider = ({
   const [loading, setLoading] = useState(true)
   const [jobsCollection, setJobsCollection] = useState([])
   const [industryArray, setIndustryArray] = useState([]);
+  const [interviewQuestion, setinterviewQuestion] = useState([]);
 //console.log(user)
 
   useEffect(() => {
@@ -126,7 +127,7 @@ export const AuthContextProvider = ({
   
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout, addIndustry, db, updateUserEmail, addQuestionDB, addJobDB, retrieveJobsData, jobsCollection, retrieveIndustriesData, industryArray}}>
+    <AuthContext.Provider value={{ user, login, signup, logout, addIndustry, db, updateUserEmail, addQuestionDB, addJobDB, retrieveJobsData, jobsCollection, retrieveIndustriesData, industryArray, interviewQuestion, setinterviewQuestion}}>
       {loading ? null : children}
     </AuthContext.Provider>
   )

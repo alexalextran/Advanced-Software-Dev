@@ -4,7 +4,7 @@ import Navigation from '../navigation.js';
 import styles from '@/styles/job.module.scss'
 import 'firebase/firestore';
 import { collection, getFirestore, getDocs} from "firebase/firestore"; 
-
+import Link from 'next/link'
 export const getStaticPaths = async () => {
     const db = getFirestore();
         var jobsData
@@ -117,7 +117,13 @@ const Job = ({ job }) => {
                       <p>{questionInfo?.testing}</p>
                   </div>
 
-                  <button>Start</button>
+                  <div>
+                    <p>Question Selected</p>
+                    <span>&nbsp;</span>
+                      <p>{questionInfo}</p>
+                  </div>
+
+                  <Link href={"/openai"}>Start</Link>
               </nav>
           </div>
       </main>
