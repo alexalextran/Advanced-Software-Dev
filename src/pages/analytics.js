@@ -22,7 +22,7 @@ const Analytics = () => {
                     <AnalyticsFields
                             label="Confidence: "
                             type="String"
-                            name="rate"
+                            name="Confidence"
                             placeholder="90%" //Need to put rated score date from database 
                             disabled={true} //Always need to be disabled to edit the value by users, only can be changed as the value change in the database
                     />
@@ -34,7 +34,7 @@ const Analytics = () => {
                     <AnalyticsFields
                             label="Coherence: "
                             type="String"
-                            name="rate"
+                            name="Coherence"
                             placeholder="60%" //Need to put rated score date from database 
                             disabled={true} //Always need to be disabled to edit the value by users, only can be changed as the value change in the database
                     />
@@ -46,7 +46,7 @@ const Analytics = () => {
                     <AnalyticsFields
                             label="Professionalism: "
                             type="String"
-                            name="rate"
+                            name="Professionalism"
                             placeholder="40%" //Need to put rated score date from database 
                             disabled={true} //Always need to be disabled to edit the value by users, only can be changed as the value change in the database
                     />
@@ -58,7 +58,7 @@ const Analytics = () => {
                     <AnalyticsFields
                             label="Creativity: "
                             type="String"
-                            name="rate"
+                            name="Creativity"
                             placeholder="85%" //Need to put rated score date from database 
                             disabled={true} //Always need to be disabled to edit the value by users, only can be changed as the value change in the database
                     />
