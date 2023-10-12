@@ -9,7 +9,6 @@ const Navigation = () => {
       <Link href={"/history"}>History </Link>
       <Link href={"/profilePage"}>Profile </Link>
       <Link href={"/admin"}>Admin</Link>
-      <Link href={"/openai"}>OpenAI</Link>
     </div>
   );
 };
