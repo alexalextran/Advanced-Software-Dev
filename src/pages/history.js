@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Navigation from './navigation';
-
+import { useAuth } from '../../context/AuthContext'
 const ChatHistory = () => {
+  const { getUserHistory, history } = useAuth()
     const [selectedChat, setSelectedChat] = useState(null);
-  
+
+    console.log(history)
     // Sample mock data for chat history
     const chatHistory = [
       {
@@ -20,6 +22,7 @@ const ChatHistory = () => {
     ];
   
     useEffect(() => {
+      getUserHistory()
       setSelectedChat(chatHistory[0]);
     }, []);
   

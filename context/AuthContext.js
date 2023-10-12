@@ -21,6 +21,7 @@ export const AuthContextProvider = ({
   const [industryArray, setIndustryArray] = useState([]);
   const [interviewQuestion, setinterviewQuestion] = useState([]);
   const [analytics, setAnalytics] = useState([]);
+  const [history, sethistory] = useState([]);
   const [industrySelected, setindustrySelected] = useState('');
 //console.log(user)
 
@@ -156,8 +157,20 @@ export const AuthContextProvider = ({
     }
   };
 
+
+  const getUserHistory = async () => {
+    const userHistoryRef = collection(db, `users/${user.email}/history`);
+    const snapshot = await getDocs(userHistoryRef);
+    const historyData = snapshot.docs.map((doc) => ({
+      ID: doc.id,
+      ...doc.data(),
+    }));
+
+    sethistory(historyData)
+  };
+
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout, addIndustry, db, updateUserEmail, addQuestionDB, addJobDB, retrieveJobsData, jobsCollection, retrieveIndustriesData, industryArray, interviewQuestion, setinterviewQuestion, addResponseToFirestore, addAanalyticsDB, retrieveAnalytics, analytics, setindustrySelected, industrySelected}}>
+    <AuthContext.Provider value={{history, getUserHistory, user, login, signup, logout, addIndustry, db, updateUserEmail, addQuestionDB, addJobDB, retrieveJobsData, jobsCollection, retrieveIndustriesData, industryArray, interviewQuestion, setinterviewQuestion, addResponseToFirestore, addAanalyticsDB, retrieveAnalytics, analytics, setindustrySelected, industrySelected}}>
       {loading ? null : children}
     </AuthContext.Provider>
   )
