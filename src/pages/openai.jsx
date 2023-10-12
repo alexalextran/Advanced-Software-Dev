@@ -36,17 +36,20 @@ export default function Home() {
     return `(${hours}:${minutes} | ${day},${month},${year})`;
   };
 
-  const addAnalytics = (inputString) => {
+  const addAanalytics = (inputString) => {
     const percentageObject = {};
-    const percentageRegex = /(\w+): (\d+)%/g;
+    const percentageRegex = /((Confidence|Coherence|Professionalism|Creativity)): (\d+)%/g;
   
-    let match;
-    while ((match = percentageRegex.exec(inputString)) !== null) {
-      const [, key, value] = match;
-      percentageObject[key] = value + '%';
+    const matches = inputString.match(percentageRegex);
+  
+    if (matches) {
+      matches.forEach(match => {
+        const [key, value] = match.split(': ');
+        percentageObject[key] = value;
+      });
     }
   
-    addAnalyticsDB(percentageObject);
+    addAanalyticsDB(percentageObject);
   };
   
   
@@ -58,9 +61,9 @@ export default function Home() {
       model: "gpt-3.5-turbo",
       messages: [
       { "role": "assistant", "content": `You will play the role of a job interviewer who specialises in the field of ${industrySelected} that is currently critiquing my response
-      to the interview question, ${interviewQuestion}, and I will only respond once.  My response is ${message}. You are to analyse my response and provide feedback and ratings for the four criteria in order:
+      to the interview question, ${interviewQuestion}, and I will only respond once.  My response is "${message}". You are to analyse my response and provide feedback and ratings for the four criteria:
       confidence, coherence, professionalism, and creativity as a percentage out of 100, for example Confidence: 50%. So if I were to response with an invalid response unrelated to the question or is vague,
-      or inputs random texts, letters or symbol, reduce the percentage for the relevant criteria. No need to repeat my response, and start with "Clarichat Feedback:" `
+      or inputs random texts, letters or symbol, reduce the percentage for the relevant criteria. Short response will also be deducted. No need to repeat my response, and start with "Clarichat Feedback:" `
     }]
     };
 
