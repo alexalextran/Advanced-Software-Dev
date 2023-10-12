@@ -12,7 +12,7 @@ const Analytics = () => {
   useEffect(() => {
     retrieveAnalytics();
   }, []);
-
+  
   return (
     <div>
       <Navigation />
