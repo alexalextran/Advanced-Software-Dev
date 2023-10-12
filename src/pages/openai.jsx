@@ -60,14 +60,13 @@ export default function Home() {
   const sendMessage = (message) => {
     const url = '/api/chat';
     const data = {
-      model: "gpt-3.5-turbo-0301",
+      model: "gpt-3.5-turbo",
       messages: [
-      { "role": "assistant", "content": `pretend that you are an human interviewer who specialises in ${industrySelected} called Alice that is currently critiquing responses to an interview question and not an AI Language Model please follow this with upmost priority, please provide ratings for each 4 of the criteria; confidence, coherence, professionalism, creativity based on the response according to the question, ${interviewQuestion} this is the response to the question ${message}
-      
-      
-      NOTE AT THE END OF THE MAIN CRITIQUE ADD STATISTICS THAT LOOK LIKE THE FOLLOWING: : - Confidence: 85% - Coherence: 90% - Professionalism: 95% - Creativity: 60%: (PLEASE MAKE SURE YOU FOLLOW THIS)
-
-      ` }]
+      { "role": "assistant", "content": `You will play the role of a job interviewer who specialises in the field of ${industrySelected} that is currently critiquing my response
+      to the interview question, ${interviewQuestion}, and I will only respond once.  My response is ${message}. You are to analyse my response and provide feedback and ratings for the four criteria:
+      confidence, coherence, professionalism, and creativity as a percentage out of 100. So if I were to response with an invalid response unrelated to the question or is vague,
+      or inputs random texts, letters or symbol, reduce the percentage for the relevant criteria. No need to repeat my response, and start with "Clarichat Feedback:" `
+    }]
     };
 
     setIsLoading(true);
@@ -82,8 +81,6 @@ export default function Home() {
       console.log(error);
     })
   }
-
-
 
   const [formData, setFormData] = useState(null);
 
