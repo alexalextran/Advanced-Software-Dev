@@ -9,7 +9,7 @@
     "lint": "next lint",
     "test": "jest --watchAll --silent",
     "debug": "jest --watchAll",
-    "autoTest": "jest"
+    "autoTest": "jest --silent"
   },
   "dependencies": {
     "axios": "^1.5.1",
