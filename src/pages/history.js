@@ -5,21 +5,8 @@ const ChatHistory = () => {
   const { getUserHistory, history } = useAuth()
     const [selectedChat, setSelectedChat] = useState(null);
 
-    console.log(history)
-    // Sample mock data for chat history
-    const chatHistory = [
-      {
-        id: 1,
-        user: history.ID,
-        messages: [history.InterviewQuestion, history.UserResponse, history.GPTResponse],
-      },
-      {
-        id: 2,
-        user: 'User 2',
-        messages: ['Hi there!', 'I am good, thanks.'],
-      },
-      // Add more chat objects here
-    ];
+
+   
   
     useEffect(() => {
       getUserHistory()
