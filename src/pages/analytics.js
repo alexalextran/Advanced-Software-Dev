@@ -9,7 +9,6 @@ const Analytics = () => {
 
   useEffect(() => {
     retrieveAnalytics;
-    console.log(analytics);
   }, []);
   return (
     <div>
@@ -21,8 +20,8 @@ const Analytics = () => {
             label="Confidence: "
             type="String"
             name="Confidence"
-            placeholder="90%" //Need to put rated score date from database
-            disabled={true} //Always need to be disabled to edit the value by users, only can be changed as the value change in the database
+            placeholder={analytics.analytics.Confidence} 
+            disabled={true} 
           />
         </h2>
         <div className={styles.container}>
@@ -33,8 +32,8 @@ const Analytics = () => {
             label="Coherence: "
             type="String"
             name="Coherence"
-            placeholder="60%" //Need to put rated score date from database
-            disabled={true} //Always need to be disabled to edit the value by users, only can be changed as the value change in the database
+            placeholder={analytics.analytics.Coherence}
+            disabled={true} 
           />
         </h2>
         <div className={styles.container}>
@@ -45,8 +44,8 @@ const Analytics = () => {
             label="Professionalism: "
             type="String"
             name="Professionalism"
-            placeholder="40%" //Need to put rated score date from database
-            disabled={true} //Always need to be disabled to edit the value by users, only can be changed as the value change in the database
+            placeholder={analytics.analytics.Professionalism}
+            disabled={true} 
           />
         </h2>
         <div className={styles.container}>
@@ -57,8 +56,8 @@ const Analytics = () => {
             label="Creativity: "
             type="String"
             name="Creativity"
-            placeholder="85%" //Need to put rated score date from database
-            disabled={true} //Always need to be disabled to edit the value by users, only can be changed as the value change in the database
+            placeholder={analytics.analytics.Creativity}
+            disabled={true} 
           />
         </h2>
         <div className={styles.container}>
