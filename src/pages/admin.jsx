@@ -38,7 +38,7 @@ const Admin = () => {
     <Navigation/>
   
       {!adminLoggedIn ? (
-        <AdminLogOn db={db} setadminLoggedIn={setadminLoggedIn}/>
+        <AdminLogOn  setadminLoggedIn={setadminLoggedIn}/>
       ) : (
         
           <div className={styles.main}>

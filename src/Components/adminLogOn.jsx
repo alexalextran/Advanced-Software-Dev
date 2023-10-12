@@ -5,8 +5,11 @@ import {
   getDocs,
 } from "firebase/firestore"; 
 import styles from '@/styles/adminLogOn.module.scss'
+import { useAuth } from "../../context/AuthContext";
 
-function AdminLogOn({db, setadminLoggedIn}) {
+
+function AdminLogOn({setadminLoggedIn}) {
+  const { db } = useAuth()
     const [email, setemail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
