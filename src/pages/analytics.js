@@ -5,8 +5,8 @@ import Navigation from "./navigation";
 import { Value } from "sass";
 import { useAuth } from "../../context/AuthContext";
 
-const Analytics = ({ retrieveAnalytics }) => {
-  const { analytics } = useAuth();
+const Analytics = () => {
+  const { retrieveAnalytics, analytics } = useAuth();
   const [isAnalyticsPopulated, setIsAnalyticsPopulated] = useState(false);
 
   useEffect(() => {

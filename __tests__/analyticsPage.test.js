@@ -20,6 +20,12 @@ const TestAnalyticsComponent = () => {
   return <Analytics retrieveAnalytics={mockRetrieveAnalytics} />;
 };
 
+jest.mock('../context/AuthContext', () => ({
+  useAuth: () => ({
+    retrieveAnalytics: jest.fn(),
+  }),
+}));
+
 describe("Render Analytics Page", () => {
   test("Correctly render analytics page", () => {
     mockRouter.push("/analytics");
