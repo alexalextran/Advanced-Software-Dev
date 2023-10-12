@@ -13,6 +13,12 @@ import { AuthContextProvider } from "../context/AuthContext";
 
 jest.mock("next/router", () => jest.requireActual("next-router-mock"));
 
+jest.mock('../context/AuthContext', () => ({
+  useAuth: () => ({
+    getUserHistory: jest.fn(),
+  }),
+}));
+
 const TestChatHistoryComponent = () => {
   return (
     <AuthContextProvider>
