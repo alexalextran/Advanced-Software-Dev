@@ -10,8 +10,8 @@ const ChatHistory = () => {
     const chatHistory = [
       {
         id: 1,
-        user: 'User 1',
-        messages: ['Hello!', 'How are you?'],
+        user: history.ID,
+        messages: [history.InterviewQuestion, history.UserResponse, history.GPTResponse],
       },
       {
         id: 2,
@@ -37,9 +37,9 @@ const ChatHistory = () => {
         <div className="chat-list">
           <h2>Chat History</h2>
           <ul>
-            {chatHistory.map((chat) => (
+            {history.map((chat) => (
               <li key={chat.id} onClick={() => handleChatSelect(chat)}>
-                {chat.user}
+                {chat.ID}
               </li>
             ))}
           </ul>
@@ -48,11 +48,18 @@ const ChatHistory = () => {
           <h2>Chat Display</h2>
           {selectedChat && (
             <div>
-              <h3>{selectedChat.user}</h3>
+              <h3>{selectedChat.ID}</h3>
+              <p>Interview Question</p>
               <ul>
-                {selectedChat.messages.map((message, index) => (
-                  <li key={index}>{message}</li>
-                ))}
+                {selectedChat.InterviewQuestion}
+              </ul>
+              <p>User Response</p>
+              <ul>
+                {selectedChat.userResponse}
+              </ul>
+              <p>AI Response</p>
+              <ul>
+                {selectedChat.GPTResponse}
               </ul>
             </div>
           )}
