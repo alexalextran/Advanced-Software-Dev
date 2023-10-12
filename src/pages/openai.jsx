@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ['latin'] })
 import Link from 'next/link'
 
 
-export default function Home() {
+export default function OpenAI() {
   const { interviewQuestion, addResponseToFirestore, addAanalyticsDB, industrySelected} = useAuth();
   const [inputValue, setInputValue] = useState('');
   const [chatLog, setChatLog] = useState([]);

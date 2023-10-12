@@ -11,12 +11,14 @@ import {
 import Analytics from "@/pages/analytics";
 import mockRouter from "next-router-mock";
 
+// Mock the retrieveAnalytics function
+const mockRetrieveAnalytics = jest.fn();
+
 jest.mock("next/router", () => jest.requireActual("next-router-mock"));
 
 const TestAnalyticsComponent = () => {
-  return <Analytics />;
+  return <Analytics retrieveAnalytics={mockRetrieveAnalytics} />;
 };
-
 
 describe("Render Analytics Page", () => {
   test("Correctly render analytics page", () => {

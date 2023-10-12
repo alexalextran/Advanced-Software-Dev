@@ -3,10 +3,7 @@ import Navigation from './navigation';
 import { useAuth } from '../../context/AuthContext'
 const ChatHistory = () => {
   const { getUserHistory, history } = useAuth()
-    const [selectedChat, setSelectedChat] = useState(null);
-
-
-   
+    const [selectedChat, setSelectedChat] = useState(null);   
   
     useEffect(() => {
       getUserHistory()
