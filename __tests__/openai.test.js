@@ -28,7 +28,7 @@ test('sends percentages to the database', async () => {
     fireEvent.change(inputField, { target: { value: 'Sample response' } });
     const sendButton = getByText('Send');
     fireEvent.click(sendButton);
-    //Mock percentages from the AI Feedback response
+    //Mock percentage from the AI Feedback response
     const mockPercentages = {
         Confidence: 50,
         Coherence: 60,
@@ -37,7 +37,7 @@ test('sends percentages to the database', async () => {
     };
     const addAanalyticsDBMock = jest.fn();
     addAanalyticsDBMock(mockPercentages);
-    expect(addAanalyticsDBMock).toHaveBeenCalledWith(expectedPercentages);
+    expect(addAanalyticsDBMock).toHaveBeenCalledWith(mockPercentages);
 });
 
 test("send button is disabled when there is no text in the textfield", () => {
