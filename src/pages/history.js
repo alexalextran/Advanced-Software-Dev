@@ -10,7 +10,7 @@ const ChatHistory = () => {
   
     useEffect(() => {
       getUserHistory()
-      setSelectedChat(chatHistory[0]);
+      setSelectedChat(history[0]);
     }, []);
   
     const handleChatSelect = (chat) => {
