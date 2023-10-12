@@ -11,7 +11,7 @@ import Link from 'next/link'
 
 
 export default function OpenAI() {
-  const { interviewQuestion, addResponseToFirestore, addAanalyticsDB, industrySelected} = useAuth();
+  const { interviewQuestion, addResponseToFirestore, addAanalyticsDB, industrySelected, jobselected} = useAuth();
   const [inputValue, setInputValue] = useState('');
   const [chatLog, setChatLog] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -60,7 +60,7 @@ export default function OpenAI() {
       model: "gpt-3.5-turbo",
       messages: [
       { "role": "assistant", "content": `You will play the role of a job interviewer who specialises in the field of ${industrySelected} that is currently critiquing my response
-      to the interview question, ${interviewQuestion}.  My response is "${message}". You are to analyse my response and provide feedback and ratings for the four criteria:
+      to the interview question, ${interviewQuestion} and the job that i am applying for is ${jobselected}.  My response is "${message}". You are to analyse my response and provide feedback and ratings for the four criteria:
       confidence, coherence, professionalism, and creativity as a percentage out of 100, for example Confidence: 50%. So if I were to response with an invalid response unrelated to the question or is vague,
       or inputs random texts, letters or symbol, reduce the percentage for the relevant criteria. One word or short responses will be deducted or given 0. Start with "Clarichat Feedback:" `
     }]
@@ -140,6 +140,7 @@ export default function OpenAI() {
         <button onClick={handleGoBack}>Go Back</button>
         <div className={styles.chatbox}>
           <h3>{interviewQuestion}</h3>
+          <h5>{jobselected}</h5>
           <p>Please Begin When You Are Ready!</p>
           {
             chatLog.map((message, index) => (

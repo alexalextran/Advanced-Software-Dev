@@ -30,6 +30,7 @@ export const AuthContextProvider = ({ children }) => {
   const [analytics, setAnalytics] = useState([]);
   const [history, sethistory] = useState([]);
   const [industrySelected, setindustrySelected] = useState("");
+  const [jobselected, setjobselected] = useState("");
   //console.log(user)
 
   useEffect(() => {
@@ -219,6 +220,8 @@ export const AuthContextProvider = ({ children }) => {
         analytics,
         setindustrySelected,
         industrySelected,
+        setjobselected,
+        jobselected,
       }}
     >
       {loading ? null : children}

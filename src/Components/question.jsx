@@ -5,8 +5,8 @@ import { useAuth } from "../../context/AuthContext";
 
 
 
-const Question = ({Question, index, setquestionInfo}) => {
-  const { setinterviewQuestion} = useAuth();
+const Question = ({Question, index, setquestionInfo, job}) => {
+  const { setinterviewQuestion, setjobselected} = useAuth();
  const updateState = () => {
 
  }
@@ -21,6 +21,7 @@ const Question = ({Question, index, setquestionInfo}) => {
     <animated.div style={trans} onClick={() => {
     setquestionInfo(Question)
     setinterviewQuestion(Question)
+    setjobselected(job)
     }
     }>
     <p className={styles.main}>
