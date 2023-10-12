@@ -16,6 +16,7 @@ const TestAnalyticsComponent = () => {
   return <Analytics />;
 };
 
+
 describe("Render Analytics Page", () => {
   test("Correctly render analytics page", () => {
     mockRouter.push("/analytics");

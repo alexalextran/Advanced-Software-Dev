@@ -11,7 +11,6 @@ const Analytics = () => {
 
   useEffect(() => {
     retrieveAnalytics();
-    setIsAnalyticsPopulated(true);
   }, []);
 
   return (

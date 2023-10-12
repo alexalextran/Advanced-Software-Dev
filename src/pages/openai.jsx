@@ -7,23 +7,25 @@ import styles from '@/styles/openai.module.scss'
 import Image from "next/image";
 import loadingimage from "../../public/images/loading.png";
 const inter = Inter({ subsets: ['latin'] })
+import Link from 'next/link'
+
 
 export default function Home() {
   const { interviewQuestion, addResponseToFirestore, addAanalyticsDB, industrySelected} = useAuth();
   const [inputValue, setInputValue] = useState('');
   const [chatLog, setChatLog] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isInputDisabled, setInputDisabled] = useState(false);
+  const [isFileInputDisabled, setFileInputDisabled] = useState(false);
    
   const handleSubmit = (event) => {
     event.preventDefault();
-
+    setInputDisabled(true); // Disable the text field
+    setFileInputDisabled(true); // Disable the file input
     setChatLog((prevChatLog) => [...prevChatLog, { type: 'user', message: inputValue }])
-
     sendMessage(inputValue);
-    
     setInputValue('');
   }
-
   
   const getCurrentDateTimeString = () => {
     const now = new Date();
@@ -51,19 +53,16 @@ export default function Home() {
   
     addAanalyticsDB(percentageObject);
   };
-  
-  
-
-
+    
   const sendMessage = (message) => {
     const url = '/api/chat';
     const data = {
       model: "gpt-3.5-turbo",
       messages: [
       { "role": "assistant", "content": `You will play the role of a job interviewer who specialises in the field of ${industrySelected} that is currently critiquing my response
-      to the interview question, ${interviewQuestion}, and I will only respond once.  My response is "${message}". You are to analyse my response and provide feedback and ratings for the four criteria:
+      to the interview question, ${interviewQuestion}.  My response is "${message}". You are to analyse my response and provide feedback and ratings for the four criteria:
       confidence, coherence, professionalism, and creativity as a percentage out of 100, for example Confidence: 50%. So if I were to response with an invalid response unrelated to the question or is vague,
-      or inputs random texts, letters or symbol, reduce the percentage for the relevant criteria. Short response will also be deducted. No need to repeat my response, and start with "Clarichat Feedback:" `
+      or inputs random texts, letters or symbol, reduce the percentage for the relevant criteria. One word or short responses will be deducted or given 0. Start with "Clarichat Feedback:" `
     }]
     };
 
@@ -105,6 +104,8 @@ export default function Home() {
 
   const sendAudio = async () => {
     setLoading(true);
+    setInputDisabled(true); // Disable the text field
+    setFileInputDisabled(true); // Disable the file input
     const res = await fetch("https://api.openai.com/v1/audio/transcriptions", {
       headers: {
         Authorization: `Bearer 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`,
@@ -126,61 +127,68 @@ export default function Home() {
     sendMessage(updatedInputValue);
   };
 
+  // Function to handle the back button click
+  const handleGoBack = () => {
+    window.history.back();
+  };
 
-
- 
-  
-
-  return ( 
-  <>
-  <Navigation/>
-  <main className={styles.main}>
+  return (
+    <>
+      <Navigation />
+      <main className={styles.main}>
+        {/* Back Button */}
+        <button onClick={handleGoBack}>Go Back</button>
         <div className={styles.chatbox}>
-        <h3 >{interviewQuestion}</h3>
-        <p>Please Begin When You Are Ready!</p>
+          <h3>{interviewQuestion}</h3>
+          <p>Please Begin When You Are Ready!</p>
           {
-        chatLog.map((message, index) => (
-          <div key={index} className={styles.message}>
-            
-            {message.message}
-           
-            </div>
-        ))}
-            
-            {
-              isLoading &&
-              <div key={chatLog.length}>
-                  <Image className={styles.loading} src={loadingimage} alt="loading" width={100} 
-                  height={100} />
-                  Loading
+            chatLog.map((message, index) => (
+              <div key={index} className={styles.message}>
+                {message.message}
               </div>
-            }
-      </div>
-       
-       <div className={styles.chatboxInput}>
-        
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <div >  
-        <input value={inputValue} placeholder="Enter Response Here" onChange={(e) => setInputValue(e.target.value)} />
-            <button >Send</button>
+            ))
+          }
+          {
+            isLoading &&
+            <div key={chatLog.length}>
+              <Image className={styles.loading} src={loadingimage} alt="loading" width={100} height={100} />
+              Analysing Response
             </div>
-        </form>
-
-                <p>Alternatively</p>
-
-            <div className={styles.fileinput}>
-             <input
-              type="file"
-              accept="audio/*"
-              onChange={handleFile}
-            />
-            <button onClick={sendAudio} >
-             Send Audio
-                </button>
-            </div>
-
+          }
         </div>
-        </main>
-  </>
-  )
+        <div className={styles.chatboxInput}>
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <div>
+            <input
+              value={inputValue}
+              placeholder="Enter Response Here"
+              onChange={(e) => setInputValue(e.target.value)}
+              disabled={isInputDisabled} // Disable the text field
+            />
+            <button
+              disabled={!inputValue.trim() || isInputDisabled} // Disable the button
+            >
+              Send
+            </button>
+          </div>
+        </form>
+        <p>Alternatively</p>
+        <div className={styles.fileinput}>
+          <input
+            type="file"
+            accept="audio/*"
+            onChange={handleFile}
+            disabled={isFileInputDisabled} // Disable the file input
+          />
+          <button
+            onClick={sendAudio}
+            disabled={!formData || isFileInputDisabled} // Disable the button
+          >
+            Send Audio
+          </button>
+        </div>
+        </div>
+      </main>
+    </>
+  );
 }
