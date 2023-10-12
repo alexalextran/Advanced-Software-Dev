@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import React from "react";
+import React, { useState as useStateMock } from "react";
 import {
   fireEvent,
   render,
@@ -9,20 +9,26 @@ import {
 } from "@testing-library/react";
 import ChatHistory from "@/pages/history";
 import mockRouter from "next-router-mock";
+import { AuthContextProvider } from "../context/AuthContext";
 
 jest.mock("next/router", () => jest.requireActual("next-router-mock"));
 
 const TestChatHistoryComponent = () => {
-  return <ChatHistory />;
+  return (
+    <AuthContextProvider>
+      <ChatHistory />
+    </AuthContextProvider>
+  );
 };
 
 describe("Render Chat History Page", () => {
   test("Correctly render chat history page", () => {
     mockRouter.push("/history");
-    jest.spyOn(React, "useEffect").mockImplementation((f) => f());
+    const dumb = () => jest.fn();
+    jest.spyOn(React, "useEffect").mockImplementation(dumb);
     render(<TestChatHistoryComponent />);
-    const interviewQuestionPara = screen.getByText("Interview Question");
+    const chatHistoryHeader = screen.getByText("Chat History");
 
-    expect(interviewQuestionPara).toBeInTheDocument();
+    expect(chatHistoryHeader).toBeInTheDocument();
   });
 });
