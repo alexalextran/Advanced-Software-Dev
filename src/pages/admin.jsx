@@ -36,9 +36,10 @@ const Admin = () => {
   return (
     <>
     <Navigation/>
-  
+    {/* navigation bar */}
       {!adminLoggedIn ? (
-        <AdminLogOn  setadminLoggedIn={setadminLoggedIn}/>
+        <AdminLogOn  setadminLoggedIn={setadminLoggedIn}/> 
+       //renders logon component for admin
       ) : (
         
           <div className={styles.main}>
@@ -47,10 +48,12 @@ const Admin = () => {
           <AdminIndustry
             selectedIndustry={selectedIndustry}
             setSelectedIndustry={setSelectedIndustry}
+            //renders all the industries, i.e IT, hospitality
           />
 
             {selectedIndustry && (
             <AdminAddJob
+            //renders the job form allows admins to add jobs
               selectedIndustry={selectedIndustry}
             />
           )}
@@ -59,11 +62,13 @@ const Admin = () => {
           <div className={styles.mainRight}>
           {selectedIndustry && (
             <AdminJobDropDown
+            //renders all jobs depending on the industry selected
               selectedJob={selectedJob}
               setSelectedJob={setSelectedJob}
             />
           )}
           {selectedIndustry && selectedJob && (
+            //renders the form that allows admins to add question
             <AdminAddQuestion
               selectedJob={selectedJob}
               selectedIndustry={selectedIndustry}
