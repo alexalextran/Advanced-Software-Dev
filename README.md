@@ -27,3 +27,25 @@ To run this project, you will need to add the following environment variables to
 `OPEN_AI_API_KEY`
 
 
+Structure
+|- __tests__
+|----context
+      |-----------AuthContext.js
+|--------- src
+            |-----------pages
+            |-----------components
+            |----------styles                   
+                    
+                
+__tests__ -->  folder for tests
+src/pages --> folder for all accessible pages
+src/components --> folder for all componenets used in pages
+src/styles --> folder for styling files
+context/authcontext --> database management (handles all functions for reading and writing data to the DB
+
+Features
+Log on, signup, Account Management -- Edward
+Dashboard, jobs, admin, database management -- Alex
+Chatscreen, openai integraton, whisper integration -- Jason
+History, user chat logs -- Josh
+Analytics, analytics algorithm -- Louis
