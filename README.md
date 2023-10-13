@@ -20,13 +20,6 @@ Clarichat a web application developed by group 5 Advanced Software Development a
 In order to run and test the demo, please install all packages with 'npm i' and run 'npm run dev' after
 
 
-## Environment Variables
-
-To run this project, you will need to add the following environment variables to your .env file
-
-`OPEN_AI_API_KEY`
-
-
 Structure
 |- __tests__
 |----context
