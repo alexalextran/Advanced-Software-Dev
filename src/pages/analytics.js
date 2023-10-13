@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import styles from "@/styles/analytic.module.scss";
 import AnalyticsFields from "@/Components/AnalyticComponent";
 import Navigation from "./navigation";
 import { Value } from "sass";
@@ -8,6 +7,7 @@ import { useAuth } from "../../context/AuthContext";
 const Analytics = () => {
   const { retrieveAnalytics, analytics } = useAuth();
   const [isAnalyticsPopulated, setIsAnalyticsPopulated] = useState(false);
+
 
   useEffect(() => {
     retrieveAnalytics();
@@ -30,8 +30,17 @@ const Analytics = () => {
             disabled={true}
           />
         </h2>
-        <div className={styles.container}>
-          <div className={styles.g1}></div>
+        <div style={{width: "100%",
+    backgroundColor: "gray",
+    paddingRight: "0px"
+    }}>
+        <div style={{width: analytics?.analytics?.Confidence,
+    backgroundColor: "red",
+    paddingRight: "0px",
+    paddingTop: "20px",
+    paddingBottom: "20px"
+    }}>
+        </div>
         </div>
         <h2>
           <AnalyticsFields
@@ -42,8 +51,18 @@ const Analytics = () => {
             disabled={true}
           />
         </h2>
-        <div className={styles.container}>
-          <div className={styles.g2}></div>
+        <div style={{width: "100%",
+    backgroundColor: "gray",
+    paddingRight: "0px"
+    }}>
+        <div style={{width: analytics?.analytics?.Coherence,
+    backgroundColor: "green",
+    paddingRight: "0px",
+    paddingTop: "20px",
+    paddingBottom: "20px"
+    }}>
+        
+        </div>
         </div>
         <h2>
           <AnalyticsFields
@@ -54,8 +73,17 @@ const Analytics = () => {
             disabled={true}
           />
         </h2>
-        <div className={styles.container}>
-          <div className={styles.g3}></div>
+        <div style={{width: "100%",
+    backgroundColor: "gray",
+    paddingRight: "0px"
+    }}>
+        <div style={{width: analytics?.analytics?.Professionalism,
+    backgroundColor: "blue",
+    paddingRight: "0px",
+    paddingTop: "20px",
+    paddingBottom: "20px"
+    }}>
+        </div>
         </div>
         <h2>
           <AnalyticsFields
@@ -66,8 +94,17 @@ const Analytics = () => {
             disabled={true}
           />
         </h2>
-        <div className={styles.container}>
-          <div className={styles.g4}></div>
+        <div style={{width: "100%",
+    backgroundColor: "gray",
+    paddingRight: "0px"
+    }}>
+        <div style={{width: analytics?.analytics?.Creativity,
+    backgroundColor: "yellow",
+    paddingRight: "0px",
+    paddingTop: "20px",
+    paddingBottom: "20px"
+    }}>
+        </div>
         </div>
       </div>
     </div>
