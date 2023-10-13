@@ -33,15 +33,15 @@ const ChatHistory = () => {
           {selectedChat && (
             <div>
               <h3>{selectedChat.ID}</h3>
-              <p>Interview Question</p>
+              <p> <b>Interview Question</b></p>
               <ul>
                 {selectedChat.InterviewQuestion}
               </ul>
-              <p>User Response</p>
+              <p> <b>User Response</b></p>
               <ul>
                 {selectedChat.userResponse}
               </ul>
-              <p>AI Response</p>
+              <p> <b>AI Response</b></p>
               <ul>
                 {selectedChat.GPTResponse}
               </ul>
