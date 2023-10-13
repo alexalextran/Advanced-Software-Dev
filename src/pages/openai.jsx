@@ -27,7 +27,7 @@ export default function OpenAI() {
     setInputValue('');
   }
   
-  const getCurrentDateTimeString = () => {
+  const getCurrentDateTimeString = () => { //gets current date for history timestamp
     const now = new Date();
     const hours = now.getHours().toString().padStart(2, '0');
     const minutes = now.getMinutes().toString().padStart(2, '0');
@@ -38,13 +38,13 @@ export default function OpenAI() {
     return `(${hours}:${minutes} | ${day},${month},${year})`;
   };
 
-  const addAanalytics = (inputString) => {
+  const addAanalytics = (inputString) => { //adds percentages to DB
     const percentageObject = {};
-    const percentageRegex = /((Confidence|Coherence|Professionalism|Creativity)): (\d+)%/g;
+    const percentageRegex = /((Confidence|Coherence|Professionalism|Creativity)): (\d+)%/g; //regex to find and retrieve stats within the response
   
     const matches = inputString.match(percentageRegex);
   
-    if (matches) {
+    if (matches) { //add percentages to OBJ
       matches.forEach(match => {
         const [key, value] = match.split(': ');
         percentageObject[key] = value;
@@ -54,7 +54,7 @@ export default function OpenAI() {
     addAanalyticsDB(percentageObject);
   };
     
-  const sendMessage = (message) => {
+  const sendMessage = (message) => { //GPT API
     const url = '/api/chat';
     const data = {
       model: "gpt-3.5-turbo",
@@ -69,8 +69,8 @@ export default function OpenAI() {
     setIsLoading(true);
 
     axios.post(url, data).then((response) => {
-    addResponseToFirestore(message.toString(), response.data.choices[0].message.content, getCurrentDateTimeString());
-    addAanalytics(response.data.choices[0].message.content)
+    addResponseToFirestore(message.toString(), response.data.choices[0].message.content, getCurrentDateTimeString()); //adds data to history DB
+    addAanalytics(response.data.choices[0].message.content) //adds analytics to DB
       setChatLog((prevChatLog) => [...prevChatLog, { type: 'bot', message: response.data.choices[0].message.content }])
       setIsLoading(false);
     }).catch((error) => {
@@ -81,7 +81,7 @@ export default function OpenAI() {
 
   const [formData, setFormData] = useState(null);
 
-  const handleFile = async (e) => {
+  const handleFile = async (e) => { //handles mp3 files
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
   
