@@ -34,7 +34,7 @@ const LoginPage = () => {
 
   return (
     <div className="formDiv">
-      <h1>Login Here!</h1>
+      <h1>Login!</h1>
       <form onSubmit={loginfunc}>
         <LoginField
           icon={<MdEmail />}
