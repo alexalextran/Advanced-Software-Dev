@@ -1,7 +1,17 @@
 import axios from 'axios';
+import Cors from 'cors';
+import { runMiddleware } from '../../utils/middleware';
 
 export default async function handler(req, res) {
   const referer = req.headers.referer || req.headers.referrer; // get the referer from the request headers
+
+
+  const cors = Cors({
+    origin: 'https://your-vercel-app-url.vercel.app', // Replace with your Vercel app's URL
+    methods: ['GET', 'POST'],
+  });
+
+  await runMiddleware(req, res, cors);
 
   if (req.method !== 'POST') {
     res.status(405).json({ message: 'Method should be POST' });
