@@ -30,6 +30,14 @@ steps:
       SourceFolder: "$(Build.SourcesDirectory)"
       targetFolder: "$(Build.ArtifactStagingDirectory)"
     displayName: "Copy Files"
+    # zip artifacts
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: "$(Build.ArtifactStagingDirectory)"
+      includeRootFolder: false
+      archiveType: "zip"
+      archiveFile: "$(Build.ArtifactStagingDirectory)/clarichat.zip"
+      replaceExistingArchive: true
     # publish artifacts
   - task: PublishBuildArtifacts@1
     inputs:
