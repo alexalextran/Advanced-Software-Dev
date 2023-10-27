@@ -108,7 +108,7 @@ export default function OpenAI() {
     setFileInputDisabled(true); // Disable the file input
     const res = await fetch("https://api.openai.com/v1/audio/transcriptions", {
       headers: {
-        Authorization: `INSERT KEY HERE`,
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
       },
       method: "POST",
       body: formData,
