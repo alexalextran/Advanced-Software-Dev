@@ -27,7 +27,7 @@ steps:
     # build artifacts
   - task: CopyFiles@2
     inputs:
-      contents: "build/**"
+      SourceFolder: "$(Build.SourcesDirectory)"
       targetFolder: "$(Build.ArtifactStagingDirectory)"
     displayName: "Copy Files"
     # publish artifacts
