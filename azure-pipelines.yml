@@ -23,3 +23,16 @@ steps:
   - script: |
       npm test
     displayName: "npm test"
+
+    # build artifacts
+  - task: CopyFiles@2
+    inputs:
+      contents: "build/**"
+      targetFolder: "$(Build.ArtifactStagingDirectory)"
+    displayName: "Copy Files"
+    # publish artifacts
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: "$(Build.ArtifactStagingDirectory)"
+      artifactName: "clarichat"
+    displayName: "Publish Artifacts"
