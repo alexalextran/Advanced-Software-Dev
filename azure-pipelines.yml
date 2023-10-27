@@ -23,24 +23,3 @@ steps:
   - script: |
       npm test
     displayName: "npm test"
-
-    # build artifacts
-  - task: CopyFiles@2
-    inputs:
-      SourceFolder: "$(Build.SourcesDirectory)"
-      targetFolder: "$(Build.ArtifactStagingDirectory)"
-    displayName: "Copy Files"
-    # zip artifacts
-  - task: ArchiveFiles@2
-    inputs:
-      rootFolderOrFile: "$(Build.ArtifactStagingDirectory)"
-      includeRootFolder: false
-      archiveType: "zip"
-      archiveFile: "$(Build.ArtifactStagingDirectory)/clarichat.zip"
-      replaceExistingArchive: true
-    # publish artifacts
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathtoPublish: "$(Build.ArtifactStagingDirectory)"
-      artifactName: "clarichat"
-    displayName: "Publish Artifacts"
