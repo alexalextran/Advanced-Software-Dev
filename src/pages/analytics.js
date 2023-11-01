@@ -10,7 +10,7 @@ const Analytics = () => {
 
 
   useEffect(() => {
-    retrieveAnalytics();
+    console.log(analytics)
   }, []);
   
   return (
@@ -26,7 +26,7 @@ const Analytics = () => {
             label="Confidence: "
             type="String"
             name="Confidence"
-            placeholder={analytics?.analytics?.Confidence}
+            placeholder={analytics?.Confidence}
             disabled={true}
           />
         </h2>
@@ -34,7 +34,7 @@ const Analytics = () => {
     backgroundColor: "gray",
     paddingRight: "0px"
     }}>
-        <div style={{width: analytics?.analytics?.Confidence,
+        <div style={{width: analytics?.Confidence,
     backgroundColor: "red",
     paddingRight: "0px",
     paddingTop: "20px",
@@ -47,7 +47,7 @@ const Analytics = () => {
             label="Coherence: "
             type="String"
             name="Coherence"
-            placeholder={analytics?.analytics?.Coherence}
+            placeholder={analytics?.Coherence}
             disabled={true}
           />
         </h2>
@@ -55,7 +55,7 @@ const Analytics = () => {
     backgroundColor: "gray",
     paddingRight: "0px"
     }}>
-        <div style={{width: analytics?.analytics?.Coherence,
+        <div style={{width: analytics?.Coherence,
     backgroundColor: "green",
     paddingRight: "0px",
     paddingTop: "20px",
@@ -69,7 +69,7 @@ const Analytics = () => {
             label="Professionalism: "
             type="String"
             name="Professionalism"
-            placeholder={analytics?.analytics?.Professionalism}
+            placeholder={analytics?.Professionalism}
             disabled={true}
           />
         </h2>
@@ -77,7 +77,7 @@ const Analytics = () => {
     backgroundColor: "gray",
     paddingRight: "0px"
     }}>
-        <div style={{width: analytics?.analytics?.Professionalism,
+        <div style={{width: analytics?.Professionalism,
     backgroundColor: "blue",
     paddingRight: "0px",
     paddingTop: "20px",
@@ -90,7 +90,7 @@ const Analytics = () => {
             label="Creativity: "
             type="String"
             name="Creativity"
-            placeholder={analytics?.analytics?.Creativity}
+            placeholder={analytics?.Creativity}
             disabled={true}
           />
         </h2>
@@ -98,7 +98,7 @@ const Analytics = () => {
     backgroundColor: "gray",
     paddingRight: "0px"
     }}>
-        <div style={{width: analytics?.analytics?.Creativity,
+        <div style={{width: analytics?.Creativity,
     backgroundColor: "yellow",
     paddingRight: "0px",
     paddingTop: "20px",
