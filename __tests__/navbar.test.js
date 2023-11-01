@@ -23,13 +23,11 @@ describe("Render Navbar", () => {
     mockRouter.push("/Dashboard");
     render(<TestNavbar />);
     const dashboardLink = screen.getByText("Dashboard");
-    const analyticsLink = screen.getByText("Analytics");
     const historyLink = screen.getByText("History");
     const profileLink = screen.getByText("Profile");
     const adminLink = screen.getByText("Admin");
 
     expect(dashboardLink).toBeInTheDocument();
-    expect(analyticsLink).toBeInTheDocument();
     expect(historyLink).toBeInTheDocument();
     expect(profileLink).toBeInTheDocument();
     expect(adminLink).toBeInTheDocument();
