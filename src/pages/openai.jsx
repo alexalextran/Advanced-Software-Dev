@@ -8,7 +8,8 @@ import Image from "next/image";
 import loadingimage from "../../public/images/loading.png";
 const inter = Inter({ subsets: ['latin'] })
 import Link from 'next/link'
-
+import { CircularProgressbar, buildStyles  } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
 export default function OpenAI() {
   const { interviewQuestion, addResponseToFirestore, addAanalyticsDB, industrySelected, jobselected} = useAuth();
@@ -17,6 +18,8 @@ export default function OpenAI() {
   const [isLoading, setIsLoading] = useState(false);
   const [isInputDisabled, setInputDisabled] = useState(false);
   const [isFileInputDisabled, setFileInputDisabled] = useState(false);
+  const [value, setvalue] = useState(0)
+
    
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -69,6 +72,7 @@ export default function OpenAI() {
     setIsLoading(true);
 
     axios.post(url, data).then((response) => {
+      setvalue(addAanalytics(response.data.choices[0].message.content))
     addResponseToFirestore(message.toString(), response.data.choices[0].message.content, getCurrentDateTimeString(),  addAanalytics(response.data.choices[0].message.content)); //adds data to history DB
   
       setChatLog((prevChatLog) => [...prevChatLog, { type: 'bot', message: response.data.choices[0].message.content }])
@@ -93,7 +97,7 @@ export default function OpenAI() {
   
       // Check if the size is less than 25MB
       if (file.size > 25 * 1024 * 1024) {
-        alert("Please upload an audio file less than 25MB");
+        alert("Please 5pload an audio file less than 25MB");
         return;
       }
     }
@@ -141,7 +145,63 @@ export default function OpenAI() {
         <div className={styles.chatbox}>
           <h3>{interviewQuestion}</h3>
           <h5>{jobselected}</h5>
-          <p>Please Begin When You Are Ready!</p>
+          <p>Please begin When You Are Ready!</p>
+
+          
+            <div className={styles.stats_Container}>
+          <div className={styles.stats}>
+            <h3>Professionalism</h3>
+            <CircularProgressbar value={parseFloat(value.Professionalism || 0)} text={`${value.Professionalism || 0}`}
+            styles={buildStyles({
+              strokeLinecap: 'butt',
+              transition: 'stroke-dashoffset 10s ease 10s',
+              pathColor: `rgb(0,209,178)`,
+              textColor: 'white',
+              trailColor: 'black',
+            })}/>
+          </div>
+
+          <div className={styles.stats}>
+            <h3>Confidence</h3>
+            <CircularProgressbar value={parseFloat(value.Confidence) || 0} text={`${value.Confidence || 0}`}
+            styles={buildStyles({
+              strokeLinecap: 'butt',
+              transition: 'stroke-dashoffset 10s ease 10s',
+              pathColor: `rgb(255,221,87)`,
+              textColor: 'white',
+              trailColor: 'black',
+            })}/>
+          </div>
+
+
+          <div className={styles.stats}>
+            <h3>Coherence</h3>
+            <CircularProgressbar value={parseFloat(value.Coherence) || 0} text={`${value.Coherence || 0}`}
+            styles={buildStyles({
+              strokeLinecap: 'butt',
+              transition: 'stroke-dashoffset 10s ease 10s',
+              pathColor: `rgb(255,56,96)`,
+              textColor: 'white',
+              trailColor: 'black',
+            })}/>
+          </div>
+
+
+          <div className={styles.stats}>
+            <h3>Creativity</h3>
+            <CircularProgressbar value={parseFloat(value.Creativity) || 0} text={`${value.Creativity || 0}`}
+            styles={buildStyles({
+              strokeLinecap: 'butt',
+              transition: 'stroke-dashoffset 10s ease 10s',
+              pathColor: `rgb(243,115,31)`,
+              textColor: 'white',
+              trailColor: 'black',
+            })}/>
+          </div>
+
+          </div>
+
+           
           {
             chatLog.map((message, index) => (
               <div key={index} className={styles.message}>
