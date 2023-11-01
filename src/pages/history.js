@@ -2,31 +2,40 @@ import React, { useState, useEffect } from 'react';
 import Navigation from './navigation';
 import { useAuth } from '../../context/AuthContext'
 import Link from 'next/link';
+
 const ChatHistory = () => {
-  const { getUserHistory, history, setAnalytics } = useAuth()
-    const [selectedChat, setSelectedChat] = useState(null);   
-  
-    useEffect(() => {
-      getUserHistory()
-      setSelectedChat(history[0]);
-    }, []);
-  
-    const handleChatSelect = (chat) => {
-      setSelectedChat(chat);
-    };
-  
-    return (
-        <>
-        <Navigation/>
+  const { getUserHistory, history, setAnalytics } = useAuth();
+  const [selectedChat, setSelectedChat] = useState(null);
+
+  useEffect(() => {
+    getUserHistory()
+    setSelectedChat(history[0]);
+  }, []);
+
+  // Use a useEffect to log analytics when selectedChat changes
+  useEffect(() => {
+    if (selectedChat) {
+      setAnalytics(selectedChat.Analytics);
+      console.log(selectedChat.Analytics);
+    }
+  }, [selectedChat]);
+
+  const handleChatSelect = (chat) => {
+    setSelectedChat(chat);
+  };
+
+  return (
+    <>
+      <Navigation />
       <div className="chat-history">
         <div className="chat-list">
           <h2>Chat History</h2>
           <ul>
             {history.map((chat) => (
-              <li key={chat.id} onClick={() => {
-              handleChatSelect(chat)
-              setAnalytics(selectedChat?.Analytics)  
-            }}>
+              <li
+                key={chat.id}
+                onClick={() => handleChatSelect(chat)}
+              >
                 {chat.ID}
               </li>
             ))}
@@ -50,13 +59,12 @@ const ChatHistory = () => {
                 {selectedChat.GPTResponse}
               </ul>
               <p> <Link  href={"/analytics"}>Analytics</Link></p>
-             
             </div>
           )}
         </div>
       </div>
-      </>
-    );
-  };
-  
-  export default ChatHistory;
+    </>
+  );
+};
+
+export default ChatHistory;
