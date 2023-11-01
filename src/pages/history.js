@@ -45,6 +45,7 @@ const ChatHistory = () => {
               <ul>
                 {selectedChat.GPTResponse}
               </ul>
+             
             </div>
           )}
         </div>

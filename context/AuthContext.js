@@ -154,13 +154,15 @@ export const AuthContextProvider = ({ children }) => {
   const addResponseToFirestore = async (
     userResponse,
     GPTResponse,
-    timestamp
+    timestamp,
+    analytics
   ) => {
     try {
       await setDoc(doc(db, `users/${user.email}/history/${timestamp}`), {
         InterviewQuestion: interviewQuestion,
         userResponse: userResponse,
         GPTResponse: GPTResponse,
+        Analytics: analytics
       });
       console.log("Document successfully written to Firestore!");
     } catch (error) {

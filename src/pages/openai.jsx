@@ -51,7 +51,7 @@ export default function OpenAI() {
       });
     }
   
-    addAanalyticsDB(percentageObject);
+    return percentageObject;
   };
     
   const sendMessage = (message) => { //GPT API
@@ -69,8 +69,8 @@ export default function OpenAI() {
     setIsLoading(true);
 
     axios.post(url, data).then((response) => {
-    addResponseToFirestore(message.toString(), response.data.choices[0].message.content, getCurrentDateTimeString()); //adds data to history DB
-    addAanalytics(response.data.choices[0].message.content) //adds analytics to DB
+    addResponseToFirestore(message.toString(), response.data.choices[0].message.content, getCurrentDateTimeString(),  addAanalytics(response.data.choices[0].message.content)); //adds data to history DB
+  
       setChatLog((prevChatLog) => [...prevChatLog, { type: 'bot', message: response.data.choices[0].message.content }])
       setIsLoading(false);
     }).catch((error) => {
