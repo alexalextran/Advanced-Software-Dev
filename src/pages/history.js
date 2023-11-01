@@ -24,6 +24,16 @@ const ChatHistory = () => {
     setSelectedChat(chat);
   };
 
+  const analyticsButton =  {
+    display: 'inline-block',
+    backgroundColor: 'black', 
+    color: 'white',
+    padding: '10px 25px',
+    border: '1px solid grey',
+    borderRadius: '5px',
+    textDecoration: 'none',
+  }
+
   return (
     <>
       <Navigation />
@@ -58,7 +68,9 @@ const ChatHistory = () => {
               <ul>
                 {selectedChat.GPTResponse}
               </ul>
-              <p> <Link  href={"/analytics"}>Analytics</Link></p>
+              <div style = {{textAlign: 'center', marginTop: '80px', marginBottom: '70px'}}>
+                <Link  href={"/analytics"} style={analyticsButton}>Check Analytics</Link>
+              </div>            
             </div>
           )}
         </div>
