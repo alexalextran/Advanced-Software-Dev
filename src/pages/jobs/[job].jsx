@@ -101,32 +101,10 @@ const Job = ({ job }) => {
                   )}
               </div>
               <nav>
-                  <h1>Information</h1>
-                  <div>
-                      <p>Time: </p>
-                      <span>&nbsp;</span>
-                      <p>{questionInfo?.time}</p>
-                  </div>
-
-                  <div>
-                      <p>Type Of Question:</p>
-                      <span>&nbsp;</span>
-                      <p>{questionInfo?.tag}</p>
-                  </div>
-
-                  <div>
-                      <p>Field Tested:</p>
-                      <span>&nbsp;</span>
-                      <p>{questionInfo?.testing}</p>
-                  </div>
-
-                  <div>
-                    <p>Question Selected</p>
-                    <span>&nbsp;</span>
-                      <p>{questionInfo}</p>
-                  </div>
-
-                  <Link href={"/openai"}>Start</Link>
+                  <h1>Question Selected</h1>
+                      <h4>{questionInfo}</h4>
+                        <p>Click start to begin the interview</p>
+                 <button><Link href={"/openai"}>Start</Link></button> 
               </nav>
           </div>
       </main>

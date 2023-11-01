@@ -10,8 +10,8 @@ const AdminAddQuestion = ({selectedJob, selectedIndustry}) => {
       e.preventDefault();
       const questionInput = e.target[0].value;
    
-        if (selectedJob == null) {
-          alert("Please select a job first.");
+        if (questionInput == "") {
+          alert("Please write a question first.");
           return;
         }
         try {

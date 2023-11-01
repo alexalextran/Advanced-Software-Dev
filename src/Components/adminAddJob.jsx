@@ -5,11 +5,12 @@ const AdminAddJob = ({selectedIndustry}) => {
   const { addJobDB, retrieveJobsData } = useAuth();
 
     const handleAddJob = async (e) => {
-        if (!selectedIndustry) {
-          alert("Please select an industry job first.");
+      e.preventDefault();
+        if (!selectedIndustry || e.target[0].value === '') {
+          alert("Please write a job first.");
           return;
         }
-       e.preventDefault();
+     
         const newJob = e.target[0].value;
         try {
           addJobDB(selectedIndustry, newJob)
