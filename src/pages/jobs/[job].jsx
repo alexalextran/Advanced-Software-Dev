@@ -104,7 +104,20 @@ const Job = ({ job }) => {
                   <h1>Question Selected</h1>
                       <h4>{questionInfo}</h4>
                         <p>Click start to begin the interview</p>
-                 <button><Link href={"/openai"}>Start</Link></button> 
+                        <button onClick={() => {
+                            if(questionInfo === undefined){
+                                alert("Please select a question first")
+                                return
+                            }
+                        }}>
+                        {questionInfo ? (
+                            <Link href="/openai">
+                                 Start
+                            </Link>
+                        ) : (
+                        <span>Start</span>
+                 )}
+                    </button>
               </nav>
           </div>
       </main>
