@@ -36,8 +36,10 @@
 
    .stats_Container{
     height: fit-content;
-    margin: 2em 0;
+    margin: 2em auto;
     margin-top: 1em; 
+    width: 40em;
+    
 
     @include flexCustom(space-between, center, row);
     .stats{
