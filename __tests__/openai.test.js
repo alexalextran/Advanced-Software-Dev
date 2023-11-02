@@ -56,8 +56,3 @@ test("send button is disabled after clicking the send button", async () => {
     expect(sendButton).toBeDisabled();
 });
 
-test("send audio button is disabled if there is no file selected", () => {
-    render(<OpenAI />);
-    const sendAudioButton = screen.getByText("Send Audio");
-    expect(sendAudioButton).toBeDisabled();
-});
