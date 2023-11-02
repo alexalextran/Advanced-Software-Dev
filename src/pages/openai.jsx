@@ -67,7 +67,7 @@ export default function OpenAI() {
 
   // Function to send a message to the GPT API
   const sendMessage = (message) => {
-    const vercelURL = process.env.VERCEL_URL; // Get the Vercel deployment URL
+    const vercelURL = process.env.NOW_URL; // Get the Vercel deployment URL
     const url = `https://${vercelURL}/api/chat`;
     const data = {
       model: "gpt-3.5-turbo",
