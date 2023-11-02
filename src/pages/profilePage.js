@@ -20,8 +20,7 @@ import {
   deleteUser,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import styles from '@/styles/profilePage.module.scss'
-
+import styles from "@/styles/profilePage.module.scss";
 
 const Profile = () => {
   const [isDisabled, setDisabled] = useState(true);
@@ -56,7 +55,7 @@ const Profile = () => {
     };
 
     getUsername(emailVariable);
-  }, [emailVariable]);
+  }, []);
 
   const Update = async (event) => {
     event.preventDefault();
@@ -230,9 +229,9 @@ const Profile = () => {
           </div>
           <Button isClicked={isClicked} />
         </form>
-        
+
         <button onClick={LogOut}> Log Out </button>
-       
+
         <button onClick={Delete}>
           <span style={{ color: "red" }}>Delete account</span>
         </button>

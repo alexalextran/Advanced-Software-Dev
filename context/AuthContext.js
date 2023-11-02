@@ -231,7 +231,7 @@ export const AuthContextProvider = ({ children }) => {
         setjobselected,
         jobselected,
         wordCountStat,
-        setwordCountStat
+        setwordCountStat,
       }}
     >
       {loading ? null : children}
