@@ -16,11 +16,11 @@ steps:
     displayName: "Install Node.js"
 
   - task: vercel-deployment-task@1
-  inputs:
-    vercelProjectId: 'prj_oLxTaAguNfwB4MoPnvsvW3icbLCp'
-    vercelOrgId: 'h3WpUkazVzVxSoumQL1gTUEJ'
-    vercelToken: 'WqZVM0HeVRXlFRx1APyzBfTO'
-    production: true
+    inputs:
+      vercelProjectId: 'prj_oLxTaAguNfwB4MoPnvsvW3icbLCp'
+      vercelOrgId: 'h3WpUkazVzVxSoumQL1gTUEJ'
+      vercelToken: 'WqZVM0HeVRXlFRx1APyzBfTO'
+      production: true
 
   - script: |
       npm install
