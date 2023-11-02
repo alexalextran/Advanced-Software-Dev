@@ -1,20 +1,25 @@
 import { useState } from "react";
-import { Inter } from 'next/font/google'
-import axios from 'axios';
+import { Inter } from "next/font/google";
+import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
 import Navigation from "./navigation";
-import styles from '@/styles/openai.module.scss'
-const inter = Inter({ subsets: ['latin'] })
+import styles from "@/styles/openai.module.scss";
+const inter = Inter({ subsets: ["latin"] });
 import ChatBox from "@/Components/ChatBox";
 import InputForm from "@/Components/InputForm";
-import 'react-circular-progressbar/dist/styles.css';
+import "react-circular-progressbar/dist/styles.css";
 
 export default function OpenAI() {
   // Extracting variables and functions using destructuring
-  const { interviewQuestion, addResponseToFirestore, industrySelected, jobselected } = useAuth();
+  const {
+    interviewQuestion,
+    addResponseToFirestore,
+    industrySelected,
+    jobselected,
+  } = useAuth();
 
   // State variables
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
   const [chatLog, setChatLog] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isInputDisabled, setInputDisabled] = useState(false);
@@ -26,18 +31,21 @@ export default function OpenAI() {
     event.preventDefault();
     setInputDisabled(true); // Disable the text field
     setFileInputDisabled(true); // Disable the file input
-    setChatLog((prevChatLog) => [...prevChatLog, { type: 'user', message: inputValue }]);
+    setChatLog((prevChatLog) => [
+      ...prevChatLog,
+      { type: "user", message: inputValue },
+    ]);
     sendMessage(inputValue);
-    setInputValue('');
-  }
-  
+    setInputValue("");
+  };
+
   // Function to get the current date and time as a string
   const getCurrentDateTimeString = () => {
     const now = new Date();
-    const hours = now.getHours().toString().padStart(2, '0');
-    const minutes = now.getMinutes().toString().padStart(2, '0');
-    const day = now.getDate().toString().padStart(2, '0');
-    const month = (now.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based, so we add 1.
+    const hours = now.getHours().toString().padStart(2, "0");
+    const minutes = now.getMinutes().toString().padStart(2, "0");
+    const day = now.getDate().toString().padStart(2, "0");
+    const month = (now.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based, so we add 1.
     const year = now.getFullYear();
     return `(${hours}:${minutes} | ${day},${month},${year})`;
   };
@@ -45,42 +53,54 @@ export default function OpenAI() {
   // Function to extract percentages from the response message
   const addAanalytics = (inputString) => {
     const percentageObject = {};
-    const percentageRegex = /((Confidence|Coherence|Professionalism|Creativity)): (\d+)%/g; // Regex to find and retrieve stats within the response
+    const percentageRegex =
+      /((Confidence|Coherence|Professionalism|Creativity)): (\d+)%/g; // Regex to find and retrieve stats within the response
     const matches = inputString.match(percentageRegex);
     if (matches) {
-      matches.forEach(match => {
-        const [key, value] = match.split(': ');
+      matches.forEach((match) => {
+        const [key, value] = match.split(": ");
         percentageObject[key] = value;
       });
     }
     return percentageObject;
   };
-    
+
   // Function to send a message to the GPT API
   const sendMessage = (message) => {
     const vercelURL = process.env.VERCEL_URL; // Get the Vercel deployment URL
-    const url = `https://${VERCEL_URL}/api/chat`;
+    const url = `https://${vercelURL}/api/chat`;
     const data = {
       model: "gpt-3.5-turbo",
       messages: [
         {
-          "role": "assistant",
-          "content": `Say Hi `
-        }
-      ]
+          role: "assistant",
+          content: `Say Hi `,
+        },
+      ],
     };
 
     setIsLoading(true);
-    axios.post(url, data).then((response) => {
-      setvalue(addAanalytics(response.data.choices[0].message.content));
-      addResponseToFirestore(message.toString(), response.data.choices[0].message.content, getCurrentDateTimeString(),  addAanalytics(response.data.choices[0].message.content)); // Adds data to history DB
-      setChatLog((prevChatLog) => [...prevChatLog, { type: 'bot', message: response.data.choices[0].message.content }]);
-      setIsLoading(false);
-    }).catch((error) => {
-      setIsLoading(false);
-      console.log(error);
-    });
-  }
+    axios
+      .post(url, data)
+      .then((response) => {
+        setvalue(addAanalytics(response.data.choices[0].message.content));
+        addResponseToFirestore(
+          message.toString(),
+          response.data.choices[0].message.content,
+          getCurrentDateTimeString(),
+          addAanalytics(response.data.choices[0].message.content)
+        ); // Adds data to history DB
+        setChatLog((prevChatLog) => [
+          ...prevChatLog,
+          { type: "bot", message: response.data.choices[0].message.content },
+        ]);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        console.log(error);
+      });
+  };
 
   // State variable and function for handling file input
   const [formData, setFormData] = useState(null);
@@ -114,7 +134,10 @@ export default function OpenAI() {
     });
     const data = await res.json();
     const updatedInputValue = data.text; // Store the updated input value
-    setChatLog((prevChatLog) => [...prevChatLog, { type: 'user', message: updatedInputValue }]);
+    setChatLog((prevChatLog) => [
+      ...prevChatLog,
+      { type: "user", message: updatedInputValue },
+    ]);
     sendMessage(updatedInputValue);
   };
 
