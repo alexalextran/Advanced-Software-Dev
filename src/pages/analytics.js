@@ -1,96 +1,81 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AnalyticsFields from "@/Components/AnalyticComponent";
 import Navigation from "./navigation";
-import { Value } from "sass";
 import { useAuth } from "../../context/AuthContext";
-import styles from '@/styles/analytics.module.scss'
+import styles from "@/styles/analytics.module.scss";
+
 const Analytics = () => {
-  const { retrieveAnalytics, analytics, wordCountStat } = useAuth();
+  // Get analytics and wordCountStat from the context
+  const { analytics, wordCountStat } = useAuth();
+
+  // State to track if analytics are populated
   const [isAnalyticsPopulated, setIsAnalyticsPopulated] = useState(false);
 
+  // Function to categorize word count
+  function getWordCountCategory(wordCount) {
+    if (wordCount < 30) {
+      return "Very Short";
+    } else if (wordCount < 80) {
+      return "Short";
+    } else if (wordCount < 120) {
+      return "Medium";
+    } else if (wordCount < 200) {
+      return "Long";
+    } else {
+      return "Very Long";
+    }
+  }
 
-  useEffect(() => {
-    console.log(analytics)
-  }, []);
-  
   return (
     <>
       <Navigation />
-     
+
       <main className={styles.analyticsForm}>
-      <h1>AI Analytics</h1>
-        {isAnalyticsPopulated && (
-          <debugger />
-        )}
-        <div>
-          <p>Average Words Per minutes</p>
-          {wordCountStat}
-        </div>
-        <h2>
-          <AnalyticsFields
-            label="Confidence: "
-            type="String"
-            name="Confidence"
-            placeholder={analytics?.Confidence}
-            disabled={true}
-          />
-        </h2>
-        <div style={{width: "100%",
-    backgroundColor: "gray",
-    paddingRight: "0px"
-    }}>
-        <div className={styles.bar} style={{width: analytics?.Confidence}}>
-        </div>
-        </div>
-        <h2>
-          <AnalyticsFields
-            label="Coherence: "
-            type="String"
-            name="Coherence"
-            placeholder={analytics?.Coherence}
-            disabled={true}
-          />
-        </h2>
-        <div style={{width: "100%",
-    backgroundColor: "gray",
-    paddingRight: "0px"
-    }}>
-        <div className={styles.bar} style={{width: analytics?.Coherence}}>
-        
-        </div>
-        </div>
-        <h2>
-          <AnalyticsFields
-            label="Professionalism: "
-            type="String"
-            name="Professionalism"
-            placeholder={analytics?.Professionalism}
-            disabled={true}
-          />
-        </h2>
-        <div style={{width: "100%",
-    backgroundColor: "gray",
-    paddingRight: "0px"
-    }}>
-        <div className={styles.bar} style={{width: analytics?.Professionalism}}>
-        </div>
-        </div>
-        <h2>
-          <AnalyticsFields
-            label="Creativity: "
-            type="String"
-            name="Creativity"
-            placeholder={analytics?.Creativity}
-            disabled={true}
-          />
-        </h2>
-        <div style={{width: "100%",
-    backgroundColor: "gray",
-    paddingRight: "0px"
-    }}>
-        <div className={styles.bar}style={{width: analytics?.Creativity}}>
-        </div>
-        </div>
+        {/* Title */}
+        <h1>AI Analytics</h1>
+
+        {/* Debugger conditionally shown */}
+        {isAnalyticsPopulated && <debugger />}
+
+        <section>
+          {/* Word Count */}
+          <div>
+            <p>Word Count</p>
+            <span>{wordCountStat}</span>
+          </div>
+
+          {/* Estimated Speaking Time */}
+          <div>
+            <p>Estimated Speaking Time</p>
+            <span>
+              {(wordCountStat / (140 / 60)).toFixed(1)} Seconds
+            </span>
+          </div>
+
+          {/* Response Length based on the word count category */}
+          <div>
+            <p>Response Length</p>
+            <span>{getWordCountCategory(wordCountStat)}</span>
+          </div>
+        </section>
+
+        {[
+          // Map over analytics fields and render them
+          { label: "Confidence", placeholder: analytics?.Confidence },
+          { label: "Coherence", placeholder: analytics?.Coherence },
+          { label: "Professionalism", placeholder: analytics?.Professionalism },
+          { label: "Creativity", placeholder: analytics?.Creativity },
+        ].map((field, index) => (
+          <>
+            <h2>
+              <AnalyticsFields label={`${field.label}: `} placeholder={field.placeholder} />
+            </h2>
+            <div key={index} style={{ width: "100%", backgroundColor: "gray", paddingRight: "0px" }}>
+              {/* Render progress bar for each field */}
+              <div className={styles.bar} style={{ width: field.placeholder }}></div>
+            </div>
+          </>
+        ))}
       </main>
     </>
   );

@@ -4,18 +4,32 @@
 .analyticsForm{
     font-size: 1vw;
     margin: auto;
-    margin-top: 5vh;
+    margin-top: 3vh;
     border-radius: 1em;
     width: 90em;
-    padding: 4em;
+    padding: 2em;
     text-align: center;
     background: rgba( 255, 255, 255, 0.25 );
     box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
     backdrop-filter: blur( 0.1em );
     -webkit-backdrop-filter: blur(  0.1em );
 
+    h1{
+        margin-top: 0em
+    }
     input{
       
+    }
+
+    section{
+        @include flexCustom(space-between, center, row);
+        width: 30em;
+        margin: auto;
+        font-size: 1.2em;
+        font-weight: 600;
+        span{
+            color: red;
+        }
     }
 
 
