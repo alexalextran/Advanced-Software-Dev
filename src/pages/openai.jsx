@@ -81,35 +81,36 @@ export default function OpenAI() {
 
     setIsLoading(true);
 
-    const res = await fetch("https://api.openai.com/v1/chat/completions", {
-      headers: {
-        'Content-type': 'application/json',
-        'Authorization':`Bearer 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`
-      },
-      method: "POST",
-      body: data,
-    });
-    res.json().then((response) => {
-      console.log(response.data)
-        setvalue(addAanalytics(response.data.choices[0].message.content));
-        addResponseToFirestore(
-          message.toString(),
-          response.data.choices[0].message.content,
-          getCurrentDateTimeString(),
-          addAanalytics(response.data.choices[0].message.content)
-        ); // Adds data to history DB
-        setChatLog((prevChatLog) => [
-          ...prevChatLog,
-          { type: "bot", message: response.data.choices[0].message.content },
-        ]);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        console.log(error);
+   
+    try {
+      const response = await axios.post("https://api.openai.com/v1/chat/completions", data, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer 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', // Replace with your actual API key
+        },
       });
-  };
+      console,log(response.data);
+      const botResponse = response.data.choices[0].message.content;
 
+      setvalue(addAanalytics(botResponse));
+      addResponseToFirestore(
+        message.toString(),
+        botResponse,
+        getCurrentDateTimeString(),
+        addAanalytics(botResponse)
+      );
+
+      setChatLog((prevChatLog) => [
+        ...prevChatLog,
+        { type: "bot", message: botResponse },
+      ]);
+
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      console.error(error);
+    }
+  };
   // State variable and function for handling file input
   const [formData, setFormData] = useState(null);
   const handleFile = async (e) => {
