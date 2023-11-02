@@ -1,6 +1,7 @@
+import styles from '@/styles/profilePage.module.scss'
 const ProfileFields = (props) => {
   return (
-    <div className="profileFormElement">
+    <div className={styles.input}>
       <label>{props.label}</label>
       <input
         type={props.type}

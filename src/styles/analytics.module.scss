@@ -1,0 +1,45 @@
+@import "variables&functions";
+
+
+.analyticsForm{
+    font-size: 1vw;
+    margin: auto;
+    margin-top: 5vh;
+    border-radius: 1em;
+    width: 90em;
+    padding: 4em;
+    text-align: center;
+    background: rgba( 255, 255, 255, 0.25 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 0.1em );
+    -webkit-backdrop-filter: blur(  0.1em );
+
+    input{
+      
+    }
+
+
+    .bar {
+        padding-right: 0px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        background: repeating-linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+        width: 100%;
+        background-size: 200% auto;
+        background-position: 0 100%;
+        animation: gradient 2s infinite;
+        animation-fill-mode: forwards;
+        animation-timing-function: linear;
+      }
+    
+      @keyframes gradient { 
+        0%   { background-position: 0 0; }
+        100% { background-position: -200% 0; }
+      }
+   
+    
+    }
+    
+
+   
+

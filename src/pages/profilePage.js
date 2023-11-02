@@ -7,7 +7,6 @@ import {
   deleteDoc,
   doc,
   getDoc,
-  getDocs,
   getFirestore,
   setDoc,
   updateDoc,
@@ -21,8 +20,8 @@ import {
   deleteUser,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { async } from "@firebase/util";
-import { admin } from "../../firebase";
+import styles from '@/styles/profilePage.module.scss'
+
 
 const Profile = () => {
   const [isDisabled, setDisabled] = useState(true);
@@ -201,9 +200,9 @@ const Profile = () => {
   };
 
   return (
-    <div>
+    <>
       <Navigation />
-      <div className="formDiv">
+      <main className={styles.main}>
         <h1>Username</h1>
         <form onSubmit={Update}>
           <div className="profileForm">
@@ -231,14 +230,14 @@ const Profile = () => {
           </div>
           <Button isClicked={isClicked} />
         </form>
-        <br />
+        
         <button onClick={LogOut}> Log Out </button>
-        <br />
+       
         <button onClick={Delete}>
           <span style={{ color: "red" }}>Delete account</span>
         </button>
-      </div>
-    </div>
+      </main>
+    </>
   );
 };
 

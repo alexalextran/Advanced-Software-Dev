@@ -3,7 +3,7 @@ import AnalyticsFields from "@/Components/AnalyticComponent";
 import Navigation from "./navigation";
 import { Value } from "sass";
 import { useAuth } from "../../context/AuthContext";
-
+import styles from '@/styles/analytics.module.scss'
 const Analytics = () => {
   const { retrieveAnalytics, analytics } = useAuth();
   const [isAnalyticsPopulated, setIsAnalyticsPopulated] = useState(false);
@@ -14,10 +14,11 @@ const Analytics = () => {
   }, []);
   
   return (
-    <div>
+    <>
       <Navigation />
+     
+      <main className={styles.analyticsForm}>
       <h1>AI Analytics</h1>
-      <div className="analyticsForm">
         {isAnalyticsPopulated && (
           <debugger />
         )}
@@ -34,12 +35,7 @@ const Analytics = () => {
     backgroundColor: "gray",
     paddingRight: "0px"
     }}>
-        <div style={{width: analytics?.Confidence,
-    backgroundColor: "red",
-    paddingRight: "0px",
-    paddingTop: "20px",
-    paddingBottom: "20px"
-    }}>
+        <div className={styles.bar} style={{width: analytics?.Confidence}}>
         </div>
         </div>
         <h2>
@@ -55,12 +51,7 @@ const Analytics = () => {
     backgroundColor: "gray",
     paddingRight: "0px"
     }}>
-        <div style={{width: analytics?.Coherence,
-    backgroundColor: "green",
-    paddingRight: "0px",
-    paddingTop: "20px",
-    paddingBottom: "20px"
-    }}>
+        <div className={styles.bar} style={{width: analytics?.Coherence}}>
         
         </div>
         </div>
@@ -77,12 +68,7 @@ const Analytics = () => {
     backgroundColor: "gray",
     paddingRight: "0px"
     }}>
-        <div style={{width: analytics?.Professionalism,
-    backgroundColor: "blue",
-    paddingRight: "0px",
-    paddingTop: "20px",
-    paddingBottom: "20px"
-    }}>
+        <div className={styles.bar} style={{width: analytics?.Professionalism}}>
         </div>
         </div>
         <h2>
@@ -98,16 +84,11 @@ const Analytics = () => {
     backgroundColor: "gray",
     paddingRight: "0px"
     }}>
-        <div style={{width: analytics?.Creativity,
-    backgroundColor: "yellow",
-    paddingRight: "0px",
-    paddingTop: "20px",
-    paddingBottom: "20px"
-    }}>
+        <div className={styles.bar}style={{width: analytics?.Creativity}}>
         </div>
         </div>
-      </div>
-    </div>
+      </main>
+    </>
   );
 };
 
