@@ -56,7 +56,7 @@ const Profile = () => {
     };
 
     getUsername(emailVariable);
-  }, []);
+  }, [emailVariable]);
 
   const Update = async (event) => {
     event.preventDefault();

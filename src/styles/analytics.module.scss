@@ -17,9 +17,7 @@
     h1{
         margin-top: 0em
     }
-    input{
-      
-    }
+   
 
     section{
         @include flexCustom(space-between, center, row);

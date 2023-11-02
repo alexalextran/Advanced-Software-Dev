@@ -41,7 +41,7 @@ const SignupPage = () => {
 
   useEffect(() => {
     if (user) router.push("/Dashboard");
-  }, [user]);
+  }, [user, router]);
 
   return (
     <div className="formDiv">
