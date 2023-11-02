@@ -4,7 +4,7 @@ import { useAuth } from '../../context/AuthContext'
 import Link from 'next/link';
 
 const ChatHistory = () => {
-  const { getUserHistory, history, setAnalytics } = useAuth();
+  const { getUserHistory, history, setAnalytics, setwordCountStat } = useAuth();
   const [selectedChat, setSelectedChat] = useState(null);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const ChatHistory = () => {
   useEffect(() => {
     if (selectedChat) {
       setAnalytics(selectedChat.Analytics);
-      console.log(selectedChat.Analytics);
+      setwordCountStat(selectedChat.wordCount);
     }
   }, [selectedChat]);
 

@@ -5,7 +5,7 @@ import { Value } from "sass";
 import { useAuth } from "../../context/AuthContext";
 import styles from '@/styles/analytics.module.scss'
 const Analytics = () => {
-  const { retrieveAnalytics, analytics } = useAuth();
+  const { retrieveAnalytics, analytics, wordCountStat } = useAuth();
   const [isAnalyticsPopulated, setIsAnalyticsPopulated] = useState(false);
 
 
@@ -22,6 +22,10 @@ const Analytics = () => {
         {isAnalyticsPopulated && (
           <debugger />
         )}
+        <div>
+          <p>Average Words Per minutes</p>
+          {wordCountStat}
+        </div>
         <h2>
           <AnalyticsFields
             label="Confidence: "

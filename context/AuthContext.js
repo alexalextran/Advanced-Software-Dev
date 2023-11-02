@@ -31,6 +31,7 @@ export const AuthContextProvider = ({ children }) => {
   const [history, sethistory] = useState([]);
   const [industrySelected, setindustrySelected] = useState("");
   const [jobselected, setjobselected] = useState("");
+  const [wordCountStat, setwordCountStat] = useState(0);
 
   //console.log(user)
 
@@ -158,12 +159,15 @@ export const AuthContextProvider = ({ children }) => {
     timestamp,
     analytics
   ) => {
+    const words = userResponse.trim().split(/\s+/); // Split the input text into an array of words
+    const wordCount = words.length;
     try {
       await setDoc(doc(db, `users/${user.email}/history/${timestamp}`), {
         InterviewQuestion: interviewQuestion,
         userResponse: userResponse,
         GPTResponse: GPTResponse,
-        Analytics: analytics
+        Analytics: analytics,
+        wordCount: wordCount,
       });
       console.log("Document successfully written to Firestore!");
     } catch (error) {
@@ -226,7 +230,8 @@ export const AuthContextProvider = ({ children }) => {
         industrySelected,
         setjobselected,
         jobselected,
-    
+        wordCountStat,
+        setwordCountStat
       }}
     >
       {loading ? null : children}
