@@ -14,7 +14,7 @@ const ChatHistory = () => {
   useEffect(() => {
     getUserHistory();
     setSelectedChat(history[0]);
-  }, [getUserHistory, history]);
+  }, []);
 
   // Use a useEffect to update analytics and word count when selectedChat changes
   useEffect(() => {
