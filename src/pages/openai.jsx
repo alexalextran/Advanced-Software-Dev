@@ -68,13 +68,13 @@ export default function OpenAI() {
   // Function to send a message to the GPT API
    const sendMessage = async (message) => {
    // const vercelURL = process.env.NOW_URL; // Get the Vercel deployment URL
-    const url = `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/chat`;
+   
     const data = {
       model: "gpt-3.5-turbo",
       messages: [
         {
           role: "assistant",
-          content: `You will play the role of a job interviewer who specializes in the field of ${industrySelected} that is currently critiquing my response to the interview question, ${interviewQuestion}, and the job that I am applying for is ${jobselected}. My response is "${message}". You are to analyze my response and provide feedback and ratings for the four criteria: confidence, coherence, professionalism, and creativity as a percentage out of 100, for example Confidence: 50%. So if I were to respond with an invalid response unrelated to the question or is vague, or inputs random texts, letters, or symbols, reduce the percentage for the relevant criteria. One word or short responses will be deducted or given 0. Start with "Clarichat Feedback:"`,
+          content: `You will play the role of a job interviewer who specializes in the field of ${industrySelected} that is currently critiquing my response to the interview question, ${interviewQuestion}, and the job that I am applying for is ${jobselected}. My response is "${message}". You are to analyze my response and provide feedback and ratings for the four criteria: confidence, coherence, professionalism, and creativity as a percentage out of 100, for example Confidence: 50%. So if I were to respond with an invalid response unrelated to the question or is vague, or inputs random texts, letters, or symbols, reduce the percentage for the relevant criteria. One word or short responses will be deducted or given 0. Start with "Clarichat Feedback:"s`,
         },
       ],
     };
@@ -86,10 +86,10 @@ export default function OpenAI() {
       const response = await axios.post("https://api.openai.com/v1/chat/completions", data, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer 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', // Replace with your actual API key
+          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`, // Replace with your actual API key
         },
       });
-      console.log(response.data);
+    
       const botResponse = response.data.choices[0].message.content;
 
       setvalue(addAanalytics(botResponse));
@@ -136,7 +136,7 @@ export default function OpenAI() {
     setFileInputDisabled(true); // Disable the file input
     const res = await fetch("https://api.openai.com/v1/audio/transcriptions", {
       headers: {
-        Authorization: `Bearer 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`,
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
       },
       method: "POST",
       body: formData,
