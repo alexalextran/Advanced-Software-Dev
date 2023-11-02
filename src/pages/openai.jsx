@@ -89,7 +89,7 @@ export default function OpenAI() {
           'Authorization': 'Bearer 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', // Replace with your actual API key
         },
       });
-      console,log(response.data);
+      console.log(response.data);
       const botResponse = response.data.choices[0].message.content;
 
       setvalue(addAanalytics(botResponse));
