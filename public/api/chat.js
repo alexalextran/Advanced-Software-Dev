@@ -1,4 +1,13 @@
 import axios from 'axios';
+import Cors from 'cors';
+import initMiddleware from '@/lib/init-middleware';
+
+const cors = initMiddleware(
+    Cors({
+      methods: ['GET', 'POST', 'PUT', 'DELETE'], // Define the HTTP methods your API should support
+      origin: `https://${VERCEL_URL}`, // Replace with your frontend's domain
+    })
+  );
 
 export default async function handler(req, res) {
   const referer = req.headers.referer || req.headers.referrer; // get the referer from the request headers
@@ -12,6 +21,7 @@ export default async function handler(req, res) {
   }
   else {
     try {
+    await cors(req, res);
       const { body } = req;
       const url = 'https://api.openai.com/v1/chat/completions';
       const headers = {
