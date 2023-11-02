@@ -2,12 +2,16 @@ import axios from "axios";
 
 export default async function handler(req, res) {
   const referer = req.headers.referer || req.headers.referrer; // get the referer from the request headers
+  console.log(referer);
 
   if (req.method !== "POST") {
     res.status(405).json({ message: "Method should be POST" });
   } else if (process.env.NODE_ENV !== "development") {
-    if (!referer || referer !== `https://${VERCEL_URL}`) {
-      res.status(401).json({ message: 'Unauthorized' });
+    if (
+      !referer ||
+      referer !== `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+    ) {
+      res.status(401).json({ message: "Unauthorized" });
     }
   } else {
     try {
