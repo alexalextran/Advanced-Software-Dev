@@ -64,7 +64,7 @@ export default function OpenAI() {
       messages: [
         {
           "role": "assistant",
-          "content": `You will play the role of a job interviewer who specializes in the field of ${industrySelected} that is currently critiquing my response to the interview question, ${interviewQuestion}, and the job that I am applying for is ${jobselected}. My response is "${message}". Start with "Clarichat Feedback:" `
+          "content": `You will play the role of a job interviewer who specializes in the field of ${industrySelected} `
         }
       ]
     };
