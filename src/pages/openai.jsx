@@ -66,7 +66,7 @@ export default function OpenAI() {
   };
 
   // Function to send a message to the GPT API
-  const sendMessage = (message) => {
+   const sendMessage = async (message) => {
    // const vercelURL = process.env.NOW_URL; // Get the Vercel deployment URL
     const url = `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/chat`;
     const data = {
@@ -80,9 +80,16 @@ export default function OpenAI() {
     };
 
     setIsLoading(true);
-    axios
-      .post(url, data)
-      .then((response) => {
+
+    const res = await fetch("https://api.openai.com/v1/chat/completions", {
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization':`Bearer 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`
+      },
+      method: "POST",
+      body: data,
+    });
+    res.json().then((response) => {
         setvalue(addAanalytics(response.data.choices[0].message.content));
         addResponseToFirestore(
           message.toString(),
