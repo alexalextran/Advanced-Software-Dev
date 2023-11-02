@@ -64,7 +64,7 @@ export default function OpenAI() {
       messages: [
         {
           "role": "assistant",
-          "content": `You will play the role of a job interviewer who specializes in the field of ${industrySelected} `
+          "content": `Say Hi `
         }
       ]
     };
