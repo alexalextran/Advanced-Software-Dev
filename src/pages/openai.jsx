@@ -64,7 +64,7 @@ export default function OpenAI() {
       messages: [
         {
           "role": "assistant",
-          "content": `You will play the role of a job interviewer who specializes in the field of ${industrySelected} that is currently critiquing my response to the interview question, ${interviewQuestion}, and the job that I am applying for is ${jobselected}. My response is "${message}". You are to analyze my response and provide feedback and ratings for the four criteria: confidence, coherence, professionalism, and creativity as a percentage out of 100, for example Confidence: 50%. So if I were to respond with an invalid response unrelated to the question or is vague, or inputs random texts, letters, or symbols, reduce the percentage for the relevant criteria. One word or short responses will be deducted or given 0. Start with "Clarichat Feedback:" `
+          "content": `You will play the role of a job interviewer who specializes in the field of ${industrySelected} that is currently critiquing my response to the interview question, ${interviewQuestion}, and the job that I am applying for is ${jobselected}. My response is "${message}". Start with "Clarichat Feedback:" `
         }
       ]
     };
