@@ -31,14 +31,14 @@ describe("Render Analytics Page", () => {
     mockRouter.push("/analytics");
     jest.spyOn(React, "useEffect").mockImplementation((f) => f());
     render(<TestAnalyticsComponent />);
-    const confidenceLabel = screen.getByLabelText("Confidence:");
-    const coherenceLabel = screen.getByLabelText("Coherence:");
-    const professionalismLabel = screen.getByLabelText("Professionalism:");
-    const creativityLabel = screen.getByLabelText("Creativity:");
+    const confidenceLabel = screen.getByText("Word Count");
+    const coherenceLabel = screen.getByText("Estimated Speaking Time");
+    const professionalismLabel = screen.getByText("Response Length");
+
 
     expect(confidenceLabel).toBeInTheDocument();
     expect(coherenceLabel).toBeInTheDocument();
     expect(professionalismLabel).toBeInTheDocument();
-    expect(creativityLabel).toBeInTheDocument();
+    
   });
 });
