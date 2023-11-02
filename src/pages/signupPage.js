@@ -7,7 +7,7 @@ import { useAuth } from "../../context/AuthContext";
 import React, { useEffect } from "react";
 import { doc, getFirestore, setDoc } from "firebase/firestore";
 // use router.push('/Dashboard') to go redirect user to dashboard after user auth
-
+//
 const SignupPage = () => {
   const router = useRouter();
   const { user, signup } = useAuth();
