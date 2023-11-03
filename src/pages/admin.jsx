@@ -12,7 +12,7 @@ import { useAuth } from "../../context/AuthContext";
 const Admin = () => {
   const [selectedIndustry, setSelectedIndustry] = useState(''); //chosen industry --> IT
   const [selectedJob, setSelectedJob] = useState(''); //chosen job --> software developer
-  const [adminLoggedIn, setadminLoggedIn] = useState(true)
+  const [adminLoggedIn, setadminLoggedIn] = useState(false)
 
   const { retrieveIndustriesData } = useAuth();
   useEffect(() => {
