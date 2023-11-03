@@ -86,7 +86,7 @@ export default function OpenAI() {
       const response = await axios.post("https://api.openai.com/v1/chat/completions", data, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${NEXT_PUBLIC_OPENAI_API_KEY}`, // Replace with your actual API key
+          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`, // Replace with your actual API key
         },
       });
     
@@ -136,7 +136,7 @@ export default function OpenAI() {
     setFileInputDisabled(true); // Disable the file input
     const res = await fetch("https://api.openai.com/v1/audio/transcriptions", {
       headers: {
-        Authorization: `Bearer ${NEXT_PUBLIC_OPENAI_API_KEY}`,
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
       },
       method: "POST",
       body: formData,
